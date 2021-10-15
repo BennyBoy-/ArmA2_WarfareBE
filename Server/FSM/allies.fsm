@@ -1,0 +1,274 @@
+/*%FSM<COMPILE "C:\Program Files\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, allies">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Allies_Init",0,4346,-44.418510,-87.799530,45.581596,-37.799454,0.000000,"Allies" \n "Init"};
+item1[] = {"loop",4,218,-43.082561,-10.971841,46.917431,39.028156,0.000000,"loop"};
+item2[] = {"Check",2,250,-190.853607,-12.100532,-100.853592,37.899467,0.000000,"Check"};
+item3[] = {"done",4,218,-314.399872,-10.889294,-224.399902,39.110706,0.000000,"done"};
+item4[] = {"end",1,250,-315.611145,69.052460,-225.611130,119.052437,0.000000,"end"};
+link0[] = {0,1};
+link1[] = {1,2};
+link2[] = {2,1};
+link3[] = {2,3};
+link4[] = {3,4};
+globals[] = {0.000000,0,0,0,0,640,480,1,23,6316128,1,-472.927826,92.799797,435.032471,-147.570496,704,700,1};
+window[] = {0,-1,-1,-1,-1,985,110,1455,145,1,722};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "allies";
+  class States
+  {
+    /*%FSM<STATE "Allies_Init">*/
+    class Allies_Init
+    {
+      name = "Allies_Init";
+      init = /*%FSM<STATEINIT""">*/"_side = _this select 0;" \n
+       "_sideText = str _side;" \n
+       "_sideID = (_side) Call WFBE_CO_FNC_GetSideID;" \n
+       "_timeStart = time;" \n
+       "" \n
+       "_startingLocation = getPos ((_side Call WFBE_CO_FNC_GetSideLogic) getVariable ""wfbe_startpos"");" \n
+       "_allysLoc = [_startingLocation,(startingLocations - [_startingLocation])] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "" \n
+       "_types = if (_side == west) then {[""CDF_WarfareBBarracks"",""CDF_WarfareBLightFactory"",""CDF_WarfareBUAVterminal"",""CDF_WarfareBHeavyFactory"",""CDF_WarfareBAircraftFactory"",""CDF_WarfareBVehicleServicePoint""]} else {[""Ins_WarfareBBarracks"",""Ins_WarfareBLightFactory"",""Ins_WarfareBUAVterminal"",""Ins_WarfareBHeavyFactory"",""Ins_WarfareBAircraftFactory"",""Ins_WarfareBVehicleServicePoint""]};" \n
+       "_structureRelPos = [[75,75],[-75,75],[75,0],[75,-75],[-75,-75],[-75,0]];" \n
+       "_structurePos = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];" \n
+       "_structureLabel = [""B"",""L"",""C"",""H"",""A"",""S""];" \n
+       "_alives = [];" \n
+       "" \n
+       "_checkNeeds = {" \n
+       "	Private [""_building"",""_canBuy"",""_needs"",""_require""];" \n
+       "	_require = _this select 0;" \n
+       "	_building = _this select 1;" \n
+       "	_needs = [];" \n
+       "	if (_require select 0) then {_needs = _needs + [alive (_building select 0)]};" \n
+       "	if (_require select 1) then {_needs = _needs + [alive (_building select 1)]};" \n
+       "	if (_require select 2) then {_needs = _needs + [alive (_building select 2)]};" \n
+       "	if (_require select 3) then {_needs = _needs + [alive (_building select 3)]};" \n
+       "	_canBuy = true;" \n
+       "	{if (!_x) then {_canBuy = false}} forEach _needs;" \n
+       "	_canBuy" \n
+       "};" \n
+       "" \n
+       "for [{_count = 0},{_count < (count _types)},{_count = _count + 1}] do {" \n
+       "	_type = _types select _count;" \n
+       "	_x = getPos _allysLoc select 0;" \n
+       "	_y = getPos _allysLoc select 1;" \n
+       "	_pos = [];" \n
+       "	_pos set [0,((_structureRelPos select _count) select 0) + _x];" \n
+       "	_pos set [1,((_structureRelPos select _count) select 1) + _y];" \n
+       "	_newPos = [0,0,0];" \n
+       "	_roads = [];" \n
+       "	_continue = true;" \n
+       "	while {_continue} do {" \n
+       "		_newPos = [_pos,30,100,10,0,50,0] Call BIS_fnc_findSafePos;" \n
+       "		_roads = _newPos nearRoads 60;" \n
+       "		_isTooClose = false;" \n
+       "		{if (_x distance _newPos < 70) then {_isTooClose = true}} forEach _structurePos;" \n
+       "		if (count _roads == 0 || _isTooClose) then {_continue = false};" \n
+       "	};" \n
+       "	_structurePos set [_count, _newPos];" \n
+       "	_building = _type createVehicle (_structurePos select _count);" \n
+       "	_building setVehicleInit Format[""[this,false,%1,'%2'] ExecVM 'Client\Init\Init_BaseStructure.sqf'"",_sideID,_structureLabel select _count];" \n
+       "	processInitCommands;" \n
+       "	if (_count in [0,1,3,4]) then {_alives = _alives + [_building]};" \n
+       "};" \n
+       "" \n
+       "_barrack = _alives select 0;" \n
+       "_light = _alives select 1;" \n
+       "_heavy = _alives select 2;" \n
+       "_air = _alives select 3;" \n
+       "" \n
+       "_alliesTemplates = missionNamespace getVariable Format[""WFBE_%1ALLIESTEAMTEMPLATES"",_sideText];" \n
+       "_alliesTemplatesRequire = missionNamespace getVariable Format[""WFBE_%1ALLIESTEAMTEMPLATEREQUIRES"",_sideText];" \n
+       "_alliesTemplatesTypes = missionNamespace getVariable Format[""WFBE_%1ALLIESTEAMTYPES"",_sideText];" \n
+       "_alliesTemplatesCost = missionNamespace getVariable Format[""WFBE_%1ALLIESTEAMCOST"",_sideText];" \n
+       "" \n
+       "_barracksTemplate = [];" \n
+       "_lightTemplate = [];" \n
+       "_heavyTemplate = [];" \n
+       "_airTemplate = [];" \n
+       "_o = 0;" \n
+       "{" \n
+       "	if (_alliesTemplatesTypes select _o == 0) then {_barracksTemplate = _barracksTemplate + [_o]};" \n
+       "	if (_alliesTemplatesTypes select _o == 1) then {_lightTemplate = _lightTemplate + [_o]};" \n
+       "	if (_alliesTemplatesTypes select _o == 2) then {_heavyTemplate = _heavyTemplate + [_o]};" \n
+       "	if (_alliesTemplatesTypes select _o == 3) then {_airTemplate = _airTemplate + [_o]};" \n
+       "	_o = _o + 1;" \n
+       "} forEach _alliesTemplates;" \n
+       "" \n
+       "WF_Logic setVariable [Format[""%1TeamInfA"",_sideText],false];" \n
+       "WF_Logic setVariable [Format[""%1TeamInfB"",_sideText],false];" \n
+       "WF_Logic setVariable [Format[""%1TeamVehA"",_sideText],false];" \n
+       "WF_Logic setVariable [Format[""%1TeamHVehA"",_sideText],false];" \n
+       "WF_Logic setVariable [Format[""%1TeamAVehA"",_sideText],false];" \n
+       "" \n
+       "_minInfFunds = 2000;" \n
+       "_minLightFunds = 5000;" \n
+       "_minHeavyFunds = 8000;" \n
+       "_minAirFunds = 40000;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "loop">*/
+        class loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _timeStart > 60"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check">*/
+    class Check
+    {
+      name = "Check";
+      init = /*%FSM<STATEINIT""">*/"_timeStart = time;" \n
+       "" \n
+       "_funds = Call Compile Format [""%1AlliesFunds"",_sideText];" \n
+       "" \n
+       "_teamInfAAlive = WF_Logic getVariable Format[""%1TeamInfA"",_sideText];" \n
+       "_teamInfBAlive = WF_Logic getVariable Format[""%1TeamInfB"",_sideText];" \n
+       "_teamVehAAlive = WF_Logic getVariable Format[""%1TeamVehA"",_sideText];" \n
+       "_teamHVehAAlive = WF_Logic getVariable Format[""%1TeamHVehA"",_sideText];" \n
+       "_teamAVehAAlive = WF_Logic getVariable Format[""%1TeamAVehA"",_sideText];" \n
+       "" \n
+       "if (!_teamInfAAlive) then {" \n
+       "	if (_funds > _minInfFunds) then {" \n
+       "		_ranTemp = _barracksTemplate select round(random((count _barracksTemplate)-1));" \n
+       "		_templateToUse = _alliesTemplates select _ranTemp;" \n
+       "		_templateRequire = _alliesTemplatesRequire select _ranTemp;" \n
+       "		_templateCost = _alliesTemplatesCost select _ranTemp;" \n
+       "	" \n
+       "		_canBuy = [_templateRequire,_alives] Call _checkNeeds;" \n
+       "		" \n
+       "		if (_funds > _templateCost && _canBuy) then {" \n
+       "			Call Compile Format [""%1AlliesFunds = %1AlliesFunds - _templateCost"",_sideText];" \n
+       "			_funds = Call Compile Format [""%1AlliesFunds"",_sideText];" \n
+       "			[_side,_templateToUse,_templateRequire,_alives,Format[""%1TeamInfA"",_sideText]] ExecFSM ""Server\FSM\allies_team.fsm"";" \n
+       "			WF_Logic setVariable [Format[""%1TeamInfA"",_sideText],true];" \n
+       "		};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "if (!_teamInfBAlive) then {" \n
+       "	if (_funds > _minInfFunds) then {" \n
+       "		_ranTemp = _barracksTemplate select round(random((count _barracksTemplate)-1));" \n
+       "		_templateToUse = _alliesTemplates select _ranTemp;" \n
+       "		_templateRequire = _alliesTemplatesRequire select _ranTemp;" \n
+       "		_templateCost = _alliesTemplatesCost select _ranTemp;" \n
+       "	" \n
+       "		_canBuy = [_templateRequire,_alives] Call _checkNeeds;" \n
+       "		" \n
+       "		if (_funds > _templateCost && _canBuy) then {" \n
+       "			Call Compile Format [""%1AlliesFunds = %1AlliesFunds - _templateCost"",_sideText];" \n
+       "			_funds = Call Compile Format [""%1AlliesFunds"",_sideText];" \n
+       "			[_side,_templateToUse,_templateRequire,_alives,Format[""%1TeamInfB"",_sideText]] ExecFSM ""Server\FSM\allies_team.fsm"";" \n
+       "			WF_Logic setVariable [Format[""%1TeamInfB"",_sideText],true];" \n
+       "		};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "if (!_teamVehAAlive) then {" \n
+       "	if (_funds > _minLightFunds) then {" \n
+       "		_ranTemp = _lightTemplate select round(random((count _lightTemplate)-1));" \n
+       "		_templateToUse = _alliesTemplates select _ranTemp;" \n
+       "		_templateRequire = _alliesTemplatesRequire select _ranTemp;" \n
+       "		_templateCost = _alliesTemplatesCost select _ranTemp;" \n
+       "	" \n
+       "		_canBuy = [_templateRequire,_alives] Call _checkNeeds;" \n
+       "		" \n
+       "		if (_funds > _templateCost && _canBuy) then {" \n
+       "			Call Compile Format [""%1AlliesFunds = %1AlliesFunds - _templateCost"",_sideText];" \n
+       "			_funds = Call Compile Format [""%1AlliesFunds"",_sideText];" \n
+       "			[_side,_templateToUse,_templateRequire,_alives,Format[""%1TeamVehA"",_sideText]] ExecFSM ""Server\FSM\allies_team.fsm"";" \n
+       "			WF_Logic setVariable [Format[""%1TeamVehA"",_sideText],true];" \n
+       "		};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "if (!_teamHVehAAlive) then {" \n
+       "	if (_funds > _minHeavyFunds) then {" \n
+       "		_ranTemp = _heavyTemplate select round(random((count _heavyTemplate)-1));" \n
+       "		_templateToUse = _alliesTemplates select _ranTemp;" \n
+       "		_templateRequire = _alliesTemplatesRequire select _ranTemp;" \n
+       "		_templateCost = _alliesTemplatesCost select _ranTemp;" \n
+       "	" \n
+       "		_canBuy = [_templateRequire,_alives] Call _checkNeeds;" \n
+       "" \n
+       "		if (_funds > _templateCost && _canBuy) then {" \n
+       "			Call Compile Format [""%1AlliesFunds = %1AlliesFunds - _templateCost"",_sideText];" \n
+       "			_funds = Call Compile Format [""%1AlliesFunds"",_sideText];" \n
+       "			[_side,_templateToUse,_templateRequire,_alives,Format[""%1TeamHVehA"",_sideText]] ExecFSM ""Server\FSM\allies_team.fsm"";" \n
+       "			WF_Logic setVariable [Format[""%1TeamHVehA"",_sideText],true];" \n
+       "		};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "if (!_teamAVehAAlive) then {" \n
+       "	if (_funds > _minAirFunds) then {" \n
+       "		_ranTemp = _airTemplate select round(random((count _airTemplate)-1));" \n
+       "		_templateToUse = _alliesTemplates select _ranTemp;" \n
+       "		_templateRequire = _alliesTemplatesRequire select _ranTemp;" \n
+       "		_templateCost = _alliesTemplatesCost select _ranTemp;" \n
+       "	" \n
+       "		_canBuy = [_templateRequire,_alives] Call _checkNeeds;" \n
+       "		" \n
+       "		if (_funds > _templateCost && _canBuy) then {" \n
+       "			Call Compile Format [""%1AlliesFunds = %1AlliesFunds - _templateCost"",_sideText];" \n
+       "			_funds = Call Compile Format [""%1AlliesFunds"",_sideText];" \n
+       "			[_side,_templateToUse,_templateRequire,_alives,Format[""%1TeamAVehA"",_sideText]] ExecFSM ""Server\FSM\allies_team.fsm"";" \n
+       "			WF_Logic setVariable [Format[""%1TeamAVehA"",_sideText],true];" \n
+       "		};" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "done">*/
+        class done
+        {
+          priority = 0.000000;
+          to="end";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || ({alive _x} count _alives) == 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "loop">*/
+        class loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _timeStart > 60"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "end">*/
+    class end
+    {
+      name = "end";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Allies_Init";
+  finalStates[] =
+  {
+    "end",
+  };
+};
+/*%FSM</COMPILE>*/

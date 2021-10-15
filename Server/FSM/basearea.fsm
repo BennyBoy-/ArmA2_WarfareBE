@@ -1,0 +1,152 @@
+/*%FSM<COMPILE "E:\Bohemia Interactive\ArmA 2\FSM Editor Personal Edition\scriptedFSM.cfg, basearea">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,4346,-81.542984,-257.577942,8.457038,-207.578140,0.000000,"Init"};
+item1[] = {"End",1,250,-216.387955,-52.508366,-126.387947,-2.508394,0.000000,"End"};
+item2[] = {"Update_Areas",2,250,-82.090652,-139.314026,7.909359,-89.314034,0.000000,"Update Areas"};
+item3[] = {"Loop",4,218,53.846153,-139.681244,143.846161,-89.681236,0.000000,"Loop"};
+item4[] = {"Gameover",4,218,-216.387955,-139.464890,-126.387947,-89.464890,0.000000,"Gameover"};
+item5[] = {"_",8,218,-51.736092,-184.192123,-21.083296,-163.272247,0.000000,""};
+link0[] = {0,5};
+link1[] = {2,3};
+link2[] = {2,4};
+link3[] = {3,2};
+link4[] = {4,1};
+link5[] = {5,2};
+globals[] = {0.000000,0,0,0,0,640,480,1,8,6316128,1,-450.330200,450.329834,163.072220,-391.043060,721,592,1};
+window[] = {0,-1,-1,-1,-1,912,175,1588,175,1,739};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "basearea";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_brr = missionNamespace getVariable ""WFBE_C_BASE_AREA_RANGE"";" \n
+       "_mbr = missionNamespace getVariable ""WFBE_C_BASE_HQ_BUILD_RANGE"";" \n
+       "" \n
+       "_onAreaRemoved = {" \n
+       "	Private [""_areas"", ""_center"", ""_delete"", ""_objects"", ""_side""];" \n
+       "	_center = _this select 0;" \n
+       "	_side = _this select 1;" \n
+       "	_areas = _this select 2;" \n
+       "	" \n
+       "	_objects = nearestObjects [_center, missionNamespace getVariable Format[""WFBE_%1DEFENSENAMES"", _side], (missionNamespace getVariable ""WFBE_C_BASE_AREA_RANGE"") + (missionNamespace getVariable ""WFBE_C_BASE_HQ_BUILD_RANGE"")];" \n
+       "	{_objects = _objects - (nearestObjects [getPos _x, missionNamespace getVariable Format[""WFBE_%1DEFENSENAMES"", _side], (missionNamespace getVariable ""WFBE_C_BASE_AREA_RANGE"") + (missionNamespace getVariable ""WFBE_C_BASE_HQ_BUILD_RANGE"")])} forEach _areas;" \n
+       "	" \n
+       "	sleep 240;" \n
+       "	" \n
+       "	{" \n
+       "		if !(isNil {_x getVariable ""wfbe_defense""}) then {" \n
+       "			_delete = true;" \n
+       "			if (_x isKindOf ""StaticWeapon"") then {" \n
+       "				_unit = gunner _x;" \n
+       "				if (alive _unit) then {" \n
+       "					if (isNil {(group _unit) getVariable ""wfbe_funds""}) then {" \n
+       "						_unit setPos (getPos _x);" \n
+       "						deleteVehicle _unit;" \n
+       "					} else {" \n
+       "						_delete = false;" \n
+       "					};" \n
+       "				};" \n
+       "			};" \n
+       "			if (_delete) then {deleteVehicle _x};" \n
+       "		};" \n
+       "	} forEach _objects;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Update_Areas";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Areas">*/
+    class Update_Areas
+    {
+      name = "Update_Areas";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdate = time;" \n
+       "" \n
+       "{" \n
+       "	_side = _x;" \n
+       "	_logik = (_side) Call WFBE_CO_FNC_GetSideLogic;" \n
+       "	_buildings = (_side Call WFBE_CO_FNC_GetSideStructures) + [_side Call WFBE_CO_FNC_GetSideHQ];" \n
+       "	" \n
+       "	_areas_old = _logik getVariable ""wfbe_basearea"";" \n
+       "	_areas = _areas_old;" \n
+       "	" \n
+       "	{" \n
+       "		_structure = [_x, _buildings] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "		if (!isNull _structure) then {" \n
+       "			if (_structure distance _x > (_brr + _mbr)) then {" \n
+       "				//--- On deletion, remove the statics/defenses later." \n
+       "				[getPos _x, _side, _areas_old] Spawn _onAreaRemoved;" \n
+       "				_areas = _areas - [_x] - [objNull];" \n
+       "				_grp = group _x;" \n
+       "				deleteVehicle _x;" \n
+       "				deleteGroup _grp;" \n
+       "			};" \n
+       "		};" \n
+       "	} forEach _areas_old;" \n
+       "	" \n
+       "	if (count _areas_old != count _areas) then {" \n
+       "		_logik setVariable [""wfbe_basearea"", _areas, true];" \n
+       "	};" \n
+       "} forEach WFBE_PRESENTSIDES;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Areas";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 30"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

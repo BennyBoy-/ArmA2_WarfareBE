@@ -1,0 +1,105 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, updatetownmarkers">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,4346,64.620567,-141.323822,154.620590,-91.323967,0.000000,"Init"};
+item1[] = {"Check_Towns",2,250,-65.773369,-55.204887,24.226547,-5.204931,0.000000,"Check Towns"};
+item2[] = {"End",1,250,-218.006683,15.304325,-128.006653,65.304314,0.000000,"End"};
+item3[] = {"Loop",4,218,65.605347,-56.267605,155.605377,-6.267574,0.000000,"Loop"};
+item4[] = {"Gameover",4,218,-216.668854,-56.267559,-126.668869,-6.267574,0.000000,"Gameover"};
+link0[] = {0,3};
+link1[] = {1,3};
+link2[] = {1,4};
+link3[] = {3,1};
+link4[] = {4,2};
+globals[] = {0.000000,0,0,0,0,640,480,1,30,6316128,1,-395.307037,395.306915,93.428192,-337.575409,744,514,1};
+window[] = {0,-1,-1,-1,-1,734,100,1432,100,1,762};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "updatetownmarkers";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdate = time;" \n
+       "" \n
+       "_tcarm = missionNamespace getVariable ""WFBE_C_PLAYERS_MARKER_TOWN_RANGE"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 5 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Towns">*/
+    class Check_Towns
+    {
+      name = "Check_Towns";
+      init = /*%FSM<STATEINIT""">*/"_units = (Units Group player) Call GetLiveUnits;" \n
+       "" \n
+       "{" \n
+       "	_town = _x;" \n
+       "	_range = (_town getVariable ""range"") * _tcarm;" \n
+       "	_visible = false;" \n
+       "	if ((_town getVariable ""sideID"") == sideID) then {_visible = true} else {{if (_town distance _x < _range) then {_visible = true}} forEach _units};" \n
+       "	_marker = Format [""WFBE_%1_CityMarker"", str _town];" \n
+       "	if (_visible) then {_marker setMarkerTextLocal Format[""  SV: %1/%2"",_town getVariable ""supplyValue"",_town getVariable ""maxSupplyValue""]} else {_marker setMarkerTextLocal """"};" \n
+       "} forEach towns;" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 5 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

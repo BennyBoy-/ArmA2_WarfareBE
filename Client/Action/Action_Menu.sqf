@@ -1,0 +1,1 @@
+createDialog "WF_Menu";

@@ -1,0 +1,182 @@
+/*%FSM<COMPILE "D:\tools\BIS\FSM Editor Personal Edition\scriptedFSM.cfg, allies_team">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Allies_Init",0,4346,-44.418510,-87.799530,45.581596,-37.799454,0.000000,"Allies" \n "Init"};
+item1[] = {"loop",4,218,-43.082561,-10.971841,46.917431,39.028156,0.000000,"loop"};
+item2[] = {"Check",2,250,-190.853607,-12.100532,-100.853592,37.899467,0.000000,"Check"};
+item3[] = {"done",4,218,-314.399872,-10.889294,-224.399902,39.110706,0.000000,"done"};
+item4[] = {"end",1,250,-315.611145,69.052460,-225.611130,119.052437,0.000000,"end"};
+link0[] = {0,1};
+link1[] = {1,2};
+link2[] = {2,1};
+link3[] = {2,3};
+link4[] = {3,4};
+globals[] = {0.000000,0,0,0,0,640,480,1,23,6316128,1,-440.874512,60.746586,402.023224,-114.561028,704,695,1};
+window[] = {0,-1,-1,-1,-1,940,100,1445,100,1,722};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "allies_team";
+  class States
+  {
+    /*%FSM<STATE "Allies_Init">*/
+    class Allies_Init
+    {
+      name = "Allies_Init";
+      init = /*%FSM<STATEINIT""">*/"_side = _this select 0;" \n
+       "_template = _this select 1;" \n
+       "_templateRequire = _this select 2;" \n
+       "_buildings = _this select 3;" \n
+       "_status = _this select 4;" \n
+       "" \n
+       "_barrack = _buildings select 0;" \n
+       "_light = _buildings select 1;" \n
+       "_heavy = _buildings select 2;" \n
+       "_air = _buildings select 3;" \n
+       "" \n
+       "_destination = objNull;" \n
+       "_lastDestination = objNull;" \n
+       "_orderComplete = true;" \n
+       "_timeStart = time;" \n
+       "_end = false;" \n
+       "" \n
+       "_team = createGroup _side;" \n
+       "" \n
+       "{" \n
+       "	_buyFrom = objNull;" \n
+       "	_kindDetail = missionNamespace getVariable _x;" \n
+       "	_crews = _kindDetail select QUERYUNITCREW;" \n
+       "	_unitType = _kindDetail select QUERYUNITFACTORY;" \n
+       "	switch (_unitType) do {" \n
+       "		case 0: {" \n
+       "			_buyFrom = _barrack;" \n
+       "		};" \n
+       "		case 1: {" \n
+       "			_buyFrom = _light;" \n
+       "		};" \n
+       "		case 2: {" \n
+       "			_buyFrom = _heavy;" \n
+       "		};" \n
+       "		case 3: {" \n
+       "			_buyFrom = _air;" \n
+       "		};" \n
+       "	};" \n
+       "	if !(isNull _buyFrom) then {" \n
+       "		_vehiSlots = [true,false,false,false];" \n
+       "		_IDS = [];		" \n
+       "		if !(_x isKindOf ""Man"") then {" \n
+       "			if (typeName _crews == ""ARRAY"") then {" \n
+       "				if (_crews select 0) then {_vehiSlots set [2, true]};" \n
+       "				if (_crews select 1) then {_vehiSlots set [1, true]};" \n
+       "				if ((_crews select 3) > 0) then {_vehiSlots set [3, true]};" \n
+       "				" \n
+       "				{" \n
+       "					_ran = 2000 + random(10) + random (100) + random(1000);" \n
+       "					_IDS set [count _IDS, _ran];" \n
+       "				} forEach _vehiSlots;" \n
+       "			} else {" \n
+       "				if (_crews < 3 && _crews != 1) then {" \n
+       "					_ran2 = 2000 + random(10) + random (100) + random(1000);" \n
+       "					_vehiSlots = [true,true,false];" \n
+       "					_IDS = _IDS + [_ran2];" \n
+       "				};" \n
+       "				if (_crews > 2) then {" \n
+       "					_ran2 = 2000 + random(10) + random (100) + random(1000);" \n
+       "					_ran3 = 2000 + random(10) + random (100) + random(1000);" \n
+       "					_vehiSlots = [true,true,true];" \n
+       "					_IDS = _IDS + [_ran2] + [_ran3];" \n
+       "				};" \n
+       "			};" \n
+       "		};" \n
+       "		[_IDS,_buyFrom,_x,_side,_team,_vehiSlots] Spawn AlliesBuyUnit;" \n
+       "	};" \n
+       "} forEach _template;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "loop">*/
+        class loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_end && time - _timeStart > 120 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check">*/
+    class Check
+    {
+      name = "Check";
+      init = /*%FSM<STATEINIT""">*/"_timeStart = time;" \n
+       "" \n
+       "_alives = (units _team) Call GetLiveUnits;" \n
+       "_end = if (count _alives > 0) then {false} else {true};" \n
+       "" \n
+       "if ((leader _team) distance _destination < 30) then {" \n
+       "	_locationSide = (_destination getVariable ""sideID"") Call GetSideFromID;" \n
+       "	if (_locationSide == _side) then {_orderComplete = true;_lastDestination = _destination};" \n
+       "};" \n
+       "if (((_destination getVariable ""sideID"") Call GetSideFromID) == _side) then {_orderComplete = true;_lastDestination = _destination};" \n
+       "if (!isNull(_lastDestination)) then {if (((_lastDestination getVariable ""sideID"") Call GetSideFromID) != _side) then {_orderComplete = true}};" \n
+       "" \n
+       "if (_orderComplete) then {" \n
+       "	_destinations = [];" \n
+       "	{" \n
+       "		_locationSide = (_x getVariable ""sideID"") Call GetSideFromID;" \n
+       "		if (_locationSide != _side) then {_destinations = _destinations + [_x]};" \n
+       "	} forEach towns;" \n
+       "	if (count _destinations > 0) then {" \n
+       "		_orderComplete = false;" \n
+       "		_destination = [leader _team,_destinations] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "		[_team,_destination,""move""] Call AIMoveTo;" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "done">*/
+        class done
+        {
+          priority = 0.000000;
+          to="end";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || _end"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "loop">*/
+        class loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_end && time - _timeStart > 120 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "end">*/
+    class end
+    {
+      name = "end";
+      init = /*%FSM<STATEINIT""">*/"WF_Logic setVariable [_status,false];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Allies_Init";
+  finalStates[] =
+  {
+    "end",
+  };
+};
+/*%FSM</COMPILE>*/

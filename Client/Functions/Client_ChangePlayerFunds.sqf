@@ -1,0 +1,1 @@
+[clientTeam, _this] Call ChangeTeamFunds;

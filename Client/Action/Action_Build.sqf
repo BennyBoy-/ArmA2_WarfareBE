@@ -1,0 +1,1 @@
+[player,player,2,MCoin,getpos player,(sideJoined) Call WFBE_CO_FNC_GetSideHQ] ExecVM "Client\Module\CoIn\coin_interface.sqf";

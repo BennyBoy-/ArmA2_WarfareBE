@@ -1,0 +1,177 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, updateclient">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,66.278671,-152.869141,156.278748,-102.869209,0.000000,"Init"};
+item1[] = {"Update_Client",2,250,-66.836029,-56.267544,23.163887,-6.267582,0.000000,"Update Client"};
+item2[] = {"End",1,250,-218.006683,15.304325,-128.006653,65.304314,0.000000,"End"};
+item3[] = {"Loop",4,218,65.605347,-56.267605,155.605377,-6.267574,0.000000,"Loop"};
+item4[] = {"Gameover",4,218,-216.668854,-56.267559,-126.668869,-6.267574,0.000000,"Gameover"};
+item5[] = {"Update_Commander",2,4346,66.545486,22.916348,156.545471,72.916397,0.000000,"Update" \n "Commander"};
+item6[] = {"Change_Commander",4,218,-66.545563,22.916351,23.454376,72.916374,0.000000,"Change" \n "Commander"};
+link0[] = {0,3};
+link1[] = {1,3};
+link2[] = {1,4};
+link3[] = {1,6};
+link4[] = {3,1};
+link5[] = {4,2};
+link6[] = {5,3};
+link7[] = {6,5};
+globals[] = {0.000000,0,0,0,0,640,480,1,22,6316128,1,-345.209412,345.209290,108.499458,-297.536255,854,906,1};
+window[] = {2,-1,-1,-1,-1,784,150,1602,150,3,872};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "updateclient";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"commanderTeam = (sideJoined) Call WFBE_CO_FNC_GetCommanderTeam;" \n
+       "" \n
+       "_hc_enabled = if ((missionNamespace getVariable ""WFBE_C_MODULE_BIS_HC"") > 0) then {true} else {false};" \n
+       "" \n
+       "_lastCommanderTeam = commanderTeam;" \n
+       "_changeCommander = false;" \n
+       "_timer = 0;" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Client";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 1 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Client">*/
+    class Update_Client
+    {
+      name = "Update_Client";
+      init = /*%FSM<STATEINIT""">*/"commanderTeam = (sideJoined) Call WFBE_CO_FNC_GetCommanderTeam;" \n
+       "if (IsNull commanderTeam && !IsNull _lastCommanderTeam) then {_changeCommander = true};" \n
+       "if (!IsNull commanderTeam && IsNull _lastCommanderTeam) then {_changeCommander = true};" \n
+       "if (!isNull commanderTeam && !isNull _lastCommanderTeam) then {" \n
+       "	if (commanderTeam != _lastCommanderTeam) then {_changeCommander = true};" \n
+       "};" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Change_Commander">*/
+        class Change_Commander
+        {
+          priority = 0.000000;
+          to="Update_Commander";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_changeCommander && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Client";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 1 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Commander">*/
+    class Update_Commander
+    {
+      name = "Update_Commander";
+      init = /*%FSM<STATEINIT""">*/"_changeCommander = false;" \n
+       "_lastCommanderTeam = commanderTeam;	" \n
+       "_MHQ = (sideJoined) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "" \n
+       "if (IsNull commanderTeam) then {" \n
+       "	if (!IsNull _MHQ) then {" \n
+       "		_MHQ RemoveAction 0;" \n
+       "		_MHQ RemoveAction 1;" \n
+       "		_MHQ RemoveAction 2;" \n
+       "		_MHQ RemoveAction 3;" \n
+       "	};" \n
+       "	if (!isNil ""HQAction"") then {player removeAction HQAction};" \n
+       "	if (count (hcAllGroups player) > 0) then {HCRemoveAllGroups player};" \n
+       "	{[_x,false] Call SetTeamAutonomous} forEach clientTeams;" \n
+       "};" \n
+       "		" \n
+       "if (!isNull(commanderTeam)) then {" \n
+       "	if (commanderTeam == Group player) then {" \n
+       "		if (!IsNull _MHQ) then {" \n
+       "			_MHQ addAction [localize ""STR_WF_Unlock_MHQ"",""Client\Action\Action_ToggleLock.sqf"", [], 95, false, true, '', 'alive _target && locked _target'];" \n
+       "			_MHQ addAction [localize ""STR_WF_Lock_MHQ"",""Client\Action\Action_ToggleLock.sqf"", [], 94, false, true, '', 'alive _target && !(locked _target)'];" \n
+       "		};" \n
+       "		_deployed = (sideJoined) Call WFBE_CO_FNC_GetSideHQDeployStatus;" \n
+       "		if (_deployed) then {" \n
+       "			[missionNamespace getVariable ""WFBE_C_BASE_COIN_AREA_HQ_DEPLOYED"",true,MCoin] Call Compile PreprocessFile ""Client\Init\Init_Coin.sqf"";" \n
+       "		} else {" \n
+       "			[missionNamespace getVariable ""WFBE_C_BASE_COIN_AREA_HQ_UNDEPLOYED"",false,MCoin] Call Compile PreprocessFile ""Client\Init\Init_Coin.sqf"";" \n
+       "		};" \n
+       "		HQAction = leader(group player) addAction [localize ""STR_WF_BuildMenu"",""Client\Action\Action_Build.sqf"", [_MHQ], 100, false, true, """", ""hqInRange && canBuildWHQ && (_target == player)""];	" \n
+       "		if (_hc_enabled) then {player setVariable [""BIS_HC_scope"",HC];{if !(isNil '_x') then {player HCSetGroup [_x]; [_x,false] Call SetTeamAutonomous}} forEach clientTeams};" \n
+       "		[Localize ""STR_WF_CHAT_PlayerCommander""] Call TitleTextMessage;" \n
+       "	} else {" \n
+       "		if (!isNil ""HQAction"") then {player removeAction HQAction};" \n
+       "		if (count (hcAllGroups player) > 0 && _hc_enabled) then {HCRemoveAllGroups player};" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Client";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 1 && !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

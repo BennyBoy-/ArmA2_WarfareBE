@@ -1,0 +1,138 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, updateactions">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,-64.944939,-176.579712,25.055046,-126.579880,0.000000,"Init"};
+item1[] = {"Check_Player",2,250,-66.836029,-56.267544,23.163887,-6.267582,0.000000,"Check Player"};
+item2[] = {"End",1,250,-218.006683,15.304325,-128.006653,65.304314,0.000000,"End"};
+item3[] = {"Loop",4,218,65.605347,-56.267605,155.605377,-6.267574,0.000000,"Loop"};
+item4[] = {"Not_Alive",4,218,-216.668854,-56.267559,-126.668869,-6.267574,1.000000,"Not Alive"};
+item5[] = {"Update_Actions",2,4346,66.545509,15.865158,156.545563,65.865219,0.000000,"Update Actions"};
+item6[] = {"Alive",4,218,-66.545601,15.865162,23.454397,65.865189,0.000000,"Alive"};
+item7[] = {"_",8,218,-37.459465,-108.411957,-3.868937,-87.498108,0.000000,""};
+link0[] = {0,7};
+link1[] = {1,3};
+link2[] = {1,4};
+link3[] = {1,6};
+link4[] = {3,1};
+link5[] = {4,2};
+link6[] = {5,3};
+link7[] = {6,5};
+link8[] = {7,1};
+globals[] = {0.000000,0,0,0,0,640,480,1,29,6316128,1,-395.307037,395.306915,167.465607,-285.572937,407,514,1};
+window[] = {0,-1,-1,-1,-1,834,200,1460,200,1,425};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "updateactions";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_optionsID = -1;" \n
+       "_lastVehicle = player;" \n
+       "_UpdateActions = true;" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Player";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Player">*/
+    class Check_Player
+    {
+      name = "Check_Player";
+      init = /*%FSM<STATEINIT""">*/"if (Vehicle player != _lastVehicle) then {_UpdateActions = true};" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Not_Alive">*/
+        class Not_Alive
+        {
+          priority = 1.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || !alive player"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Alive">*/
+        class Alive
+        {
+          priority = 0.000000;
+          to="Update_Actions";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive player && !gameOver && _UpdateActions"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Player";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 0.5 && !gameOver && alive player && !_UpdateActions"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/"_lastVehicle RemoveAction _optionsID"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Actions">*/
+    class Update_Actions
+    {
+      name = "Update_Actions";
+      init = /*%FSM<STATEINIT""">*/"_UpdateActions = false;" \n
+       "_vehicle = Vehicle player;" \n
+       "if (_vehicle != player) then {_optionsID = _vehicle addAction [""<t color='#42b6ff'>"" + (localize ""STR_WF_Options"") + ""</t>"",""Client\Action\Action_Menu.sqf"", """", 1, false, true, """", """"]} else {_lastVehicle RemoveAction _optionsID};" \n
+       "_lastVehicle = _vehicle;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Player";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 0.5 && !gameOver && alive player && !_UpdateActions"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

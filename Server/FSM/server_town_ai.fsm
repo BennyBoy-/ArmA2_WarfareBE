@@ -1,0 +1,777 @@
+/*%FSM<COMPILE "E:\Bohemia Interactive\ArmA 2\FSM Editor Personal Edition\scriptedFSM.cfg, server_town_ai.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,-675.000000,-150.000000,-575.000000,-100.000000,0.000000,"Init"};
+item1[] = {"Check_Side",2,250,100.000000,-150.000000,200.000000,-100.000000,0.000000,"Check" \n "Side"};
+item2[] = {"Contact",4,218,-50.000000,250.000000,50.000000,300.000000,0.000000,"Contact"};
+item3[] = {"Loop",4,218,-525.000000,-150.000000,-425.000000,-100.000000,0.000000,"Loop"};
+item4[] = {"No_Contact",4,218,-200.000000,150.000000,-100.000000,200.000000,1.000000,"No Contact"};
+item5[] = {"Skip",2,250,-200.000000,550.000000,-100.000000,600.000000,0.000000,"Skip"};
+item6[] = {"Activity",2,250,100.000000,650.000000,200.000000,700.000000,0.000000,"Activity"};
+item7[] = {"Kind_of_Contact",2,250,250.000000,150.000000,350.000000,200.000000,0.000000,"Kind of" \n "Contact"};
+item8[] = {"Air",4,218,250.000000,250.000000,350.000000,300.000000,0.000000,"Air"};
+item9[] = {"Ground",4,218,400.000000,150.000000,500.000000,200.000000,1.000000,"Ground"};
+item10[] = {"Activated",2,250,100.000000,250.000000,200.000000,300.000000,0.000000,"Activated"};
+item11[] = {"No",4,218,100.000000,150.000000,200.000000,200.000000,1.000000,"No"};
+item12[] = {"Yes",4,218,100.000000,350.000000,200.000000,400.000000,0.000000,"Yes"};
+item13[] = {"Air_Activated",2,250,250.000000,350.000000,350.000000,400.000000,0.000000,"Air" \n "Activated"};
+item14[] = {"Set_Ground_Team",2,250,550.000000,150.000000,650.000000,200.000000,0.000000,"Set Ground" \n "Team"};
+item15[] = {"Skip_1",2,250,100.000000,450.000000,200.000000,500.000000,0.000000,"Skip"};
+item16[] = {"No",4,218,400.000000,350.000000,500.000000,400.000000,0.000000,"No"};
+item17[] = {"Yes",4,218,250.000000,450.000000,350.000000,500.000000,1.000000,"Yes"};
+item18[] = {"Set_AA_Team",2,250,550.000000,350.000000,650.000000,400.000000,0.000000,"Set AA" \n "Team"};
+item19[] = {"",7,210,696.000000,271.000000,704.000000,278.999969,0.000000,""};
+item20[] = {"Create_Template",2,250,650.000000,550.000000,750.000000,600.000000,0.000000,"Create" \n "Template"};
+item21[] = {"_",8,218,100.000000,550.000000,200.000000,600.000000,0.000000,""};
+item22[] = {"Active",4,218,100.000000,750.000000,200.000000,800.000000,0.000000,"Active"};
+item23[] = {"Inactive",4,218,-75.000000,650.000000,25.000000,700.000000,1.000000,"Inactive"};
+item24[] = {"Check_Time",2,250,-75.000000,750.000000,25.000000,800.000000,0.000000,"Check Time"};
+item25[] = {"Skip_2",2,250,-225.000000,650.000000,-125.000000,700.000000,0.000000,"Skip"};
+item26[] = {"Remove",2,4346,-375.000000,850.000000,-275.000000,900.000000,0.000000,"Remove"};
+item27[] = {"SideID_Unknown",4,218,100.000000,-250.000000,200.000000,-200.000000,1.000000,"SideID" \n "Unknown"};
+item28[] = {"SideID_Known",4,218,100.000000,-50.000000,200.000000,0.000000,2.000000,"SideID" \n "Known"};
+item29[] = {"Skip_3",2,250,-525.000000,-250.000000,-425.000000,-200.000000,0.000000,"Skip"};
+item30[] = {"Check_Enemies",2,250,-50.000000,150.000000,50.000000,200.000000,0.000000,"Check" \n "Enemies"};
+item31[] = {"Timeout",4,218,-75.000000,850.000000,25.000000,900.000000,1.000000,"Timeout"};
+item32[] = {"Skip",4,218,-225.000000,750.000000,-125.000000,800.000000,0.000000,"Skip"};
+item33[] = {"_",8,218,-375.000000,650.000000,-275.000000,700.000000,0.000000,""};
+item34[] = {"End",4,218,250.000000,-150.000000,350.000000,-100.000000,0.000000,"End"};
+item35[] = {"Game_Over",1,250,400.000000,-150.000000,500.000000,-100.000000,0.000000,"Game Over"};
+item36[] = {"_",8,218,550.000000,250.000000,650.000000,300.000000,0.000000,""};
+item37[] = {"Parameter_Patrol",2,250,-525.000000,650.000000,-425.000000,700.000000,0.000000,"Parameter" \n "Patrol"};
+item38[] = {"Off",4,218,-525.000000,550.000000,-425.000000,600.000000,0.000000,"Off"};
+item39[] = {"On",4,218,-675.000000,650.000000,-575.000000,700.000000,0.000000,"On"};
+item40[] = {"Skip_4",2,250,-525.000000,450.000000,-425.000000,500.000000,0.000000,"Skip"};
+item41[] = {"",7,210,-479.000000,396.000031,-471.000000,404.000000,0.000000,""};
+item42[] = {"Check_or_set",2,250,-675.000000,550.000000,-575.000000,600.000000,0.000000,"Check or set"};
+item43[] = {"",7,210,-629.000000,396.000000,-621.000000,404.000000,0.000000,""};
+item44[] = {"Check_Side_Enabl",2,250,-50.000000,-50.000000,50.000000,0.000000,0.000000,"Check Side" \n "Enabled"};
+item45[] = {"Disabled",4,218,-300.000000,-50.000000,-200.000000,0.000000,0.000000,"Disabled"};
+item46[] = {"Enabled",4,218,-50.000000,50.000000,50.000000,100.000000,0.000000,"Enabled"};
+item47[] = {"",7,210,-253.999985,571.000000,-246.000000,579.000000,0.000000,""};
+link0[] = {0,3};
+link1[] = {1,27};
+link2[] = {1,28};
+link3[] = {1,34};
+link4[] = {2,10};
+link5[] = {3,1};
+link6[] = {4,5};
+link7[] = {5,21};
+link8[] = {6,22};
+link9[] = {6,23};
+link10[] = {7,8};
+link11[] = {7,9};
+link12[] = {8,13};
+link13[] = {9,14};
+link14[] = {10,11};
+link15[] = {10,12};
+link16[] = {11,7};
+link17[] = {12,15};
+link18[] = {13,16};
+link19[] = {13,17};
+link20[] = {14,36};
+link21[] = {15,21};
+link22[] = {16,18};
+link23[] = {17,15};
+link24[] = {18,36};
+link25[] = {19,20};
+link26[] = {20,21};
+link27[] = {21,6};
+link28[] = {22,24};
+link29[] = {23,25};
+link30[] = {24,31};
+link31[] = {24,32};
+link32[] = {25,33};
+link33[] = {26,33};
+link34[] = {27,29};
+link35[] = {28,44};
+link36[] = {29,3};
+link37[] = {30,2};
+link38[] = {30,4};
+link39[] = {31,26};
+link40[] = {32,25};
+link41[] = {33,37};
+link42[] = {34,35};
+link43[] = {36,19};
+link44[] = {37,38};
+link45[] = {37,39};
+link46[] = {38,40};
+link47[] = {39,42};
+link48[] = {40,41};
+link49[] = {41,3};
+link50[] = {42,43};
+link51[] = {43,41};
+link52[] = {44,45};
+link53[] = {44,46};
+link54[] = {45,47};
+link55[] = {46,30};
+link56[] = {47,5};
+globals[] = {25.000000,1,0,0,0,640,480,1,84,6316128,1,-594.135254,798.115967,1022.985229,-403.262939,860,911,1};
+window[] = {2,-1,-1,-1,-1,964,125,1437,125,3,878};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "server_town_ai.fsm";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_town = _this select 0;" \n
+       "_range = _this select 1;" \n
+       "" \n
+       "[""INITIALIZATION"",Format [""server_town_ai.fsm : Initialized for [%1]."", _town getVariable ""name""]] Call WFBE_CO_FNC_LogContent;" \n
+       "" \n
+       "_range_detect = _range * (missionNamespace getVariable ""WFBE_C_TOWNS_DETECTION_RANGE_COEF"");" \n
+       "_range_detect_active = _range * (missionNamespace getVariable ""WFBE_C_TOWNS_DETECTION_RANGE_ACTIVE_COEF"");" \n
+       "_position = [];" \n
+       "" \n
+       "_town setVariable [""wfbe_active"", false];" \n
+       "_town setVariable [""wfbe_active_air"", false];" \n
+       "_town setVariable [""wfbe_inactivity"", 0];" \n
+       "" \n
+       "_groups = [];" \n
+       "_town_camps = _town getVariable ""camps"";" \n
+       "_town_camps_count = count _town_camps;" \n
+       "" \n
+       "_town_teams = [];" \n
+       "_town setVariable ['wfbe_active_vehicles', []];" \n
+       "" \n
+       "_airHeight = missionNamespace getVariable ""WFBE_C_TOWNS_DETECTION_RANGE_AIR"";" \n
+       "_unitsInactiveMax = missionNamespace getVariable ""WFBE_C_TOWNS_UNITS_INACTIVE"";" \n
+       "" \n
+       "_patrol_delay = missionNamespace getVariable ""WFBE_C_PATROLS_DELAY_SPAWN"";" \n
+       "_patrol_enabled = if (!isNil {_town getVariable ""wfbe_patrol_enabled""}) then {true} else {false};" \n
+       "" \n
+       "_ai_delegation_enabled = if ((missionNamespace getVariable ""WFBE_C_AI_DELEGATION"") > 0) then {true} else {false};" \n
+       "_town_defender_enabled = if ((missionNamespace getVariable ""WFBE_C_TOWNS_DEFENDER"") > 0) then {true} else {false};" \n
+       "_town_occupation_enabled = if ((missionNamespace getVariable ""WFBE_C_TOWNS_OCCUPATION"") > 0) then {true} else {false};" \n
+       "" \n
+       "//--- Towns patrol, if enabled." \n
+       "if (_patrol_enabled) then {" \n
+       "	_town setVariable [""wfbe_patrol_active"", false];" \n
+       "	_town setVariable [""wfbe_patrol_active_last"", time];" \n
+       "};" \n
+       "" \n
+       "_snap = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Side";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Side">*/
+    class Check_Side
+    {
+      name = "Check_Side";
+      init = /*%FSM<STATEINIT""">*/"_snap = time + 5;" \n
+       "" \n
+       "_sideID = _town getVariable ""sideID"";" \n
+       "_side = (_sideID) Call WFBE_CO_FNC_GetSideFromID;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "SideID_Known">*/
+        class SideID_Known
+        {
+          priority = 2.000000;
+          to="Check_Side_Enabl";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_sideID != WFBE_C_UNKNOWN_ID && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "SideID_Unknown">*/
+        class SideID_Unknown
+        {
+          priority = 1.000000;
+          to="Skip_3";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_sideID == WFBE_C_UNKNOWN_ID && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "End">*/
+        class End
+        {
+          priority = 0.000000;
+          to="Game_Over";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip">*/
+    class Skip
+    {
+      name = "Skip";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Activity";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Activity">*/
+    class Activity
+    {
+      name = "Activity";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Inactive">*/
+        class Inactive
+        {
+          priority = 1.000000;
+          to="Skip_2";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(_town getVariable ""wfbe_active"") && !(_town getVariable ""wfbe_active_air"")"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Active">*/
+        class Active
+        {
+          priority = 0.000000;
+          to="Check_Time";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(_town getVariable ""wfbe_active"") || (_town getVariable ""wfbe_active_air"")"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Kind_of_Contact">*/
+    class Kind_of_Contact
+    {
+      name = "Kind_of_Contact";
+      init = /*%FSM<STATEINIT""">*/"_below = _detected unitsBelowHeight 10;" \n
+       "" \n
+       "_enemies_ground = [_below, _side] Call WFBE_CO_FNC_GetAreaEnemiesCount;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Ground">*/
+        class Ground
+        {
+          priority = 1.000000;
+          to="Set_Ground_Team";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_enemies_ground > 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Air">*/
+        class Air
+        {
+          priority = 0.000000;
+          to="Air_Activated";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_enemies_ground == 0 && _enemies > 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Activated">*/
+    class Activated
+    {
+      name = "Activated";
+      init = /*%FSM<STATEINIT""">*/"if (_enemies > 0) then {_town setVariable [""wfbe_inactivity"", time]};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "No">*/
+        class No
+        {
+          priority = 1.000000;
+          to="Kind_of_Contact";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(_town getVariable ""wfbe_active"")"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Yes">*/
+        class Yes
+        {
+          priority = 0.000000;
+          to="Skip_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_town getVariable ""wfbe_active"""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Air_Activated">*/
+    class Air_Activated
+    {
+      name = "Air_Activated";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Yes">*/
+        class Yes
+        {
+          priority = 1.000000;
+          to="Skip_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_town getVariable ""wfbe_active_air"""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "No">*/
+        class No
+        {
+          priority = 0.000000;
+          to="Set_AA_Team";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(_town getVariable ""wfbe_active_air"")"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Set_Ground_Team">*/
+    class Set_Ground_Team
+    {
+      name = "Set_Ground_Team";
+      init = /*%FSM<STATEINIT""">*/"_town setVariable [""wfbe_active"", true];" \n
+       "" \n
+       "if (_side == WFBE_DEFENDER) then {" \n
+       "	_groups = [_town, _side] Call WFBE_SE_FNC_GetTownGroupsDefender" \n
+       "} else {" \n
+       "	_groups = [_town, _side] Call WFBE_SE_FNC_GetTownGroups;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Create_Template";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_1">*/
+    class Skip_1
+    {
+      name = "Skip_1";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Activity";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Set_AA_Team">*/
+    class Set_AA_Team
+    {
+      name = "Set_AA_Team";
+      init = /*%FSM<STATEINIT""">*/"_town setVariable [""wfbe_active_air"", true];" \n
+       "" \n
+       "if (_side == WFBE_DEFENDER) then {" \n
+       "	_groups = [_town, _side, true] Call WFBE_SE_FNC_GetTownGroupsDefender" \n
+       "} else {" \n
+       "	_groups = [_town, _side, true] Call WFBE_SE_FNC_GetTownGroups;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Create_Template";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Create_Template">*/
+    class Create_Template
+    {
+      name = "Create_Template";
+      init = /*%FSM<STATEINIT""">*/"if (missionNamespace getVariable Format [""WFBE_%1_PRESENT"",_side]) then {[_side,""HostilesDetectedNear"",_town] Spawn SideMessage};" \n
+       "" \n
+       "//--- Man the defenses." \n
+       "[_town, _side, ""spawn""] Call WFBE_SE_FNC_OperateTownDefensesUnits;" \n
+       "" \n
+       "//--- Get the positions and create the groups" \n
+       "_camps = +(_town getVariable ""camps"");" \n
+       "_positions = [];" \n
+       "_teams = [];" \n
+       "for '_i' from 0 to count(_groups)-1 do {" \n
+       "	_position = [];" \n
+       "	if (count _camps > 0 && random 100 > 50) then {" \n
+       "		_camp = _camps select floor (random count _camps);" \n
+       "		_camps = _camps - [_camp];" \n
+       "		_position = ([getPos _camp, 10, 50] call WFBE_CO_FNC_GetRandomPosition);" \n
+       "	} else {" \n
+       "		_position = ([getPos _town, 50, 300] call WFBE_CO_FNC_GetRandomPosition);" \n
+       "	};" \n
+       "	_position = [_position, 50] call WFBE_CO_FNC_GetEmptyPosition;" \n
+       "	[_positions, _position] call WFBE_CO_FNC_ArrayPush;" \n
+       "	[_teams, createGroup _side] call WFBE_CO_FNC_ArrayPush;" \n
+       "};" \n
+       "" \n
+       "if !(_ai_delegation_enabled) then { //--- Create the units (Server sided)" \n
+       "	_retVal = [_town, _side, _groups, _positions, _teams] Call WFBE_CO_FNC_CreateTownUnits;" \n
+       "	_town_teams = _town_teams + _teams;" \n
+       "	_town setVariable ['wfbe_active_vehicles', (_town getVariable 'wfbe_active_vehicles') + (_retVal select 1)];" \n
+       "} else { //--- Create the units (Client/server sided)" \n
+       "	_retVal = [_town, _side, _groups, _positions, _teams] Call WFBE_SE_FNC_DelegateAITown;" \n
+       "	_town_teams = _town_teams + _teams;" \n
+       "	_town setVariable ['wfbe_active_vehicles', (_town getVariable 'wfbe_active_vehicles') + (_retVal select 1)];" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Activity";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Time">*/
+    class Check_Time
+    {
+      name = "Check_Time";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Timeout">*/
+        class Timeout
+        {
+          priority = 1.000000;
+          to="Remove";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - (_town getVariable ""wfbe_inactivity"") > _unitsInactiveMax"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Skip_2";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - (_town getVariable ""wfbe_inactivity"") <= _unitsInactiveMax"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_2">*/
+    class Skip_2
+    {
+      name = "Skip_2";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Parameter_Patrol";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Remove">*/
+    class Remove
+    {
+      name = "Remove";
+      init = /*%FSM<STATEINIT""">*/"_town setVariable [""wfbe_active"", false];" \n
+       "_town setVariable [""wfbe_active_air"", false];" \n
+       "" \n
+       "//--- Teams Units." \n
+       "{" \n
+       "	if !(isNil '_x') then {" \n
+       "		if !(isNull _x) then {" \n
+       "			{deleteVehicle _x} forEach units _x;" \n
+       "			deleteGroup _x;" \n
+       "		};" \n
+       "	};" \n
+       "} forEach _town_teams;" \n
+       "" \n
+       "//--- Teams vehicles." \n
+       "{" \n
+       "	if (alive _x) then {" \n
+       "		if (!isPlayer _x) then {deleteVehicle _x};" \n
+       "	};" \n
+       "} forEach (_town getVariable 'wfbe_active_vehicles');" \n
+       "" \n
+       "_town_teams = [];" \n
+       "_town setVariable ['wfbe_active_vehicles', []];" \n
+       "" \n
+       "//--- Despawn the town defenses unit." \n
+       "[_town, _side, ""remove""] Call WFBE_SE_FNC_OperateTownDefensesUnits;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Parameter_Patrol";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_3">*/
+    class Skip_3
+    {
+      name = "Skip_3";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Side";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Enemies">*/
+    class Check_Enemies
+    {
+      name = "Check_Enemies";
+      init = /*%FSM<STATEINIT""">*/"_dynRange = if (_town getVariable ""wfbe_active"" || _town getVariable ""wfbe_active_air"") then {_range_detect_active} else {_range_detect};" \n
+       "_detected = (_town nearEntities [[""Man"",""Car"",""Motorcycle"",""Tank"",""Air"",""Ship""],_dynRange]) unitsBelowHeight _airHeight;" \n
+       "" \n
+       "_enemies = [_detected, _side] Call WFBE_CO_FNC_GetAreaEnemiesCount;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "No_Contact">*/
+        class No_Contact
+        {
+          priority = 1.000000;
+          to="Skip";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_enemies == 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Contact">*/
+        class Contact
+        {
+          priority = 0.000000;
+          to="Activated";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_enemies > 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Game_Over">*/
+    class Game_Over
+    {
+      name = "Game_Over";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Parameter_Patrol">*/
+    class Parameter_Patrol
+    {
+      name = "Parameter_Patrol";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "On">*/
+        class On
+        {
+          priority = 0.000000;
+          to="Check_or_set";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_patrol_enabled"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Off">*/
+        class Off
+        {
+          priority = 0.000000;
+          to="Skip_4";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_patrol_enabled"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_4">*/
+    class Skip_4
+    {
+      name = "Skip_4";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Side";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_or_set">*/
+    class Check_or_set
+    {
+      name = "Check_or_set";
+      init = /*%FSM<STATEINIT""">*/"if !(_town getVariable ""wfbe_patrol_active"") then {" \n
+       "	if (time - (_town getVariable ""wfbe_patrol_active_last"") > _patrol_delay && !(_town getVariable ""wfbe_active"")) then {" \n
+       "		_town setVariable [""wfbe_patrol_active"", true];" \n
+       "		[_town, _sideID] ExecFSM ""Server\FSM\server_patrols.fsm"";" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Side";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Side_Enabl">*/
+    class Check_Side_Enabl
+    {
+      name = "Check_Side_Enabl";
+      init = /*%FSM<STATEINIT""">*/"_side_enabled = false;" \n
+       "" \n
+       "if (_side == WFBE_DEFENDER) then {" \n
+       "	if (_town_defender_enabled) then {_side_enabled = true};" \n
+       "} else {" \n
+       "	if (_town_occupation_enabled) then {_side_enabled = true};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Enabled">*/
+        class Enabled
+        {
+          priority = 0.000000;
+          to="Check_Enemies";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_side_enabled"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Disabled">*/
+        class Disabled
+        {
+          priority = 0.000000;
+          to="Skip";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_side_enabled"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "Game_Over",
+  };
+};
+/*%FSM</COMPILE>*/

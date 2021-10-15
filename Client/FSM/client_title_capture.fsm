@@ -1,0 +1,229 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, client_title_capture.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,4346,50.000000,-225.000000,150.000000,-175.000000,0.000000,"Init"};
+item1[] = {"Check_Towns",2,250,-100.000000,-125.000000,0.000000,-75.000000,0.000000,"Check Towns"};
+item2[] = {"End",1,250,-100.000000,-325.000000,0.000000,-275.000000,0.000000,"End"};
+item3[] = {"Loop",4,218,50.000000,-125.000000,150.000000,-75.000000,0.000000,"Loop"};
+item4[] = {"Gameover",4,218,-100.000000,-225.000000,0.000000,-175.000000,1.000000,"Gameover"};
+item5[] = {"Update_Capture",2,250,50.000000,-25.000000,150.000000,25.000000,0.000000,"Update Capture"};
+item6[] = {"In_Range",4,218,-100.000000,-25.000000,0.000000,25.000000,0.800000,"In Range"};
+item7[] = {"Not_in_Range",4,218,-225.000000,25.000000,-125.000000,75.000000,0.700000,"Not in Range"};
+item8[] = {"Hide",2,250,200.000000,25.000000,300.000000,75.000000,0.000000,"Hide"};
+link0[] = {0,3};
+link1[] = {1,4};
+link2[] = {1,6};
+link3[] = {1,7};
+link4[] = {3,1};
+link5[] = {4,2};
+link6[] = {5,3};
+link7[] = {6,5};
+link8[] = {7,8};
+link9[] = {8,3};
+globals[] = {25.000000,1,0,0,0,640,480,1,25,6316128,1,-327.502472,459.015900,273.669495,-419.340637,699,906,1};
+window[] = {2,-1,-1,-1,-1,784,150,1410,150,3,717};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "client_title_capture.fsm";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_delay = 4;" \n
+       "_lastCheck = """";" \n
+       "_lastSID = -1;" \n
+       "_lastUpdate = time;" \n
+       "_txt = """";" \n
+       "" \n
+       "_colorBlue = [0,0,0.7,0.6];" \n
+       "_colorGreen = [0,0.7,0,0.6];" \n
+       "_colorRed = [0.7,0,0,0.6];" \n
+       "_colorBlack = [0,0,0,0.6];" \n
+       "" \n
+       "_ui_bg = [0,0,0,0.7];" \n
+       "_town_capture_mode = missionNamespace getVariable ""WFBE_C_TOWNS_CAPTURE_MODE"";" \n
+       "_town_conquest_mode = missionNamespace getVariable 'WFBE_C_TOWNS_CONQUEST_MODE';" \n
+       "" \n
+       "_snap = 0;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Towns">*/
+    class Check_Towns
+    {
+      name = "Check_Towns";
+      init = /*%FSM<STATEINIT""">*/"_nearest = [player,towns] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "_update = if (player distance _nearest < (_nearest getVariable ""range"") && alive player) then {true} else {false};" \n
+       "" \n
+       "_snap = time + 2;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 1.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "In_Range">*/
+        class In_Range
+        {
+          priority = 0.800000;
+          to="Update_Capture";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_update && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Not_in_Range">*/
+        class Not_in_Range
+        {
+          priority = 0.700000;
+          to="Hide";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_update && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Capture">*/
+    class Update_Capture
+    {
+      name = "Update_Capture";
+      init = /*%FSM<STATEINIT""">*/"_sideID = _nearest getVariable ""sideID"";" \n
+       "_curSV = _nearest getVariable ""supplyValue"";" \n
+       "_maxSV = _nearest getVariable ""maxSupplyValue"";" \n
+       "" \n
+       "_camp = [vehicle player, 12, true] Call WFBE_CL_FNC_GetClosestCamp;" \n
+       "" \n
+       "if (_town_capture_mode != 0 && !isNull _camp) then {" \n
+       "	if (alive (_camp getVariable ""wfbe_camp_bunker"")) then {" \n
+       "		_sideID = _camp getVariable ""sideID"";" \n
+       "		_curSV = _camp getVariable ""supplyValue"";" \n
+       "		if (_lastCheck == ""Town"") then {_delay = 0};" \n
+       "		_txt = """";" \n
+       "		_lastCheck = ""Camp"";" \n
+       "	};" \n
+       "} else {" \n
+       "	_txt = Format [localize ""STR_WF_TownSV"", _curSV,_maxSV];" \n
+       "	_lastCheck = ""Town"";" \n
+       "};" \n
+       "" \n
+       "if (_sideID != _lastSID) then {_delay = 0};" \n
+       "if (isNull (uiNamespace getVariable ""wfbe_title_capture"")) then {600200 cutRsc[""CaptureBar"",""PLAIN"",0];_delay = 0};" \n
+       "if !(isNull (uiNamespace getVariable ""wfbe_title_capture"")) then {" \n
+       "" \n
+       "	_barColor = switch (_sideID) do {" \n
+       "		case WFBE_C_WEST_ID: {_colorBlue};" \n
+       "		case WFBE_C_EAST_ID: {_colorRed};" \n
+       "		case WFBE_C_GUER_ID: {_colorGreen};" \n
+       "		case WFBE_C_UNKNOWN_ID: {_colorBlack};" \n
+       "		default {_colorGreen};" \n
+       "	};" \n
+       "	" \n
+       "	//--- Territorial mode." \n
+       "	if (_town_conquest_mode == 1) then {" \n
+       "		if (_sideID != WFBE_Client_SideID) then {" \n
+       "			if (isNil {_nearest getVariable ""wfbe_marker""}) then {_barColor = _colorBlack};" \n
+       "		};" \n
+       "	};" \n
+       "" \n
+       "	_control = (uiNamespace getVariable ""wfbe_title_capture"") displayCtrl 601001;" \n
+       "	_control ctrlShow true;" \n
+       "	_control ctrlSetBackgroundColor _barColor;" \n
+       "	_backgroundControl = (uiNamespace getVariable ""wfbe_title_capture"") displayCtrl 601000;" \n
+       "	_backgroundControl ctrlShow true;" \n
+       "	_backgroundControl ctrlSetBackgroundColor _ui_bg;" \n
+       "	_textControl = (uiNamespace getVariable ""wfbe_title_capture"") displayCtrl 601002;" \n
+       "	_textControl ctrlShow true;" \n
+       "	_textControl ctrlSetText _txt;" \n
+       "	_maxWidth = (ctrlPosition _backgroundControl Select 2) - 0.02;" \n
+       "	_position = ctrlPosition _control;" \n
+       "	_position set [2,_maxWidth * _curSV / _maxSV];" \n
+       "	_control ctrlSetPosition _position;" \n
+       "	_control ctrlCommit _delay;" \n
+       "	_delay = 4;" \n
+       "	_lastSID = _sideID;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Hide">*/
+    class Hide
+    {
+      name = "Hide";
+      init = /*%FSM<STATEINIT""">*/"_delay = 0;" \n
+       "if (isNull (uiNamespace getVariable ""wfbe_title_capture"")) then {600200 cutRsc[""CaptureBar"",""PLAIN"",0]};" \n
+       "if (!isNull (uiNamespace getVariable ""wfbe_title_capture"")) then {" \n
+       "	{((uiNamespace getVariable ""wfbe_title_capture"") displayCtrl _x) ctrlShow false} forEach [601000,601001,601002];" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

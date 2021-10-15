@@ -1,0 +1,315 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, server_town_camp.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,4346,-75.000000,-600.000000,25.000000,-550.000000,0.000000,"Init"};
+item1[] = {"End",1,250,-225.000000,-100.000000,-125.000000,-50.000000,0.000000,"End"};
+item2[] = {"Gameover",4,218,-225.000000,-200.000000,-125.000000,-150.000000,0.000000,"Gameover"};
+item3[] = {"Empty",4,218,75.000000,-200.000000,175.000000,-150.000000,0.000000,"Empty"};
+item4[] = {"Camp_Core",2,250,-75.000000,-200.000000,25.000000,-150.000000,0.000000,"Camp Core"};
+item5[] = {"Occupied",4,218,-75.000000,-100.000000,25.000000,-50.000000,0.000000,"Occupied"};
+item6[] = {"Capture",4,218,-225.000000,0.000000,-125.000000,50.000000,1.000000,"Capture"};
+item7[] = {"Skip",4,218,75.000000,0.000000,175.000000,50.000000,0.000000,"Skip"};
+item8[] = {"Idle",2,250,175.000000,-500.000000,275.000000,-450.000000,0.000000,"Idle"};
+item9[] = {"Check",2,250,-75.000000,0.000000,25.000000,50.000000,0.000000,"Check"};
+item10[] = {"",7,210,221.000000,20.999996,229.000000,29.000002,0.000000,""};
+item11[] = {"",7,210,221.000031,-179.000000,228.999985,-171.000000,0.000000,""};
+item12[] = {"Captured",2,250,-375.000000,0.000000,-275.000000,50.000000,0.000000,"Captured"};
+item13[] = {"",7,210,-329.000000,-479.000000,-321.000000,-471.000000,0.000000,""};
+item14[] = {"Alive",2,250,-75.000000,-400.000000,25.000000,-350.000000,0.000000,"Alive"};
+item15[] = {"No",4,218,75.000000,-400.000000,175.000000,-350.000000,0.000000,"No"};
+item16[] = {"Yes",4,218,-75.000000,-300.000000,25.000000,-250.000000,0.000000,"Yes"};
+item17[] = {"Loop",4,218,-75.000000,-500.000000,25.000000,-450.000000,0.000000,"Loop"};
+link0[] = {0,17};
+link1[] = {2,1};
+link2[] = {3,11};
+link3[] = {4,2};
+link4[] = {4,3};
+link5[] = {4,5};
+link6[] = {5,9};
+link7[] = {6,12};
+link8[] = {7,10};
+link9[] = {8,17};
+link10[] = {9,6};
+link11[] = {9,7};
+link12[] = {10,11};
+link13[] = {11,8};
+link14[] = {12,13};
+link15[] = {13,17};
+link16[] = {14,15};
+link17[] = {14,16};
+link18[] = {15,8};
+link19[] = {16,4};
+link20[] = {17,14};
+globals[] = {25.000000,1,0,0,0,640,480,1,79,6316128,1,-364.308594,319.991333,128.384277,-639.606445,556,649,1};
+window[] = {0,-1,-1,-1,-1,944,175,1524,175,1,574};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "server_town_camp.fsm";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_camp = _this select 0;" \n
+       "_town = _this select 1;" \n
+       "_flag = _this select 2;" \n
+       "" \n
+       "_snap = 0;" \n
+       "_newSID = -1;" \n
+       "_force = 0;" \n
+       "" \n
+       "_camp_cap_rate = missionNamespace getVariable ""WFBE_C_CAMPS_CAPTURE_RATE"";" \n
+       "_camp_range = missionNamespace getVariable ""WFBE_C_CAMPS_RANGE"";" \n
+       "_camp_range_players = missionNamespace getVariable ""WFBE_C_CAMPS_RANGE_PLAYERS"";" \n
+       "_town_starting_sv = _town getVariable ""startingSupplyValue"";" \n
+       "_town_conquest_mode = missionNamespace getVariable 'WFBE_C_TOWNS_CONQUEST_MODE';"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Alive";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Camp_Core">*/
+    class Camp_Core
+    {
+      name = "Camp_Core";
+      init = /*%FSM<STATEINIT""">*/"//--- Filter players and ai." \n
+       "_objects = _camp nearEntities[""Man"", _camp_range];" \n
+       "_in_range = _objects;" \n
+       "{" \n
+       "	if (isPlayer _x) then {if (_x distance _camp > _camp_range_players) then {_objects = _objects - [_x]}};" \n
+       "} forEach _in_range;" \n
+       "" \n
+       "_west = west countSide _objects;" \n
+       "_east = east countSide _objects;" \n
+       "_resistance = resistance countSide _objects;" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Empty">*/
+        class Empty
+        {
+          priority = 0.000000;
+          to="Idle";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_west == 0 && _east == 0 && _resistance == 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Occupied">*/
+        class Occupied
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_west > 0 || _east > 0 || _resistance > 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Idle">*/
+    class Idle
+    {
+      name = "Idle";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Alive";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check">*/
+    class Check
+    {
+      name = "Check";
+      init = /*%FSM<STATEINIT""">*/"_skip = false;" \n
+       "_protected = false;" \n
+       "_captured = false;" \n
+       "_sideID = _camp getVariable ""sideID"";" \n
+       "_supplyValue = _camp getVariable ""supplyValue"";" \n
+       "" \n
+       "//--- Territorial conquest mode (If the side can't cap the town, then that side's force is set to 0)." \n
+       "_town_sideID = _town getVariable ""sideID"";" \n
+       "if (_town_conquest_mode == 1) then {" \n
+       "	{" \n
+       "		if (!(_town getVariable format [""wfbe_town_capturable_%1"", _x]) && ((_x Call WFBE_CO_FNC_GetSideID) != _town_sideID)) then {" \n
+       "			switch (_x) do { case west: {_west = 0}; case east: {_east = 0}; case resistance: {_resistance = 0}; };" \n
+       "		};" \n
+       "	} forEach WFBE_PRESENTSIDES;" \n
+       "};" \n
+       "" \n
+       "_resistanceDominion = if (_resistance > _east && _resistance > _west) then {true} else {false};" \n
+       "_westDominion = if (_west > _east && _west > _resistance) then {true} else {false};" \n
+       "_eastDominion = if (_east > _west && _east > _resistance) then {true} else {false};" \n
+       "" \n
+       "if (_sideID == WFBE_C_GUER_ID && _resistanceDominion) then {_force = _resistance;_protected = true;_skip = true};" \n
+       "if (_sideID == WFBE_C_EAST_ID && _eastDominion) then {_force = _east;_protected = true;_skip = true};" \n
+       "if (_sideID == WFBE_C_WEST_ID && _westDominion) then {_force = _west;_protected = true;_skip = true};" \n
+       "" \n
+       "switch (true) do {" \n
+       "	case _resistanceDominion: {_resistance = if (_east > _west) then {_resistance - _east} else {_resistance - _west};	_force = _resistance; _east = 0; _west = 0};" \n
+       "	case _westDominion: {_west = if (_east > _resistance) then {_west - _east} else {_west - _resistance}; _force = _west; _east = 0; _resistance = 0};" \n
+       "	case _eastDominion: {_east = if (_west > _resistance) then {_east - _west} else {_east - _resistance}; _force = _east; _west = 0; _resistance = 0};" \n
+       "};" \n
+       "" \n
+       "if (!_resistanceDominion && !_westDominion && !_eastDominion) then {_west = 0; _east = 0; _resistance = 0};" \n
+       "" \n
+       "if !(_skip) then {" \n
+       "	_newSID = switch (true) do {case (_west > 0): {WFBE_C_WEST_ID}; case (_east > 0): {WFBE_C_EAST_ID}; case (_resistance > 0): {WFBE_C_GUER_ID}};" \n
+       "	_supplyValue = round(_supplyValue - ((_resistance + _east + _west)*_camp_cap_rate));" \n
+       "	if (_supplyValue < 1) then {_supplyValue = _town_starting_sv; _captured = true};" \n
+       "	_camp setVariable [""supplyValue"",_supplyValue,true];" \n
+       "};" \n
+       "" \n
+       "if (_protected) then {" \n
+       "	if (_supplyValue < _town_starting_sv) then {" \n
+       "		_supplyValue = _supplyValue + round(_force * _camp_cap_rate);" \n
+       "		if (_supplyValue > _town_starting_sv) then {_supplyValue = _town_starting_sv};" \n
+       "		_camp setVariable [""supplyValue"",_supplyValue,true];" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Capture">*/
+        class Capture
+        {
+          priority = 1.000000;
+          to="Captured";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_captured"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Idle";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_captured"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Captured">*/
+    class Captured
+    {
+      name = "Captured";
+      init = /*%FSM<STATEINIT""">*/"_newSide = (_newSID) Call WFBE_CO_FNC_GetSideFromID;" \n
+       "_side = (_sideID) Call WFBE_CO_FNC_GetSideFromID;" \n
+       "" \n
+       "if (_sideID != WFBE_C_UNKNOWN_ID) then {" \n
+       "	if (missionNamespace getVariable Format [""WFBE_%1_PRESENT"",_side]) then {[_side,""LostAt"",[""Strongpoint"",_town]] Spawn SideMessage};" \n
+       "};" \n
+       "" \n
+       "if (missionNamespace getVariable Format [""WFBE_%1_PRESENT"",_newSide]) then {[_newSide,""CapturedNear"",[""Strongpoint"",_town]] Spawn SideMessage};" \n
+       "_camp setVariable [""sideID"",_newSID,true];" \n
+       "_flag setFlagTexture (missionNamespace getVariable Format[""WFBE_%1FLAG"",str _side]);" \n
+       "" \n
+       "[nil, ""CampCaptured"", [_camp,_newSID,_sideID]] Call WFBE_CO_FNC_SendToClients;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Alive";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Alive">*/
+    class Alive
+    {
+      name = "Alive";
+      init = /*%FSM<STATEINIT""">*/"_snap = time + 3 + random(0.2); " \n
+       "" \n
+       "_base = _camp getVariable ""wfbe_camp_bunker"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Yes">*/
+        class Yes
+        {
+          priority = 0.000000;
+          to="Camp_Core";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive _base"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "No">*/
+        class No
+        {
+          priority = 0.000000;
+          to="Idle";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!alive _base"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

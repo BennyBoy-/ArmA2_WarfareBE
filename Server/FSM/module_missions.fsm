@@ -1,0 +1,204 @@
+/*%FSM<COMPILE "E:\Bohemia Interactive\ArmA 2\FSM Editor Personal Edition\scriptedFSM.cfg, missions">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,-75.000000,-325.000000,25.000000,-275.000000,0.000000,"Init"};
+item1[] = {"End",1,250,-75.000000,75.000000,25.000000,125.000000,0.000000,"End"};
+item2[] = {"Check_Missions",2,250,-75.000000,-125.000000,25.000000,-75.000000,0.000000,"Check Missions"};
+item3[] = {"Loop",4,218,-75.000000,-225.000000,25.000000,-175.000000,0.000000,"Loop"};
+item4[] = {"Gameover",4,218,-75.000000,-25.000000,25.000000,25.000000,0.000000,"Gameover"};
+item5[] = {"Assign_a_Mission",2,4346,-225.000000,-225.000000,-125.000000,-175.000000,0.000000,"Assign a" \n "Mission"};
+item6[] = {"Cannot_Create",4,218,75.000000,-125.000000,175.000000,-75.000000,0.000000,"Cannot" \n "Create"};
+item7[] = {"Can_Create",4,218,-225.000000,-125.000000,-125.000000,-75.000000,0.000000,"Can" \n "Create"};
+item8[] = {"Skip",2,250,75.000000,-225.000000,175.000000,-175.000000,0.000000,"Skip"};
+link0[] = {0,3};
+link1[] = {2,4};
+link2[] = {2,6};
+link3[] = {2,7};
+link4[] = {3,2};
+link5[] = {4,1};
+link6[] = {5,3};
+link7[] = {6,8};
+link8[] = {7,5};
+link9[] = {8,3};
+globals[] = {25.000000,1,0,0,0,640,480,1,19,6316128,1,-341.992493,398.498718,171.784286,-353.840118,834,592,1};
+window[] = {0,-1,-1,-1,-1,862,125,1538,125,1,852};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "missions";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_maxmissionswest = missionNamespace getVariable 'WFBE_MISSIONSMAXIMUM_WEST';" \n
+       "_maxmissionseast = missionNamespace getVariable 'WFBE_MISSIONSMAXIMUM_EAST';" \n
+       "_randomizer = missionNamespace getVariable 'WFBE_MISSIONSRANDOMIZER';" \n
+       "_timeout = missionNamespace getVariable 'WFBE_MISSIONSTIMEOUT';" \n
+       "_canReuseAfter = missionNamespace getVariable 'WFBE_MISSIONSREUSABILITY';" \n
+       "_totalMissions = count(missionNamespace getVariable 'WFBE_M_CONTENT');" \n
+       "" \n
+       "_lastUpdate = 0;" \n
+       "_lastMissionAssignedTime = -6000;" \n
+       "_lastMissionsIndex = [];" \n
+       "{missionNamespace setVariable [Format['_WFBE_M_RUNNINGMISSIONS_%1', _x], 0]} forEach WFBE_PRESENTSIDES;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Missions";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 30"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Missions">*/
+    class Check_Missions
+    {
+      name = "Check_Missions";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdate = time;" \n
+       "" \n
+       "_canAssign = Call WFBE_SE_MOD_Missions_CanAssign;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Cannot_Create">*/
+        class Cannot_Create
+        {
+          priority = 0.000000;
+          to="Skip";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_canAssign || !gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Can_Create">*/
+        class Can_Create
+        {
+          priority = 0.000000;
+          to="Assign_a_Mission";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastMissionAssignedTime >= _timeout && _canAssign"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Assign_a_Mission">*/
+    class Assign_a_Mission
+    {
+      name = "Assign_a_Mission";
+      init = /*%FSM<STATEINIT""">*/"//--- Retrieve an updated version of the missions array." \n
+       "_missions = missionNamespace getVariable 'WFBE_M_CONTENT';" \n
+       "_missionAssigned = false;" \n
+       "" \n
+       "//--- Retrieve a 'free' mission." \n
+       "_i = -1;" \n
+       "while {_i < 0} do {" \n
+       "	_r = floor(random _totalMissions);" \n
+       "	if !(_r in _lastMissionsIndex) then {_i = _r};" \n
+       "};" \n
+       "" \n
+       "//--- Retrieve the current mission content." \n
+       "_mission = (_missions select _i);" \n
+       "" \n
+       "//--- Can the mission run?" \n
+       "_get = (_mission) Call WFBE_SE_MOD_Missions_CanRun;" \n
+       "_go = _get select 0;" \n
+       "_sides = _get select 1;" \n
+       "" \n
+       "//--- Go?" \n
+       "if (_go) then {" \n
+       "	[_mission select 2,_mission select 3,_sides] ExecVM (_mission select 1);" \n
+       "" \n
+       "	//--- Randomize the next mission delay." \n
+       "	_lastMissionAssignedTime = (time)+random(_randomizer)-random(_randomizer);" \n
+       "" \n
+       "	//--- Increment Mission index (it will apply to the getter, no need to set again)." \n
+       "	_mission set [3,(_mission select 3) + 1];" \n
+       "" \n
+       "	//--- Push (i.e limit 4, [1,2,3,4] add 5 >> [5,1,2,3])." \n
+       "	for [{_z = (count _lastMissionsIndex)},{_z > 0},{_z = _z - 1}] do {" \n
+       "		_lastMissionsIndex set [_z, (_lastMissionsIndex select (_z - 1))];" \n
+       "	};" \n
+       "	" \n
+       "	//--- Resize if we're above the limit." \n
+       "	_lastMissionsIndex set [0, _i];" \n
+       "	if (count _lastMissionsIndex >= _canReuseAfter) then {" \n
+       "		_lastMissionsIndex resize (_canReuseAfter - 1);" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Missions";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 30"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip">*/
+    class Skip
+    {
+      name = "Skip";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Missions";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 30"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

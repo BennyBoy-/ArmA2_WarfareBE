@@ -1,0 +1,325 @@
+/*%FSM<COMPILE "D:\tools\BIS\FSM Editor Personal Edition\scriptedFSM.cfg, workers">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,4346,-81.542984,-257.577942,8.457038,-207.578140,0.000000,"Init"};
+item1[] = {"End",1,250,-341.327942,-139.587799,-251.327972,-89.587807,0.000000,"End"};
+item2[] = {"Update_Worker",2,250,-82.090652,-139.314026,7.909359,-89.314034,0.000000,"Update Worker"};
+item3[] = {"Loop",4,218,53.846153,-139.681244,143.846161,-89.681236,0.000000,"Loop"};
+item4[] = {"Gameover",4,218,-216.387955,-139.464890,-126.387947,-89.464890,0.000000,"Gameover"};
+item5[] = {"_",8,218,-51.736092,-184.192123,-21.083296,-163.272247,0.000000,""};
+item6[] = {"No_Job",4,218,-18.119097,-70.317200,71.880913,-20.317196,0.000000,"No Job"};
+item7[] = {"Job",4,218,-129.429321,-69.559975,-39.429314,-19.559986,0.000000,"Job"};
+item8[] = {"Update_Job",2,250,-129.807770,17.519415,-39.807682,67.519424,0.000000,"Update Job"};
+item9[] = {"Idle_or_Assign",2,250,-17.740370,16.005005,72.259621,66.005020,0.000000,"Idle or Assign"};
+item10[] = {"",7,210,23.149067,111.413750,31.149073,119.413750,0.000000,""};
+item11[] = {"",7,210,94.437599,110.454597,102.437599,118.454597,0.000000,""};
+item12[] = {"Build",4,218,-259.291138,17.519421,-169.291153,67.519417,0.000000,"Build"};
+item13[] = {"Maintenance",4,218,-259.231995,82.296516,-169.232025,132.296509,0.000000,"Maintenance"};
+item14[] = {"Update_Build",2,250,-375.901794,18.161104,-285.901794,68.161102,0.000000,"Update Build"};
+item15[] = {"Update_Maintenan",2,250,-375.085449,82.180977,-285.085449,132.181000,0.000000,"Update" \n "Maintenance"};
+item16[] = {"",7,210,-405.433075,39.363052,-397.433075,47.363045,0.000000,""};
+item17[] = {"",7,210,-404.876038,105.391983,-396.876038,113.391983,0.000000,""};
+item18[] = {"",7,210,-406.079773,223.920914,-398.079773,231.920914,0.000000,""};
+item19[] = {"",7,210,23.259628,223.163696,31.259632,231.163696,0.000000,""};
+link0[] = {0,5};
+link1[] = {2,4};
+link2[] = {2,6};
+link3[] = {2,7};
+link4[] = {3,2};
+link5[] = {4,1};
+link6[] = {5,2};
+link7[] = {6,9};
+link8[] = {7,8};
+link9[] = {8,12};
+link10[] = {8,13};
+link11[] = {9,10};
+link12[] = {10,11};
+link13[] = {11,3};
+link14[] = {12,14};
+link15[] = {13,15};
+link16[] = {14,16};
+link17[] = {15,17};
+link18[] = {16,17};
+link19[] = {17,18};
+link20[] = {18,19};
+link21[] = {19,10};
+globals[] = {0.000000,0,0,0,0,640,480,1,28,6316128,1,-486.594543,265.272156,220.416641,-283.276123,784,592,1};
+window[] = {0,-1,-1,-1,-1,937,200,1613,200,1,802};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "workers";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_worker = _this select 0;" \n
+       "_side = _this select 1;" \n
+       "_index = _this select 2;" \n
+       "" \n
+       "_logik = (_side) Call WFBE_CO_FNC_GetSideLogic;" \n
+       "" \n
+       "_assignedConstruction = objNull;" \n
+       "_action = """";" \n
+       "_pos = getPos _worker;" \n
+       "_idleFor = 0;" \n
+       "_lastMoveOrdered = -40;" \n
+       "" \n
+       "_speed = missionNamespace getVariable ""WFBE_C_STRUCTURES_WORKERS_RATIO"";" \n
+       "_distance = missionNamespace getVariable ""WFBE_C_STRUCTURES_WORKERS_DISTANCE"";" \n
+       "_maxDistance = missionNamespace getVariable ""WFBE_C_STRUCTURES_WORKERS_RADIUS"";" \n
+       "_repairs = missionNamespace getVariable ""WFBE_C_STRUCTURES_WORKERS_REPAIR"";" \n
+       "" \n
+       "_animations = [""AinvPknlMstpSlayWrflDnon_AmovPknlMstpSnonWnonDnon"", ""AinvPknlMstpSlayWrflDnon_AmovPknlMstpSnonWnonDnon"", ""AinvPknlMstpSlayWrflDnon_AmovPercMstpSrasWrflDnon"", ""AinvPknlMstpSlayWrflDnon_medic""];" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Update_Worker";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/"_workers = _logik getVariable ""wfbe_workers"";" \n
+       "_workers set [_index, objNull];" \n
+       "_logik setVariable [""wfbe_workers"", _workers, true];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Worker">*/
+    class Update_Worker
+    {
+      name = "Update_Worker";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdate = time;" \n
+       "" \n
+       "_temp = _logik getVariable ""wfbe_structures_logic"";" \n
+       "" \n
+       "//--- Range calculation." \n
+       "_buildList = [];" \n
+       "{if (_x distance _worker < _maxDistance) then {_buildList = _buildList + [_x]}} forEach _temp;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "No_Job">*/
+        class No_Job
+        {
+          priority = 0.000000;
+          to="Idle_or_Assign";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive _worker && isNull _assignedConstruction|| count _buildList == 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Job">*/
+        class Job
+        {
+          priority = 0.000000;
+          to="Update_Job";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive _worker && !isNull _assignedConstruction && count _buildList > 0 || _action == ""Maintenance"""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || !alive _worker"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Job">*/
+    class Update_Job
+    {
+      name = "Update_Job";
+      init = /*%FSM<STATEINIT""">*/"if (_pos distance (getPos _worker) < 5 && _worker distance _assignedConstruction > _distance) then {" \n
+       "	_idleFor = _idleFor + 5;" \n
+       "} else {" \n
+       "	_idleFor = 0;" \n
+       "};" \n
+       "" \n
+       "if (_idleFor > 30) then {" \n
+       "	_idleFor = 0;" \n
+       "	[_worker, getPos _worker, 40] Call PlaceSafe;" \n
+       "};" \n
+       "" \n
+       "if (behaviour _worker != ""CARELESS"") then {_worker setBehaviour ""CARELESS""};" \n
+       "" \n
+       "_pos = getPos _worker;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Maintenance">*/
+        class Maintenance
+        {
+          priority = 0.000000;
+          to="Update_Maintenan";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_action == ""Maintenance"""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Build">*/
+        class Build
+        {
+          priority = 0.000000;
+          to="Update_Build";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_action == ""Build"" || _action == ""Repair"""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Idle_or_Assign">*/
+    class Idle_or_Assign
+    {
+      name = "Idle_or_Assign";
+      init = /*%FSM<STATEINIT""">*/"if (count _buildList > 0) then {" \n
+       "	_temp = [_worker, _buildList] Call SortByDistance;" \n
+       "	{" \n
+       "		if !(isNull _assignedConstruction) exitWith {};		" \n
+       "" \n
+       "		_get = _x getVariable ""WFBE_B_Completion"";" \n
+       "		" \n
+       "		if !(isNil '_get') then {" \n
+       "			if (_get <= 100) then {" \n
+       "				_action = if (_x getVariable ""WFBE_B_Repair"") then {""Repair""} else {""Build""};" \n
+       "				_assignedConstruction = _x;" \n
+       "			};" \n
+       "		};" \n
+       "	} forEach _temp;" \n
+       "};" \n
+       "" \n
+       "//--- Maintenance?" \n
+       "if (count _buildList == 0) then {" \n
+       "	_structures = (_side) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "" \n
+       "	_structures = [_worker, _structures] Call SortByDistance;" \n
+       "" \n
+       "	{" \n
+       "		if (getDammage _x > 0 && alive _x) exitWith {_assignedConstruction = _x;_action = ""Maintenance"";}" \n
+       "	} forEach _structures;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Worker";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 4"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Build">*/
+    class Update_Build
+    {
+      name = "Update_Build";
+      init = /*%FSM<STATEINIT""">*/"if (_assignedConstruction in _buildList) then {" \n
+       "	_completion = _assignedConstruction getVariable ""WFBE_B_Completion"";" \n
+       "	_ratio = _assignedConstruction getVariable ""WFBE_B_CompletionRatio"";" \n
+       "" \n
+       "	if (_completion < 100) then {" \n
+       "		if (_worker distance _assignedConstruction > _distance) then {" \n
+       "			if (time - _lastMoveOrdered > 40) then {_worker commandMove (getPos _assignedConstruction);_lastMoveOrdered = time};" \n
+       "		} else {" \n
+       "			_worker playMove (_animations select round(random((count _animations)-1)));" \n
+       "			_ratio = (_speed * _ratio) + _completion;" \n
+       "			if (_ratio > 100) then {_ratio = 100};" \n
+       "			_assignedConstruction setVariable [""WFBE_B_Completion"", _ratio];" \n
+       "		};" \n
+       "	} else {" \n
+       "		_action = """";" \n
+       "		_assignedConstruction = objNull;" \n
+       "	};" \n
+       "} else {" \n
+       "	_action = """";" \n
+       "	_assignedConstruction = objNull;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Worker";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 4"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Maintenan">*/
+    class Update_Maintenan
+    {
+      name = "Update_Maintenan";
+      init = /*%FSM<STATEINIT""">*/"if (alive _assignedConstruction && getDammage _assignedConstruction > 0) then {" \n
+       "		if (_worker distance _assignedConstruction > _distance) then {" \n
+       "			if (time - _lastMoveOrdered > 30) then {_worker commandMove (getPos _assignedConstruction);_lastMoveOrdered = time};" \n
+       "		} else {" \n
+       "			_worker playMove (_animations select round(random((count _animations)-1)));" \n
+       "			_damages = (getDammage _assignedConstruction) - _repairs;" \n
+       "			if (_damages < 0) then {_damages = 0};" \n
+       "			_assignedConstruction setDammage _damages;" \n
+       "		};" \n
+       "} else {" \n
+       "	_action = """";" \n
+       "	_assignedConstruction = objNull;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Update_Worker";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && time - _lastUpdate > 4"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

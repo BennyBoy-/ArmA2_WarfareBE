@@ -1,0 +1,186 @@
+/*%FSM<COMPILE "D:\tools\BIS\FSM Editor Personal Edition\scriptedFSM.cfg, server_victory_threeway.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,0.000000,-175.000000,100.000000,-125.000000,0.000000,"Init"};
+item1[] = {"_",-1,250,-11.537962,23.713089,-8.193480,23.713089,0.000000,""};
+item2[] = {"_",8,218,0.000000,-75.000000,100.000000,-25.000000,0.000000,""};
+item3[] = {"Root",2,250,150.000000,-75.000000,250.000000,-25.000000,0.000000,"Root"};
+item4[] = {"End",1,250,150.000000,325.000000,250.000000,375.000000,0.000000,"End"};
+item5[] = {"Loop_0",4,218,150.000000,25.000000,250.000000,75.000000,0.000000,"Loop 0"};
+item6[] = {"A_vs_B_Defender",2,4346,150.000000,125.000000,250.000000,175.000000,0.000000,"A vs B" \n "Defender C" \n "ignored"};
+item7[] = {"Gameover",4,218,150.000000,225.000000,250.000000,275.000000,0.000000,"Gameover"};
+item8[] = {"__1",2,250,0.000000,225.000000,100.000000,275.000000,0.000000,""};
+item9[] = {"Idle",4,218,0.000000,325.000000,100.000000,375.000000,0.000000,"Idle"};
+version=1;
+class LayoutItems
+{
+	class Item1
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=10;
+			lStyle=1;
+		};
+	};
+};
+link0[] = {0,2};
+link1[] = {2,3};
+link2[] = {3,5};
+link3[] = {5,6};
+link4[] = {6,5};
+link5[] = {6,7};
+link6[] = {7,8};
+link7[] = {8,9};
+link8[] = {9,4};
+globals[] = {25.000000,1,0,0,0,640,480,1,56,6316128,1,-212.385651,557.442688,512.809265,-214.553268,707,663,1};
+window[] = {0,-1,-1,-1,-1,858,50,1390,50,1,725};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "server_victory_threeway.fsm";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdate = time;" \n
+       "_winTime = time;" \n
+       "" \n
+       "_victory = missionNamespace getVariable ""WFBE_C_VICTORY_THREEWAY"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Root";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Root">*/
+    class Root
+    {
+      name = "Root";
+      init = /*%FSM<STATEINIT""">*/"_total = totalTowns;" \n
+       "" \n
+       "if (_victory in [0]) then {" \n
+       "	(WFBE_DEFENDER) ExecFSM ""Server\FSM\server_victory_defender_helper.fsm"";" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop_0">*/
+        class Loop_0
+        {
+          priority = 0.000000;
+          to="A_vs_B_Defender";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 25 && !gameOver && _victory == 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/"diag_log Format[""[WFBE (OUTRO)][frameno:%1 | ticktime:%2] server_victory_threeway.fsm: Mission end - [Done]"",diag_frameno,diag_tickTime];" \n
+       "failMission ""END1"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "A_vs_B_Defender">*/
+    class A_vs_B_Defender
+    {
+      name = "A_vs_B_Defender";
+      init = /*%FSM<STATEINIT""">*/"//--- Control the 2 invasion side." \n
+       "//todo apply the WF3 building grabbin" \n
+       "{" \n
+       "	_side = _x;" \n
+       "	_hq = (_x) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "	_structures = (_x) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "	_towns = (_x) Call GetTownsHeld;" \n
+       "	" \n
+       "	_factories = 0;" \n
+       "	{" \n
+       "		_factories = _factories + count([_side,missionNamespace getVariable Format [""WFBE_%1%2TYPE"",_side,_x], _structures] Call GetFactories);" \n
+       "	} forEach [""BARRACKS"",""LIGHT"",""HEAVY"",""AIRCRAFT""];" \n
+       "" \n
+       "	if (!(alive _hq)  && _factories == 0 || _towns == _total && !WFBE_GameOver) then {" \n
+       "		[nil, ""HandleSpecial"", [""endgame"", (_x) Call WFBE_CO_FNC_GetSideID]] Call WFBE_CO_FNC_SendToClients;" \n
+       "		WF_Logic setVariable [""WF_Winner"", _x];" \n
+       "		gameOver = true;" \n
+       "		WFBE_GameOver = true;" \n
+       "		_winTime = time;" \n
+       "	};" \n
+       "} forEach WFBE_PRESENTSIDES - [WFBE_DEFENDER];" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="__1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop_0">*/
+        class Loop_0
+        {
+          priority = 0.000000;
+          to="A_vs_B_Defender";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 25 && !gameOver && _victory == 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "__1">*/
+    class __1
+    {
+      name = "__1";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Idle">*/
+        class Idle
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _winTime > 20"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

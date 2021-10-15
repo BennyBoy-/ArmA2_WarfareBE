@@ -1,0 +1,52 @@
+/*
+	WARFARE Benny Edition
+	  Note: This mission was made from scratch.
+	  Status: Work in Progress.
+	  Contact: benny_boy66@hotmail.fr
+	  
+	  Description:
+		Warfare is a gamemode which focus on the PvPvAI (Player versus Player versus AI), 
+		each team has a commander which have to build a base and perform upgrades. 
+		
+		The others players have to conquer towns in order to gain more supply, this supply is used 
+		to build a base and perform upgrades, a town generate a variable income each x min (Supply
+		and Funds), the funds are used to purchase different assets (Infantry, Vehicles, Support...)
+		
+		Each team has a MHQ, This last one is used to build the base, once that the MHQ is lost,
+		The commander won't be able to build a base until that the MHQ get fixed with a repair
+		truck.
+		
+		The towns are defended by resistance, once that all resistance is neutralized, the town
+		will belong to the team who took it, depending on the Supply Value of the town, a defense
+		team will spawn in that town to prevent enemy from taking it.
+		
+		The game will end as soon as all towns are captured by a side or once that all of a side's base
+		is destroyed.
+		
+	  Credits:
+		Benny - Mission Maker
+		MrNiceGuy - UI Design - Beer provider
+*/
+
+//--- Define which 'part' of the game to run.
+#include "version.sqf"
+
+//--- Header contains the mission tite.
+#include "Rsc\Header.hpp"
+
+//--- Styles
+#include "Rsc\Styles.hpp"
+
+//--- Parameters contains the mission parameters.
+#include "Rsc\Parameters.hpp"
+//--- Ressource contains the dialog ressources.
+#include "Rsc\Ressources.hpp"
+//--- Dialogs contain all the interfaces (dialogs).
+#include "Rsc\Dialogs.hpp"
+//--- Titles contains the titles (overlay).
+#include "Rsc\Titles.hpp"
+
+//--- Include Identities (OA/CO Only).
+#ifndef VANILLA
+	#include "Rsc\Identities.hpp"
+#endif

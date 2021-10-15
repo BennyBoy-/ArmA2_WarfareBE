@@ -1,0 +1,1982 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, aicommander">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,29.117783,-243.242416,119.117828,-193.242630,0.000000,"Init"};
+item1[] = {"End",1,250,-216.387955,-52.508366,-126.387947,-2.508394,0.000000,"End"};
+item2[] = {"Commander_Check",2,250,-82.090652,-139.314026,7.909359,-89.314034,0.000000,"Commander" \n "Check"};
+item3[] = {"AI",4,218,43.444695,-138.881104,133.444702,-88.881126,0.000000,"AI"};
+item4[] = {"Gameover",4,218,-216.387955,-139.464890,-126.387947,-89.464890,0.000000,"Gameover"};
+item5[] = {"_",8,218,-51.736092,-228.307785,-21.083296,-207.387909,0.000000,""};
+item6[] = {"Check_HQ",2,250,167.429672,-138.824554,257.429688,-88.824554,0.000000,"Check HQ"};
+item7[] = {"Alive",4,218,167.029816,-63.614120,257.029968,-13.613998,0.000000,"Alive"};
+item8[] = {"Dead",4,218,167.829926,-230.037415,257.830078,-180.037399,0.000000,"Dead"};
+item9[] = {"Check_HQ_Status",2,250,298.248291,-63.614052,388.248230,-13.614052,0.000000,"Check HQ" \n "Status"};
+item10[] = {"Mobilized",4,218,433.250854,-64.045685,523.250732,-14.045616,0.000000,"Mobilized"};
+item11[] = {"Deployed",4,218,298.503387,29.438709,388.503357,79.438721,0.000000,"Deployed"};
+item12[] = {"Check_Repair",2,250,296.539734,-230.131653,386.539734,-180.131622,0.000000,"Check" \n "Repair"};
+item13[] = {"Repair_Moving",4,218,429.166107,-228.948074,519.166382,-178.948105,0.000000,"Repair" \n "Moving"};
+item14[] = {"Repair_Null",4,218,429.329987,-153.716705,519.330261,-103.716690,0.000000,"Repair" \n "Null"};
+item15[] = {"Check_Status",2,250,563.136597,-243.488693,653.136597,-193.488678,0.000000,"Check" \n "Status"};
+item16[] = {"Check_Light",2,250,562.396851,-183.315887,652.396851,-133.315872,0.000000,"Check" \n "Light"};
+item17[] = {"Alive",4,218,715.106934,-184.222443,805.106934,-134.222443,0.000000,"Alive"};
+item18[] = {"Dead",4,218,715.106995,-243.430771,805.106995,-193.430771,0.000000,"Dead"};
+item19[] = {"Create_Repair",2,4346,858.268066,-185.584671,948.268066,-135.584671,0.000000,"Create" \n "Repair"};
+item20[] = {"Skip",2,250,859.370850,-245.140686,949.370911,-195.140793,0.000000,"Skip"};
+item21[] = {"",7,210,1028.113892,-194.407562,1036.114014,-186.407562,0.000000,""};
+item22[] = {"",7,210,1027.204102,-330.018250,1035.203979,-322.018250,0.000000,""};
+item23[] = {"",7,210,-41.498245,-331.121155,-33.498249,-323.121155,0.000000,""};
+item24[] = {"Check_Status_1",2,250,567.105652,-64.265991,657.105652,-14.265972,0.000000,"Check" \n "Status"};
+item25[] = {"Moving",4,218,709.035706,-103.210243,799.035706,-53.210236,0.000000,"Moving"};
+item26[] = {"Empty",4,218,703.864319,-36.693626,793.864319,13.306374,0.000000,"Empty"};
+item27[] = {"Spawn___Lead",2,250,853.857727,-35.590744,943.857727,14.409276,0.000000,"Spawn & Lead"};
+item28[] = {"Check_Position",2,250,852.754883,-103.970093,942.754883,-53.970085,0.000000,"Check" \n "Position"};
+item29[] = {"",7,210,1028.114868,-51.031216,1036.114990,-43.031216,0.000000,""};
+item30[] = {"Check_Move",2,250,439.100250,29.323673,529.100098,79.323669,0.000000,"Check" \n "Move"};
+item31[] = {"Move",4,218,579.575684,29.323677,669.576050,79.323685,0.000000,"Move"};
+item32[] = {"Proceed",4,218,436.745636,114.689537,526.745728,164.689575,0.000000,"Proceed"};
+item33[] = {"Move",2,250,712.286255,29.029057,802.286255,79.029053,0.000000,"Move"};
+item34[] = {"",7,210,1028.016968,50.640667,1036.016846,58.640675,0.000000,""};
+item35[] = {"Check_Base",2,250,292.344421,114.037247,382.344421,164.037247,0.000000,"Check" \n "Base"};
+item36[] = {"Update",4,218,138.614502,145.674393,228.614502,195.674393,0.000000,"Update"};
+item37[] = {"Skip",4,218,138.614502,78.700897,228.614502,128.700897,0.000000,"Skip"};
+item38[] = {"Skip_1",2,250,-24.498369,79.781113,65.501648,129.781113,0.000000,"Skip"};
+item39[] = {"Update_Base",2,250,-24.498356,146.754593,65.501656,196.754593,0.000000,"Update" \n "Base"};
+item40[] = {"_",8,218,-113.658813,123.267853,-83.006012,144.187729,0.000000,""};
+item41[] = {"Check_Defenses",2,250,-263.351929,109.838028,-173.352142,159.838013,0.000000,"Check Defenses"};
+item42[] = {"Update",4,218,-400.730560,148.182983,-310.730560,198.182983,0.000000,"Update"};
+item43[] = {"Skip",4,218,-400.730560,81.209473,-310.730560,131.209488,0.000000,"Skip"};
+item44[] = {"Skip_2",2,250,-563.843628,82.289688,-473.843506,132.289688,0.000000,"Skip"};
+item45[] = {"Update_Defenses",2,250,-563.843628,149.263184,-473.843384,199.263184,0.000000,"Update" \n "Defenses"};
+item46[] = {"_",8,218,-653.004028,125.776443,-622.351196,146.696320,0.000000,""};
+item47[] = {"Check_Upgrades",2,250,-683.420288,273.342194,-593.420410,323.342194,0.000000,"Check Upgrades"};
+item48[] = {"Update",4,218,-508.776093,300.503662,-418.775909,350.503662,0.000000,"Update"};
+item49[] = {"Skip",4,218,-508.776093,233.530121,-418.775909,283.530151,0.000000,"Skip"};
+item50[] = {"Skip_3",2,250,-329.947998,234.610321,-239.947815,284.610352,0.000000,"Skip"};
+item51[] = {"Update_Upgrades",2,250,-329.947998,301.583862,-239.947693,351.583862,0.000000,"Update" \n "Upgrades"};
+item52[] = {"_",8,218,-167.467773,275.580872,-136.814941,296.500732,0.000000,""};
+item53[] = {"Check_Types",2,250,-197.088531,386.316132,-107.088661,436.316132,0.000000,"Check Types"};
+item54[] = {"Update",4,218,-22.444336,413.477600,67.555847,463.477600,0.000000,"Update"};
+item55[] = {"Skip",4,218,-22.444336,346.504059,67.555847,396.504089,0.000000,"Skip"};
+item56[] = {"Skip_4",2,250,156.383759,347.584259,246.383911,397.584290,0.000000,"Skip"};
+item57[] = {"Update_Types",2,250,156.383759,414.557800,246.384033,464.557800,0.000000,"Update" \n "Types"};
+item58[] = {"_",8,218,318.863953,388.554810,349.516785,409.474670,0.000000,""};
+item59[] = {"Check_Move_1",2,250,-135.812561,688.819275,-45.812672,738.819336,0.000000,"Check Move"};
+item60[] = {"Check_Workers",2,250,289.874207,510.880676,379.874207,560.880615,0.000000,"Check" \n "Workers"};
+item61[] = {"Workers",4,218,145.521439,513.043701,235.521378,563.043640,0.000000,"Workers"};
+item62[] = {"Time",4,218,140.350052,579.560242,230.349976,629.560242,0.000000,"Time"};
+item63[] = {"Nothing",2,250,-6.216207,579.195068,83.783813,629.194946,0.000000,"Nothing"};
+item64[] = {"Update_Workers",2,250,-7.319051,510.815735,82.681030,560.815674,0.000000,"Update" \n "Workers"};
+item65[] = {"Update",4,218,28.554688,721.853210,118.554871,771.853149,0.000000,"Update"};
+item66[] = {"Skip",4,218,28.554688,654.879639,118.554871,704.879700,0.000000,"Skip"};
+item67[] = {"Skip_5",2,250,207.382751,655.959839,297.382874,705.959900,0.000000,"Skip"};
+item68[] = {"Update_Move",2,250,206.000549,721.551208,296.000916,771.551147,0.000000,"Update" \n "Move"};
+item69[] = {"",7,210,1026.111328,696.930481,1034.111206,704.930481,0.000000,""};
+item70[] = {"_",8,218,-105.421837,566.197021,-74.769012,587.116821,0.000000,""};
+item71[] = {"Being_Fixed",4,218,429.542877,-297.545441,519.542847,-247.545441,0.000000,"Being Fixed"};
+item72[] = {"Skip_6",2,250,562.756470,-305.701782,652.756470,-255.701782,0.000000,"Skip"};
+item73[] = {"",7,210,760.996826,-287.467224,768.996826,-279.467224,0.000000,""};
+item74[] = {"",7,210,364.846039,698.257568,372.846039,706.257568,0.000000,""};
+link0[] = {0,5};
+link1[] = {2,3};
+link2[] = {2,4};
+link3[] = {3,6};
+link4[] = {4,1};
+link5[] = {5,2};
+link6[] = {6,7};
+link7[] = {6,8};
+link8[] = {7,9};
+link9[] = {8,12};
+link10[] = {9,10};
+link11[] = {9,11};
+link12[] = {10,24};
+link13[] = {11,30};
+link14[] = {12,13};
+link15[] = {12,14};
+link16[] = {12,71};
+link17[] = {13,15};
+link18[] = {14,16};
+link19[] = {15,73};
+link20[] = {16,17};
+link21[] = {16,18};
+link22[] = {17,19};
+link23[] = {18,20};
+link24[] = {19,21};
+link25[] = {20,21};
+link26[] = {21,22};
+link27[] = {22,23};
+link28[] = {23,5};
+link29[] = {24,25};
+link30[] = {24,26};
+link31[] = {25,28};
+link32[] = {26,27};
+link33[] = {27,29};
+link34[] = {28,29};
+link35[] = {29,21};
+link36[] = {30,31};
+link37[] = {30,32};
+link38[] = {31,33};
+link39[] = {32,35};
+link40[] = {33,34};
+link41[] = {34,29};
+link42[] = {35,36};
+link43[] = {35,37};
+link44[] = {36,39};
+link45[] = {37,38};
+link46[] = {38,40};
+link47[] = {39,40};
+link48[] = {40,41};
+link49[] = {41,42};
+link50[] = {41,43};
+link51[] = {42,45};
+link52[] = {43,44};
+link53[] = {44,46};
+link54[] = {45,46};
+link55[] = {46,47};
+link56[] = {47,48};
+link57[] = {47,49};
+link58[] = {48,51};
+link59[] = {49,50};
+link60[] = {50,52};
+link61[] = {51,52};
+link62[] = {52,53};
+link63[] = {53,54};
+link64[] = {53,55};
+link65[] = {54,57};
+link66[] = {55,56};
+link67[] = {56,58};
+link68[] = {57,58};
+link69[] = {58,60};
+link70[] = {59,65};
+link71[] = {59,66};
+link72[] = {60,61};
+link73[] = {60,62};
+link74[] = {61,64};
+link75[] = {62,63};
+link76[] = {63,70};
+link77[] = {64,70};
+link78[] = {65,68};
+link79[] = {66,67};
+link80[] = {67,74};
+link81[] = {68,74};
+link82[] = {69,34};
+link83[] = {70,59};
+link84[] = {71,72};
+link85[] = {72,73};
+link86[] = {73,22};
+link87[] = {74,69};
+globals[] = {0.000000,0,0,0,0,640,480,1,103,6316128,1,174.028687,1082.074341,504.120697,-274.780731,900,772,1};
+window[] = {0,-1,-1,-1,-1,917,25,1477,25,1,918};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "aicommander";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_side = _this select 0;" \n
+       "_sideText = Str _side;" \n
+       "_sideID = (_side) Call GetSideID;" \n
+       "_hq = (_side) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "_logik = (_side) Call WFBE_CO_FNC_GetSideLogic;" \n
+       "_maxplayers = _logik getVariable ""wfbe_teams_count"";" \n
+       "" \n
+       "_lastHQMoveOrder = 0;" \n
+       "_lastHQMovePos = getPos _hq;" \n
+       "" \n
+       "_lastRepairMoveOrder = 0;" \n
+       "_lastRepairMosPos = [0,0,0];" \n
+       "" \n
+       "_lastUpdate = -500;" \n
+       "_lastUpdateBase = -500;" \n
+       "_lastUpdateDefenses = -500;" \n
+       "_lastUpdateMove = -500;" \n
+       "_lastUpdateTypes = -500;" \n
+       "_lastUpdateUpgrades = -500;" \n
+       "_lastUpdateWorkers = -500;" \n
+       "" \n
+       "//--- Init the base types." \n
+       "_types = missionNamespace getVariable Format[""WFBE_%1STRUCTURES"",_sideText];" \n
+       "_names = missionNamespace getVariable Format[""WFBE_%1STRUCTURENAMES"",_sideText];" \n
+       "_costs = missionNamespace getVariable Format[""WFBE_%1STRUCTURECOSTS"",_sideText];" \n
+       "_scripts = missionNamespace getVariable Format[""WFBE_%1STRUCTURESCRIPTS"",_sideText];" \n
+       "" \n
+       "_eastStructuresNames = missionNamespace getVariable ""WFBE_EASTSTRUCTURENAMES"";" \n
+       "_westStructuresNames = missionNamespace getVariable ""WFBE_WESTSTRUCTURENAMES"";" \n
+       "" \n
+       "_hqCanMove = false;" \n
+       "_hqDeployAt = [_hq, startingLocations] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "_hqDeployRange = missionNamespace getVariable ""WFBE_C_STRUCTURES_HQ_RANGE_DEPLOYED"";" \n
+       "_hqType = missionNamespace getVariable Format[""WFBE_%1HEADQUARTERSTYPE"",_sideText];" \n
+       "" \n
+       "_baseAiInterval = missionNamespace getVariable ""WFBE_C_AI_COMMANDER_MOVE_INTERVALS"";" \n
+       "_baseAiIntervalLast = time;" \n
+       "_baseAlive = [];" \n
+       "_baseDefenses = [];" \n
+       "_baseDefensesTemplate = [[missionNamespace getVariable Format[""WFBE_%1DEFENSES_MG"",_sideText],[150,150],0,""MG""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_MG"",_sideText],[-150,150],0,""MG""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_MG"",_sideText],[-150,-150],180,""MG""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_MG"",_sideText],[150,-150],180,""MG""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_AAPOD"",_sideText],[0,135],0,""AAPOD""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_AAPOD"",_sideText],[110,-145],90,""AAPOD""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_AAPOD"",_sideText],[-110,-145],270,""AAPOD""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_MASH"",_sideText],[0,-80],180,""MASH""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_ATPOD"",_sideText],[0,-130],0,""""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_ATPOD"",_sideText],[-100,130],315,""""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_ATPOD"",_sideText],[100,130],45,""""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_CANNON"",_sideText],[120,120],0,""""],[missionNamespace getVariable Format[""WFBE_%1DEFENSES_CANNON"",_sideText],[-120,-120],180,""""]];" \n
+       "_baseDirections = missionNamespace getVariable Format[""WFBE_%1STRUCTUREDIRECTIONS"",_sideText];" \n
+       "_baseDistances = missionNamespace getVariable Format[""WFBE_%1STRUCTUREDISTANCES"",_sideText];" \n
+       "_baseInProgress = [];" \n
+       "_baseOrder = [""Barracks"",""Light"",""CommandCenter"",""Heavy"",""Aircraft"",""ServicePoint""];" \n
+       "_baseStructureRelPos = [[50,50],[-50,50],[50,0],[50,-50],[-50,-50],[-50,0]];" \n
+       "_baseTimerCheck = [];" \n
+       "_baseWalls = [];" \n
+       "" \n
+       "_currentContent = 0;" \n
+       "_crew = missionNamespace getVariable Format [""WFBE_%1SOLDIER"",_sideText];" \n
+       "_driver = objNull;" \n
+       "_overallDefenses = [];" \n
+       "_repairPrice = missionNamespace getVariable 'WFBE_C_BASE_HQ_REPAIR_PRICE';" \n
+       "_repairTruck = objNull;" \n
+       "_victoryCondition = missionNamespace getVariable ""WFBE_C_GAMEPLAY_VICTORY_CONDITION"";" \n
+       "" \n
+       "_teams = (missionNamespace getVariable Format[""WFBE_%1TEAMS"",_sideText]);" \n
+       "_templates = missionNamespace getVariable Format [""WFBE_%1AITEAMTEMPLATES"",_sideText];" \n
+       "_teamTypes = missionNamespace getVariable Format [""WFBE_%1AITEAMTYPES"",_sideText];" \n
+       "_teamUpgrades = missionNamespace getVariable Format [""WFBE_%1AITEAMUPGRADES"",_sideText];" \n
+       "_totalSupply = 0;" \n
+       "{_totalSupply = _totalSupply + (_x getVariable 'maxSupplyValue')} forEach towns;" \n
+       "" \n
+       "_currency_system = missionNamespace getVariable ""WFBE_C_ECONOMY_CURRENCY_SYSTEM"";" \n
+       "_workers_enabled = if ((missionNamespace getVariable ""WFBE_C_STRUCTURES_CONSTRUCTION_MODE"") == 1) then {true} else {false};" \n
+       "_workerPrice = if (_workers_enabled) then {missionNamespace getVariable ""WFBE_C_STRUCTURES_WORKERS_PRICE""} else {0};" \n
+       "" \n
+       "" \n
+       "_overallDefenses = missionNamespace getVariable Format [""WFBE_Defenses_%1_Global"",_sideText];" \n
+       "_currentContent = 0;" \n
+       "_totalContent = 0;" \n
+       "if !(isNil ""_overallDefenses"") then {_totalContent = count _overallDefenses} else {_overallDefenses = []};" \n
+       "" \n
+       "_baseDefenses = [];" \n
+       "_defenses = missionNamespace getVariable Format [""WFBE_Defenses_%1"",_sideText];" \n
+       "for '_i' from 0 to count(_baseDefensesTemplate)-1 do {_baseDefenses set [_i,["""",[]]]};" \n
+       "if (isNil '_defenses') then {" \n
+       "	missionNamespace setVariable [Format [""WFBE_Defenses_%1"",_sideText],_baseDefenses];" \n
+       "} else {" \n
+       "	//--- Check the distance;" \n
+       "	_currentContent = -1;" \n
+       "	for '_i' from 0 to _totalContent-1 do {	" \n
+       "		_defenses = _overallDefenses select _i;" \n
+       "		{" \n
+       "			if (count(_x select 1) > 0) then {" \n
+       "				if (alive (_x select 0)) then {" \n
+       "					if ((_x select 0) distance _hq < 750) then {" \n
+       "						_baseDefenses = _defenses;" \n
+       "						_currentContent = _i;" \n
+       "					};" \n
+       "				};" \n
+       "			};" \n
+       "			if (_currentContent != -1) exitWith {};" \n
+       "		} forEach _defenses;" \n
+       "		if (_currentContent != -1) exitWith {};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "if (_currentContent == -1) then {_currentContent = count _overallDefenses};" \n
+       "" \n
+       "_baseAiIntervalLast = time;" \n
+       "_baseAlive = [false,false,false,false,false,false];" \n
+       "_baseInProgress = [false,false,false,false,false,false];" \n
+       "_baseTimerCheck = [0,0,0,0,0,0];" \n
+       "_baseWalls = [[],[],[],[],[],[]];" \n
+       "" \n
+       "_isStartingFSM = true;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/"_logik setVariable [""wfbe_aicom_running"", false];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Commander_Check">*/
+    class Commander_Check
+    {
+      name = "Commander_Check";
+      init = /*%FSM<STATEINIT""">*/"_commander = (_side) Call WFBE_CO_FNC_GetCommanderTeam;" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || !isNull _commander || !(_logik getVariable ""wfbe_aicom_running"")"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "AI">*/
+        class AI
+        {
+          priority = 0.000000;
+          to="Check_HQ";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!gameOver && isNull _commander"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_HQ">*/
+    class Check_HQ
+    {
+      name = "Check_HQ";
+      init = /*%FSM<STATEINIT""">*/"_hq = (_side) Call WFBE_CO_FNC_GetSideHQ;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Dead">*/
+        class Dead
+        {
+          priority = 0.000000;
+          to="Check_Repair";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(alive _hq) && _victoryCondition != 1"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Alive">*/
+        class Alive
+        {
+          priority = 0.000000;
+          to="Check_HQ_Status";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive _hq"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_HQ_Status">*/
+    class Check_HQ_Status
+    {
+      name = "Check_HQ_Status";
+      init = /*%FSM<STATEINIT""">*/"_hqDeployed = (_side) Call WFBE_CO_FNC_GetSideHQDeployStatus;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Deployed">*/
+        class Deployed
+        {
+          priority = 0.000000;
+          to="Check_Move";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_hqDeployed"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Mobilized">*/
+        class Mobilized
+        {
+          priority = 0.000000;
+          to="Check_Status_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_hqDeployed"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Repair">*/
+    class Check_Repair
+    {
+      name = "Check_Repair";
+      init = /*%FSM<STATEINIT""">*/"_isBeingRepaired = _logik getVariable ""wfbe_hq_repairing"";"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Repair_Null">*/
+        class Repair_Null
+        {
+          priority = 0.000000;
+          to="Check_Light";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!alive _repairTruck && !_isBeingRepaired"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Being_Fixed">*/
+        class Being_Fixed
+        {
+          priority = 0.000000;
+          to="Skip_6";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_isBeingRepaired"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Repair_Moving">*/
+        class Repair_Moving
+        {
+          priority = 0.000000;
+          to="Check_Status";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive _repairTruck && !_isBeingRepaired"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Status">*/
+    class Check_Status
+    {
+      name = "Check_Status";
+      init = /*%FSM<STATEINIT""">*/"if (!(alive _driver) || !canMove(_repairTruck)) then {" \n
+       "	{_x setDammage 1} forEach [_driver, _repairTruck];" \n
+       "} else {" \n
+       "	if (_lastRepairMosPos distance (getPos _repairTruck) < 20) then {" \n
+       "		_lastRepairMoveOrder = _lastRepairMoveOrder + 5;" \n
+       "	} else {" \n
+       "		_lastRepairMoveOrder = 0;" \n
+       "	};" \n
+       "" \n
+       "	if (_lastRepairMoveOrder > 40) then {" \n
+       "		_lastRepairMoveOrder = 0;" \n
+       "		[_hq, getPos _repairTruck, 50] Call PlaceSafe;" \n
+       "		(driver _hq) doMove ([getPos _hq,10,20] Call GetRandomPosition);" \n
+       "	};" \n
+       "" \n
+       "	_lastRepairMosPos = getPos _repairTruck;" \n
+       "};" \n
+       "" \n
+       "//--- Repair if possible." \n
+       "if (_repairTruck distance _hq < 75) then {" \n
+       "	if (isEngineOn _repairTruck) then {_repairTruck engineOn false};" \n
+       "	_currency = if (_currency_system == 0) then {(_side) Call GetSideSupply} else {(_side) Call GetAICommanderFunds};" \n
+       "	if (_currency >= (_repairPrice * (_logik getVariable ""wfbe_hq_repair_count""))) then {" \n
+       "		if (_currency_system == 0) then {" \n
+       "			[_side,-(_repairPrice * (_logik getVariable ""wfbe_hq_repair_count""))] Call ChangeSideSupply;" \n
+       "		} else {" \n
+       "			[_side,-(_repairPrice * (_logik getVariable ""wfbe_hq_repair_count""))] Call ChangeAICommanderFunds;" \n
+       "		};" \n
+       "		" \n
+       "		_logik setVariable [""wfbe_hq_repairing"",true,true];" \n
+       "		[_side] Spawn MHQRepair;" \n
+       "" \n
+       "		if (alive _driver) then {_group = group _driver; deleteVehicle _driver; deleteGroup _group};" \n
+       "		deleteVehicle _repairTruck;" \n
+       "" \n
+       "		//--- Determine a suitable moving location close by." \n
+       "		_sortedLocation = [_hq, startingLocations] Call SortByDistance;" \n
+       "" \n
+       "		_hqDeployAt = objNull;" \n
+       "		{" \n
+       "			if (count (nearestObjects [_x, _names, 400]) > 0 && _x distance _hq < 2000) exitWith {_hqDeployAt = _x};" \n
+       "		} forEach _sortedLocation;" \n
+       "" \n
+       "		if (isNull _hqDeployAt) then {_hqDeployAt = getPos _hq};" \n
+       "		_isStartingFSM = false;" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Light">*/
+    class Check_Light
+    {
+      name = "Check_Light";
+      init = /*%FSM<STATEINIT""">*/"_buildings = (_side) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "_checks = [_side,missionNamespace getVariable Format [""WFBE_%1LIGHTTYPE"",_sideText],_buildings] Call GetFactories;" \n
+       "_light = objNull;" \n
+       "" \n
+       "if (count _checks > 0) then {" \n
+       "	_light = [_hq,_checks] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "};" \n
+       "" \n
+       "if (alive _driver) then {_group = group _driver; deleteVehicle _driver; deleteGroup _group};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Dead">*/
+        class Dead
+        {
+          priority = 0.000000;
+          to="Skip";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(alive _light)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Alive">*/
+        class Alive
+        {
+          priority = 0.000000;
+          to="Create_Repair";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"alive _light"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Create_Repair">*/
+    class Create_Repair
+    {
+      name = "Create_Repair";
+      init = /*%FSM<STATEINIT""">*/"_type = typeOf _light;" \n
+       "_index = _names find _type;" \n
+       "_distance = (missionNamespace getVariable Format[""WFBE_%1STRUCTUREDISTANCES"",_sideText]) select _index;" \n
+       "_direction = (missionNamespace getVariable Format[""WFBE_%1STRUCTUREDIRECTIONS"",_sideText]) select _index;" \n
+       "_position = [getPos _light,_distance,getDir _light + _direction] Call GetPositionFrom;" \n
+       "" \n
+       "_repairTruck = [missionNamespace getVariable Format[""WFBE_%1REPAIRTRUCK"",_sideText], _position, _sideID, 0, true] Call WFBE_CO_FNC_CreateVehicle;" \n
+       "_group = createGroup _side;" \n
+       "_driver = [_crew,_group,_position,_sideID] Call WFBE_CO_FNC_CreateUnit;" \n
+       "[_driver] allowGetIn true;" \n
+       "_driver moveInDriver _repairTruck;" \n
+       "_repairAlive = true;" \n
+       "" \n
+       "[_sideText,'VehiclesCreated',1] Call UpdateStatistics;" \n
+       "[_sideText,'UnitsCreated',1] Call UpdateStatistics;" \n
+       "_driver doMove ([GetPos _hq,10,20] Call GetRandomPosition);"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip">*/
+    class Skip
+    {
+      name = "Skip";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Status_1">*/
+    class Check_Status_1
+    {
+      name = "Check_Status_1";
+      init = /*%FSM<STATEINIT""">*/"_inRange = if (_hq distance _hqDeployAt < 200) then {true} else {false};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Empty">*/
+        class Empty
+        {
+          priority = 0.000000;
+          to="Spawn___Lead";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_isStartingFSM || !_inRange"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Moving">*/
+        class Moving
+        {
+          priority = 0.000000;
+          to="Check_Position";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_isStartingFSM || _inRange"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Spawn___Lead">*/
+    class Spawn___Lead
+    {
+      name = "Spawn___Lead";
+      init = /*%FSM<STATEINIT""">*/"if !(alive(driver _hq)) then {" \n
+       "	_HQDriver = [_crew,(createGroup _side),getPos _hq,_sideID] Call WFBE_CO_FNC_CreateUnit;" \n
+       "	[_HQDriver] allowGetIn true;" \n
+       "	_HQDriver moveInDriver _hq;" \n
+       "	_HQDriver assignAsDriver _hq;" \n
+       "	[_HQDriver] orderGetIn true;" \n
+       "	_HQDriver doMove ([GetPos _hqDeployAt,10,20] Call GetRandomPosition);" \n
+       "};" \n
+       "" \n
+       "if (alive(driver _hq)) then {" \n
+       "" \n
+       "	if (_lastHQMovePos distance (getPos _hq) < 20 && !surfaceIsWater(getPos _hq)) then {" \n
+       "		_lastHQMoveOrder = _lastHQMoveOrder + 5;" \n
+       "	} else {" \n
+       "		_lastHQMoveOrder = 0;" \n
+       "	};" \n
+       "" \n
+       "	if (_lastHQMoveOrder > 40) then {" \n
+       "		_lastHQMoveOrder = 0;" \n
+       "		[_hq, getPos _hq, 50] Call PlaceSafe;" \n
+       "		(driver _hq) doMove ([GetPos _hqDeployAt,10,20] Call GetRandomPosition);" \n
+       "	};" \n
+       "" \n
+       "	_lastHQMovePos = getPos _hq;" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Position">*/
+    class Check_Position
+    {
+      name = "Check_Position";
+      init = /*%FSM<STATEINIT""">*/"_canBeDeploy = true;" \n
+       "" \n
+       "//--- On multiplayer, ensure that there is no exploits." \n
+       "if (isMultiplayer) then {" \n
+       "	_tbpr = missionNamespace getVariable ""WFBE_C_TOWNS_BUILD_PROTECTION_RANGE"";" \n
+       "	_isPlayerOnSide = false;" \n
+       "	" \n
+       "	{if (!isNull _x) then {if (side _x == _side && isPlayer _x) exitWith {_isPlayerOnSide = true}}} forEach playableUnits;" \n
+       "	" \n
+       "	if (_isPlayerOnSide) then {" \n
+       "		{if (_x distance _hq < _tbpr) exitWith {_canBeDeploy = false}} forEach towns;" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "//--- HQ Can be deployed." \n
+       "if (_canBeDeploy) then {" \n
+       "	if (alive(driver _hq)) then {(driver _hq) setDammage 1};" \n
+       "" \n
+       "	_pos = getPos _hq;" \n
+       "	_pos set [2,0];" \n
+       "	_pos = [_pos,((missionNamespace getVariable 'WFBE_C_BASE_COIN_AREA_HQ_UNDEPLOYED') select 0)+20] Call GetSafePlace;" \n
+       "	if (count _pos < 1) then {_pos = [_pos,((missionNamespace getVariable 'WFBE_C_BASE_COIN_AREA_HQ_UNDEPLOYED') select 0)+50] Call GetSafePlace};" \n
+       "	if (count _pos < 1) then {_pos = getPos (_logik getVariable ""wfbe_startpos"")};" \n
+       "	_dir = getDir _hq;" \n
+       "	_currency = if (_currency_system == 0) then {(_side) Call GetSideSupply} else {(_side) Call GetAICommanderFunds};" \n
+       "" \n
+       "	//--- Ensure that we have the supply required to deploy the HQ." \n
+       "	if (_currency >= (_costs select _hqType)) then {" \n
+       "		[(_names select _hqType),_side,_pos,_dir] ExecVM 'Server\Construction\Construction_HQSite.sqf';" \n
+       "" \n
+       "		if (_currency_system == 0) then {" \n
+       "			[_side, -(_costs select _hqType)] Call ChangeSideSupply;" \n
+       "		} else {" \n
+       "			[_side, -(_costs select _hqType)] Call ChangeAICommanderFunds;" \n
+       "		};" \n
+       "		" \n
+       "		if (_isStartingFSM) then {_isStartingFSM = false};" \n
+       "	};" \n
+       "" \n
+       "	//--- Reset local variable." \n
+       "	_overallDefenses = missionNamespace getVariable Format [""WFBE_Defenses_%1_Global"",_sideText];" \n
+       "	_currentContent = 0;" \n
+       "	_totalContent = 0;" \n
+       "	if !(isNil ""_overallDefenses"") then {_totalContent = count _overallDefenses} else {_overallDefenses = []};" \n
+       "" \n
+       "	_baseDefenses = [];" \n
+       "	_defenses = missionNamespace getVariable Format [""WFBE_Defenses_%1"",_sideText];" \n
+       "	for '_i' from 0 to count(_baseDefensesTemplate)-1 do {_baseDefenses set [_i,["""",[]]]};" \n
+       "	if (isNil '_defenses') then {" \n
+       "		missionNamespace setVariable [Format [""WFBE_Defenses_%1"",_sideText],_baseDefenses];" \n
+       "	} else {" \n
+       "		//--- Check the distance;" \n
+       "		_currentContent = -1;" \n
+       "		for '_i' from 0 to _totalContent-1 do {	" \n
+       "			_defenses = _overallDefenses select _i;" \n
+       "			{" \n
+       "				if (count(_x select 1) > 0) then {" \n
+       "					if (alive (_x select 0)) then {" \n
+       "						if ((_x select 0) distance _hq < 750) then {" \n
+       "							_baseDefenses = _defenses;" \n
+       "							_currentContent = _i;" \n
+       "						};" \n
+       "					};" \n
+       "				};" \n
+       "				if (_currentContent != -1) exitWith {};" \n
+       "			} forEach _defenses;" \n
+       "			if (_currentContent != -1) exitWith {};" \n
+       "		};" \n
+       "	};" \n
+       "" \n
+       "	if (_currentContent == -1) then {_currentContent = count _overallDefenses};" \n
+       "" \n
+       "	_baseAiIntervalLast = time;" \n
+       "	_baseAlive = [false,false,false,false,false,false];" \n
+       "	_baseInProgress = [false,false,false,false,false,false];" \n
+       "	_baseTimerCheck = [time,time,time,time,time,time];" \n
+       "	_baseWalls = [[],[],[],[],[],[]];" \n
+       "};" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Move">*/
+    class Check_Move
+    {
+      name = "Check_Move";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Proceed">*/
+        class Proceed
+        {
+          priority = 0.000000;
+          to="Check_Base";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_hqCanMove"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Move">*/
+        class Move
+        {
+          priority = 0.000000;
+          to="Move";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_hqCanMove"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Move">*/
+    class Move
+    {
+      name = "Move";
+      init = /*%FSM<STATEINIT""">*/"_hqCanMove = false;" \n
+       "" \n
+       "[(_names select _hqType),_side,getPos _hq,getDir _hq] ExecVM 'Server\Construction\Construction_HQSite.sqf';"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Base">*/
+    class Check_Base
+    {
+      name = "Check_Base";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Skip_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdateBase <= 45"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Update">*/
+        class Update
+        {
+          priority = 0.000000;
+          to="Update_Base";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdateBase > 45"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_1">*/
+    class Skip_1
+    {
+      name = "Skip_1";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Defenses";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Base">*/
+    class Update_Base
+    {
+      name = "Update_Base";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdateBase = time;" \n
+       "" \n
+       "_buildings = (_side) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "" \n
+       "//--- Get the buildings close of the HQ by type (repair if downed)." \n
+       "_barracks = ['BARRACKSTYPE',_buildings,750,_side,_hq] Call BuildingInRange;" \n
+       "_light = ['LIGHTTYPE',_buildings,750,_side,_hq] Call BuildingInRange;" \n
+       "_heavy = ['HEAVYTYPE',_buildings,750,_side,_hq] Call BuildingInRange;" \n
+       "_air = ['AIRCRAFTTYPE',_buildings,750,_side,_hq] Call BuildingInRange;" \n
+       "_servicePoint = ['SERVICEPOINTTYPE',_buildings,750,_side,_hq] Call BuildingInRange;" \n
+       "_commandCenter = ['COMMANDCENTERTYPE',_buildings,750,_side,_hq] Call BuildingInRange;" \n
+       "" \n
+       "//--- Get the building in progress." \n
+       "_contentInProgress = [objNull,objNull,objNull,objNull,objNull,objNull];" \n
+       "_nearLogics = _hq nearEntities [[""LocationLogicStart""],550];" \n
+       "{" \n
+       "	_get = _x getVariable 'WFBE_B_Type';" \n
+       "	" \n
+       "	if !(isNil '_get') then {" \n
+       "		switch (_get) do {" \n
+       "			case ""Barracks"": {_contentInProgress set [0, _x]};" \n
+       "			case ""Light"": {_contentInProgress set [1, _x]};" \n
+       "			case ""CommandCenter"": {_contentInProgress set [2, _x]};" \n
+       "			case ""Heavy"": {_contentInProgress set [3, _x]};" \n
+       "			case ""Aircraft"": {_contentInProgress set [4, _x]};" \n
+       "			case ""ServicePoint"": {_contentInProgress set [5, _x]};" \n
+       "		};" \n
+       "	};" \n
+       "} forEach _nearLogics;" \n
+       "" \n
+       "//--- Is there a CC at least." \n
+       "_check = [_side, missionNamespace getVariable Format [""WFBE_%1COMMANDCENTERTYPE"",_sideText],_buildings] Call GetFactories;" \n
+       "_ccAvailable = if (count _check == 0) then {false} else {true};" \n
+       "" \n
+       "_content = [_barracks,_light,_commandCenter,_heavy,_air,_servicePoint];" \n
+       "_baseStructurePos = [];" \n
+       "{_baseStructurePos = _baseStructurePos + [getPos _x]} forEach _content;" \n
+       "" \n
+       "//--- Check for construction etc." \n
+       "for '_i' from 0 to count(_content)-1 do {" \n
+       "	_currency = if (_currency_system == 0) then {(_side) Call GetSideSupply} else {(_side) Call GetAICommanderFunds};" \n
+       "" \n
+       "	_currentStructure = _content select _i;" \n
+       "	_isInProgress = _baseInProgress select _i;" \n
+       "	_isAlive = _baseAlive select _i;" \n
+       "	_timer = _baseTimerCheck select _i;" \n
+       "	_isLogicInProgress = _contentInProgress select _i;" \n
+       "" \n
+       "	//--- Bad Catch?" \n
+       "	if (_isInProgress && !_isAlive && _timer > 400) then {" \n
+       "		_baseInProgress set [_i, false];" \n
+       "	};" \n
+       "" \n
+       "	//--- Alive?" \n
+       "	if (alive _currentStructure) then {if !(_isAlive) then {_baseAlive set [_i , true]}};" \n
+       "" \n
+       "	//--- Destroyed?" \n
+       "	if (_isInProgress && _isAlive && !(alive _currentStructure)) then {" \n
+       "		_baseAlive set [_i , false];" \n
+       "		_baseInProgress set [_i, false];" \n
+       "	};" \n
+       "" \n
+       "	//--- Not in progress, we can build it." \n
+       "	if (!_isInProgress && isNull(_currentStructure) && isNull(_isLogicInProgress)) then {" \n
+       "		_currentType = _baseOrder select _i;" \n
+       "		_type = _types find _currentType;" \n
+       "" \n
+       "		//--- Check the supply." \n
+       "		_cost = _costs select _type;" \n
+       "		if (_cost <= _currency) then {" \n
+       "" \n
+       "			//--- check about the building limit." \n
+       "			_buildLimit = false;" \n
+       "			_current = _logik getVariable ""wfbe_structures_live"";" \n
+       "			_limit = missionNamespace getVariable (Format['WFBE_C_STRUCTURES_MAX_%1',_currentType]);" \n
+       "			if (isNil '_limit') then {_limit = 4}; //--- Default." \n
+       "			if ((_current select (_type-1)) >= _limit) then {_buildLimit = true};" \n
+       "" \n
+       "			//--- Can build." \n
+       "			if !(_buildLimit) then {" \n
+       "				_pos = getPos _hq;" \n
+       "				_x = _pos select 0;" \n
+       "				_y = _pos select 1;" \n
+       "				_pos = [];" \n
+       "				_pos set [0,((_baseStructureRelPos select _i) select 0) + _x];" \n
+       "				_pos set [1,((_baseStructureRelPos select _i) select 1) + _y];" \n
+       "				_newPos = [0,0,0];" \n
+       "				_roads = [];" \n
+       "" \n
+       "				_attempts = 0;" \n
+       "				_max = 100;" \n
+       "				while {true} do {" \n
+       "					_newPos = [_pos,30,_max,10,0,50,0] Call BIS_fnc_findSafePos;" \n
+       "					_aiSpawnPos = [_newPos,_baseDistances select _i,_baseDirections select _i] Call GetPositionFrom;" \n
+       "					_aiSpawnPos set [2,0];" \n
+       "					_roads = _newPos nearRoads 30;" \n
+       "					_roads2 = _aiSpawnPos nearRoads 30;" \n
+       "					" \n
+       "					_isFlat = _aiSpawnPos isFlatEmpty [" \n
+       "						5,	//--- Minimal distance from another object" \n
+       "						0,				//--- If 0, just check position. If >0, select new one" \n
+       "						0.6,				//--- Max gradient" \n
+       "						5,	//--- Gradient area" \n
+       "						0,				//--- 0 for restricted water, 2 for required water," \n
+       "						false,				//--- True if some water can be in 25m radius" \n
+       "						objNull			//--- Ignored object" \n
+       "					];" \n
+       "					" \n
+       "					_isTooClose = false;" \n
+       "					{if (_x distance _newPos < 70) exitWith {_isTooClose = true}} forEach _baseStructurePos;" \n
+       "					if (count _roads == 0 && count _roads2 == 0 && !_isTooClose && count _isFlat != 0) exitWith {};" \n
+       "					_attempts = _attempts + 1;" \n
+       "					if (_attempts > 100 && _max == 100) then {_max = _max + 150};" \n
+       "				};" \n
+       "				_baseStructurePos set [_i, _newPos];" \n
+       "				[(_names select _type),_side,_newPos,0,_type] ExecVM (Format[""Server\Construction\Construction_%1.sqf"",(_scripts select _type)]);" \n
+       "				if (_currency_system == 0) then {" \n
+       "					[_side, -_cost] Call ChangeSideSupply;" \n
+       "				} else {" \n
+       "					[_side, -_cost] Call ChangeAICommanderFunds;" \n
+       "				};" \n
+       "				_baseInProgress set [_i, true];" \n
+       "				_baseTimerCheck set [_i, time];" \n
+       "				" \n
+       "				_current set [_type - 1, (_current select (_type-1)) + 1];" \n
+       "				_logik setVariable [""wfbe_structures_live"", _current, true];	" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Defenses";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Defenses">*/
+    class Check_Defenses
+    {
+      name = "Check_Defenses";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Skip_2";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"isNull _barracks || time - _lastUpdateDefenses <= 80"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Update">*/
+        class Update
+        {
+          priority = 0.000000;
+          to="Update_Defenses";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!isNull _barracks && time - _lastUpdateDefenses > 80"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_2">*/
+    class Skip_2
+    {
+      name = "Skip_2";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Upgrades";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Defenses">*/
+    class Update_Defenses
+    {
+      name = "Update_Defenses";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdateDefenses = time;" \n
+       "" \n
+       "//--- Buildings checks" \n
+       "for '_i' from 0 to count(_content)-1 do {" \n
+       "	_building = _content select _i;" \n
+       "	_type = _baseOrder select _i;" \n
+       "	_buildingWall = _baseWalls select _i;" \n
+       "" \n
+       "	if (alive _building) then {" \n
+       "		if (count _buildingWall == 0) then {" \n
+       "			//--- Persistent check (Walls), only executed if the array is empty." \n
+       "			_defenses = _building getVariable 'WFBE_Walls';" \n
+       "			if !(isNil ""_defenses"") then {_baseWalls set [_i,_defenses]};" \n
+       "	" \n
+       "			_defenses = [_building,missionNamespace getVariable Format [""WFBE_NEURODEF_%1_WALLS"",_type],(_baseWalls select _i)] Call CreateDefenseTemplate;" \n
+       "			_baseWalls set [_i ,_defenses];" \n
+       "			_building setVariable ['WFBE_Walls', _defenses];" \n
+       "		} else {" \n
+       "			{" \n
+       "				if !(alive _x) exitWith {" \n
+       "					_defenses = [_building,missionNamespace getVariable Format [""WFBE_NEURODEF_%1_WALLS"",_type],(_baseWalls select _i)] Call CreateDefenseTemplate;" \n
+       "					_baseWalls set [_i ,_defenses];" \n
+       "					_building setVariable ['WFBE_Walls', _defenses];" \n
+       "				};" \n
+       "			} forEach (_baseWalls select _i);" \n
+       "		};" \n
+       "	} else {" \n
+       "		if (count(_buildingWall) > 0) then {" \n
+       "			{deleteVehicle _x} forEach (_baseWalls select _i);" \n
+       "			_baseWalls set [_i, []];" \n
+       "		};" \n
+       "	};" \n
+       "} forEach _content;" \n
+       "" \n
+       "//--- Defenses Check." \n
+       "for '_i' from 0 to count(_baseDefenses)-1 do {" \n
+       "	_defense = (_baseDefenses select _i) select 0;" \n
+       "" \n
+       "	//--- If object, it exist or existed." \n
+       "	if (typename _defense == ""OBJECT"") then {" \n
+       "		_template = (_baseDefenses select _i) select 1;" \n
+       "		" \n
+       "		if (alive _defense) then {" \n
+       "			{" \n
+       "				if !(alive _x) exitWith {" \n
+       "					_template = _baseDefensesTemplate select _i;" \n
+       "					_defenses = [_defense,missionNamespace getVariable Format [""WFBE_NEURODEF_%1"",_template select 3]] Call CreateDefenseTemplate;" \n
+       "					_baseDefenses set [_i, [_defense,_defenses]];" \n
+       "					missionNamespace setVariable [Format [""WFBE_Defenses_%1"",_sideText],_baseDefenses];" \n
+       "					_overallDefenses set [_currentContent, _baseDefenses];" \n
+       "					missionNamespace setVariable [Format [""WFBE_Defenses_%1_Global"",_sideText], _overallDefenses];" \n
+       "				};" \n
+       "			} forEach _template;" \n
+       "" \n
+       "			//--- Keep the defense able to fire." \n
+       "			if !(isNull(gunner _defense)) then {" \n
+       "				if !(someAmmo _defense) then {[_defense,_side] Call RearmVehicle};" \n
+       "			};" \n
+       "		} else {" \n
+       "			if (count(_template) > 0) then {" \n
+       "				{deleteVehicle _x} forEach _template;" \n
+       "				_baseDefenses set [_i, ["""",[]]];" \n
+       "				_defense = (_baseDefenses select _i) select 0;" \n
+       "				missionNamespace setVariable [Format [""WFBE_Defenses_%1"",_sideText],_baseDefenses];" \n
+       "				_overallDefenses set [_currentContent, _baseDefenses];" \n
+       "				missionNamespace setVariable [Format [""WFBE_Defenses_%1_Global"",_sideText], _overallDefenses];" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "" \n
+       "	//--- If string, it don't exist." \n
+       "	if (typename _defense == ""STRING"") then {" \n
+       "		_aiComFunds = (_side) Call GetAICommanderFunds;" \n
+       "		_template = _baseDefensesTemplate select _i;" \n
+       "		_pool = _template select 0;" \n
+       "		_picked = _pool select round(random((count _pool)-1));" \n
+       "" \n
+       "		//--- Grab the defense price." \n
+       "		_details = missionNamespace getVariable _picked;" \n
+       "		_price = if !(isNil '_details') then {_details select QUERYUNITPRICE} else {400};" \n
+       "" \n
+       "		if (_aiComFunds >= _price) then {" \n
+       "			[_side, -_price] Call ChangeAICommanderFunds;" \n
+       "		" \n
+       "			_pos = getPos _hq;" \n
+       "			_x = _pos select 0;" \n
+       "			_y = _pos select 1;" \n
+       "			_pos = [];" \n
+       "			_pos set [0,((_template select 1) select 0) + _x];" \n
+       "			_pos set [1,((_template select 1) select 1) + _y];" \n
+       "			_newPos = [0,0,0];" \n
+       "			_roads = [];" \n
+       "" \n
+       "			_attempts = 0;" \n
+       "			_max = 100;" \n
+       "			while {true} do {" \n
+       "				_newPos = [_pos,30,_max,10,0,50,0] Call BIS_fnc_findSafePos;" \n
+       "				_roads = _newPos nearRoads 24;" \n
+       "" \n
+       "				_isTooClose = false;" \n
+       "				{if (_x distance _newPos < 30) exitWith {_isTooClose = true}} forEach _content;" \n
+       "				if (count _roads == 0 && !_isTooClose && count(_newPos nearEntities 15) == 0) exitWith {};" \n
+       "				_attempts = _attempts + 1;" \n
+       "				if (_attempts > 100 && _max == 100) then {_max = _max + 150};" \n
+       "			};" \n
+       "" \n
+       "			_created = [_picked,_side,_newPos,_template select 2,true,true,(missionNamespace getVariable ""WFBE_C_BASE_DEFENSE_MANNING_RANGE"")*3] Call ConstructDefense;" \n
+       "" \n
+       "			//--- Extra?" \n
+       "			_defenses = [];" \n
+       "			_extra = _template select 3;" \n
+       "			if (_extra != """") then {" \n
+       "				_defenses = [_created,missionNamespace getVariable Format [""WFBE_NEURODEF_%1"",_extra]] Call CreateDefenseTemplate;" \n
+       "			};" \n
+       "" \n
+       "			_baseDefenses set [_i, [_created,_defenses]];" \n
+       "			missionNamespace setVariable [Format [""WFBE_Defenses_%1"",_sideText],_baseDefenses];" \n
+       "			_overallDefenses set [_currentContent, _baseDefenses];" \n
+       "			missionNamespace setVariable [Format [""WFBE_Defenses_%1_Global"",_sideText], _overallDefenses];" \n
+       "		};" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Upgrades";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Upgrades">*/
+    class Check_Upgrades
+    {
+      name = "Check_Upgrades";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Skip_3";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_ccAvailable || time - _lastUpdateUpgrades <= 60"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Update">*/
+        class Update
+        {
+          priority = 0.000000;
+          to="Update_Upgrades";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_ccAvailable && time - _lastUpdateUpgrades > 60"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_3">*/
+    class Skip_3
+    {
+      name = "Skip_3";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Types";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Upgrades">*/
+    class Update_Upgrades
+    {
+      name = "Update_Upgrades";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdateUpgrades = time;" \n
+       "" \n
+       "if !(_logik getVariable ""wfbe_upgrading"") then {" \n
+       "	(_side) Spawn WFBE_SE_FNC_AI_Com_Upgrade; " \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Types";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Types">*/
+    class Check_Types
+    {
+      name = "Check_Types";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Skip_4";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdateTypes <= 120"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Update">*/
+        class Update
+        {
+          priority = 0.000000;
+          to="Update_Types";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdateTypes > 120"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_4">*/
+    class Skip_4
+    {
+      name = "Skip_4";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Workers";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Types">*/
+    class Update_Types
+    {
+      name = "Update_Types";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdateTypes = time;" \n
+       "" \n
+       "_totalFunds = 0;" \n
+       "" \n
+       "{" \n
+       "	if !(isNil '_x') then {_totalFunds = _totalFunds + ((_x) Call GetTeamFunds)};" \n
+       "} forEach (_logik getVariable ""wfbe_teams"");" \n
+       "" \n
+       "_avgIncome = _totalFunds / _maxplayers;" \n
+       "" \n
+       "_income = _side Call GetTotalSupplyValue;" \n
+       "" \n
+       "_type = 0;" \n
+       "" \n
+       "_infPercent = 0;" \n
+       "_lightPercent = 0;" \n
+       "_heavyPercent = 0;" \n
+       "_airPercent = 0;" \n
+       "if (_income < (_totalSupply - (_totalSupply/1.2)) || _avgIncome < 2000) then {_infPercent = 70; _lightPercent = 30};" \n
+       "if ((_income >= (_totalSupply - (_totalSupply/1.2)) && _income < (_totalSupply - (_totalSupply/1.6))) || _avgIncome > 2000) then {_infPercent = 60; _lightPercent = 30; _heavyPercent = 10};" \n
+       "if ((_income >= (_totalSupply - (_totalSupply/1.6)) && _income < (_totalSupply - (_totalSupply/2))) || _avgIncome > 4000) then {_infPercent = 50; _lightPercent = 30; _heavyPercent = 20};" \n
+       "if ((_income >= (_totalSupply - (_totalSupply/2)) && _income < (_totalSupply - (_totalSupply/3))) || _avgIncome > 12000) then {_infPercent = 40; _lightPercent = 25; _heavyPercent = 30; _airPercent = 5};" \n
+       "if ((_income >= (_totalSupply - (_totalSupply/3)) && _income < (_totalSupply - (_totalSupply/4))) || _avgIncome > 18000) then {_infPercent = 30; _lightPercent = 20; _heavyPercent = 40; _airPercent = 10};" \n
+       "if (_income >= (_totalSupply - (_totalSupply/4)) || _avgIncome > 24000) then {_infPercent = 20; _lightPercent = 20; _heavyPercent = 45; _airPercent = 15};" \n
+       "" \n
+       "_infAssign = round(_maxplayers * (_infPercent / 100));" \n
+       "_lightAssign = round(_maxplayers * (_lightPercent / 100));" \n
+       "_heavyAssign = round(_maxplayers * (_heavyPercent / 100));" \n
+       "_airAssign = round(_maxplayers * (_airPercent / 100));" \n
+       "" \n
+       "_infTemplates = [];" \n
+       "_lightTemplates = [];" \n
+       "_heavyTemplates = [];" \n
+       "_airTemplates = [];" \n
+       "" \n
+       "_i = 0;" \n
+       "" \n
+       "/* Experimental - Start */" \n
+       "_upgrades = (_side) Call WFBE_CO_FNC_GetSideUpgrades;" \n
+       "" \n
+       "//--- Retrieve the available types." \n
+       "{" \n
+       "	_upgradesTemplate = _teamUpgrades select _i;" \n
+       "	switch (_x) do {" \n
+       "		//--- Infantry." \n
+       "		case 0: {" \n
+       "			_canAdd = true;" \n
+       "			for '_k' from 0 to 3 do {" \n
+       "				if ((_upgrades select _k) < (_upgradesTemplate select _k)) exitWith {_canAdd = false};" \n
+       "			};" \n
+       "			if (_canAdd) then {_infTemplates = _infTemplates + [_i]};" \n
+       "		};" \n
+       "		//--- Light." \n
+       "		case 1: {" \n
+       "			_canAdd = true;" \n
+       "			for '_k' from 0 to 3 do {" \n
+       "				if ((_upgrades select _k) < (_upgradesTemplate select _k)) exitWith {_canAdd = false};" \n
+       "			};" \n
+       "			if (_canAdd) then {_lightTemplates = _lightTemplates + [_i]};" \n
+       "		};" \n
+       "		//--- Heavy." \n
+       "		case 2: {" \n
+       "			_canAdd = true;" \n
+       "			for '_k' from 0 to 3 do {" \n
+       "				if ((_upgrades select _k) < (_upgradesTemplate select _k)) exitWith {_canAdd = false};" \n
+       "			};" \n
+       "			if (_canAdd) then {_heavyTemplates = _heavyTemplates + [_i]};" \n
+       "		};" \n
+       "		//--- Air." \n
+       "		case 3: {" \n
+       "			_canAdd = true;" \n
+       "			for '_k' from 0 to 3 do {" \n
+       "				if ((_upgrades select _k) < (_upgradesTemplate select _k)) exitWith {_canAdd = false};" \n
+       "			};" \n
+       "			if (_canAdd) then {_airTemplates = _airTemplates + [_i]};" \n
+       "		};" \n
+       "	};" \n
+       "	_i = _i + 1;" \n
+       "} forEach _teamTypes;" \n
+       "" \n
+       "//--- How many types are available." \n
+       "_templates_infavailable = count _infTemplates;" \n
+       "_templates_ligavailable = count _lightTemplates;" \n
+       "_templates_heaavailable = count _heavyTemplates;" \n
+       "_templates_airavailable = count _airTemplates;" \n
+       "" \n
+       "//--- Assign if possible." \n
+       "if (_templates_infavailable > 0 || _templates_ligavailable > 0 || _templates_heaavailable > 0 || _templates_airavailable > 0) then {" \n
+       "	//--- Reallocate if necessary - Infantry." \n
+       "	if (_templates_infavailable == 0 && _infAssign > 0) then {" \n
+       "		_dividedEnd = _infAssign;" \n
+       "		_ressourceDivision = [_dividedEnd / 2, (_dividedEnd/2) - ((_dividedEnd/2) / 4), (_dividedEnd/2)/4];" \n
+       "		" \n
+       "		_infAssign = 0;" \n
+       "		_i = 0;" \n
+       "		" \n
+       "		if (_templates_ligavailable != 0) then {" \n
+       "			_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "			_i = _i + 1;" \n
+       "			" \n
+       "			if (_templates_heaavailable == 0) then {" \n
+       "				_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "			" \n
+       "			if (_templates_airavailable == 0) then {" \n
+       "				_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "		};" \n
+       "		" \n
+       "		if (_i < 3) then {" \n
+       "			if (_templates_heaavailable != 0) then {" \n
+       "				_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "				" \n
+       "				if (_templates_ligavailable == 0 && _i < 3) then {" \n
+       "					_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "				" \n
+       "				if (_templates_airavailable == 0 && _i < 3) then {" \n
+       "					_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "			};" \n
+       "			" \n
+       "			if (_i < 3) then {" \n
+       "				if (_templates_airavailable != 0) then {" \n
+       "					_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "					" \n
+       "					if (_templates_ligavailable == 0 && _i < 3) then {" \n
+       "						_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "					" \n
+       "					if (_templates_heaavailable == 0 && _i < 3) then {" \n
+       "						_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "				};" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "" \n
+       "	//--- Reallocate if necessary - Light." \n
+       "	if (_templates_ligavailable == 0 && _lightAssign > 0) then {" \n
+       "		_dividedEnd = _lightAssign;" \n
+       "		_ressourceDivision = [_dividedEnd / 2, (_dividedEnd/2) - ((_dividedEnd/2) / 4), (_dividedEnd/2)/4];" \n
+       "		" \n
+       "		_lightAssign = 0;" \n
+       "		_i = 0;" \n
+       "		" \n
+       "		if (_templates_infavailable != 0) then {" \n
+       "			_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "			_i = _i + 1;" \n
+       "			" \n
+       "			if (_templates_heaavailable == 0) then {" \n
+       "				_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "			" \n
+       "			if (_templates_airavailable == 0) then {" \n
+       "				_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "		};" \n
+       "		" \n
+       "		if (_i < 3) then {" \n
+       "			if (_templates_heaavailable != 0) then {" \n
+       "				_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "				" \n
+       "				if (_templates_infavailable == 0 && _i < 3) then {" \n
+       "					_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "				" \n
+       "				if (_templates_airavailable == 0 && _i < 3) then {" \n
+       "					_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "			};" \n
+       "			" \n
+       "			if (_i < 3) then {" \n
+       "				if (_templates_airavailable != 0) then {" \n
+       "					_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "					" \n
+       "					if (_templates_infavailable == 0 && _i < 3) then {" \n
+       "						_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "					" \n
+       "					if (_templates_heaavailable == 0 && _i < 3) then {" \n
+       "						_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "				};" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "	" \n
+       "	//--- Reallocate if necessary - Heavy." \n
+       "	if (_templates_heaavailable == 0 && _heavyAssign > 0) then {" \n
+       "		_dividedEnd = _heavyAssign;" \n
+       "		_ressourceDivision = [_dividedEnd / 2, (_dividedEnd/2) - ((_dividedEnd/2) / 4), (_dividedEnd/2)/4];" \n
+       "		" \n
+       "		_heavyAssign = 0;" \n
+       "		_i = 0;" \n
+       "		" \n
+       "		if (_templates_infavailable != 0) then {" \n
+       "			_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "			_i = _i + 1;" \n
+       "			" \n
+       "			if (_templates_ligavailable == 0) then {" \n
+       "				_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "			" \n
+       "			if (_templates_airavailable == 0) then {" \n
+       "				_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "		};" \n
+       "		" \n
+       "		if (_i < 3) then {" \n
+       "			if (_templates_ligavailable != 0) then {" \n
+       "				_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "				" \n
+       "				if (_templates_infavailable == 0 && _i < 3) then {" \n
+       "					_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "				" \n
+       "				if (_templates_airavailable == 0 && _i < 3) then {" \n
+       "					_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "			};" \n
+       "			" \n
+       "			if (_i < 3) then {" \n
+       "				if (_templates_airavailable != 0) then {" \n
+       "					_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "					" \n
+       "					if (_templates_infavailable == 0 && _i < 3) then {" \n
+       "						_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "					" \n
+       "					if (_templates_ligavailable == 0 && _i < 3) then {" \n
+       "						_airAssign = _airAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "				};" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "	" \n
+       "	//--- Reallocate if necessary - Air." \n
+       "	if (_templates_airavailable == 0 && _airAssign > 0) then {" \n
+       "		_dividedEnd = _airAssign;" \n
+       "		_ressourceDivision = [_dividedEnd / 2, (_dividedEnd/2) - ((_dividedEnd/2) / 4), (_dividedEnd/2)/4];" \n
+       "		" \n
+       "		_airAssign = 0;" \n
+       "		_i = 0;" \n
+       "		" \n
+       "		if (_templates_infavailable != 0) then {" \n
+       "			_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "			_i = _i + 1;" \n
+       "			" \n
+       "			if (_templates_ligavailable == 0) then {" \n
+       "				_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "			" \n
+       "			if (_templates_airavailable == 0) then {" \n
+       "				_infAssign = _infAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "			};" \n
+       "		};" \n
+       "		" \n
+       "		if (_i < 3) then {" \n
+       "			if (_templates_ligavailable != 0) then {" \n
+       "				_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "				_i = _i + 1;" \n
+       "				" \n
+       "				if (_templates_infavailable == 0 && _i < 3) then {" \n
+       "					_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "				" \n
+       "				if (_templates_airavailable == 0 && _i < 3) then {" \n
+       "					_lightAssign = _lightAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "				};" \n
+       "			};" \n
+       "			" \n
+       "			if (_i < 3) then {" \n
+       "				if (_templates_heaavailable != 0) then {" \n
+       "					_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "					_i = _i + 1;" \n
+       "					" \n
+       "					if (_templates_infavailable == 0 && _i < 3) then {" \n
+       "						_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "					" \n
+       "					if (_templates_ligavailable == 0 && _i < 3) then {" \n
+       "						_heavyAssign = _heavyAssign + (_ressourceDivision select _i);" \n
+       "						_i = _i + 1;" \n
+       "					};" \n
+       "				};" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "	" \n
+       "	{" \n
+       "		if !(isNil '_x') then {" \n
+       "			_skip = false;" \n
+       "			if (_infAssign > 0) then {" \n
+       "				_type = _infTemplates select (round(random((count _infTemplates)-1)));" \n
+       "				_infAssign = _infAssign - 1;" \n
+       "				_skip = true;" \n
+       "			};" \n
+       "			if (_lightAssign > 0 && !_skip) then {" \n
+       "				_type = _lightTemplates select (round(random((count _lightTemplates)-1)));" \n
+       "				_lightAssign = _lightAssign - 1;" \n
+       "				_skip = true;" \n
+       "			};" \n
+       "			if (_heavyAssign > 0 && !_skip) then {" \n
+       "				_type = _heavyTemplates select (round(random((count _heavyTemplates)-1)));" \n
+       "				_heavyAssign = _heavyAssign - 1;" \n
+       "				_skip = true;" \n
+       "			};" \n
+       "			if (_airAssign > 0 && !_skip) then {" \n
+       "				_type = _airTemplates select (round(random((count _airTemplates)-1)));" \n
+       "				_airAssign = _airAssign - 1;" \n
+       "				_skip = true;" \n
+       "			};" \n
+       "			[_x,_type] Call SetTeamType;" \n
+       "		};" \n
+       "	} forEach (_logik getVariable ""wfbe_teams"");" \n
+       ";" \n
+       "};" \n
+       "/* Experimental - End */"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Workers";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Move_1">*/
+    class Check_Move_1
+    {
+      name = "Check_Move_1";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Skip">*/
+        class Skip
+        {
+          priority = 0.000000;
+          to="Skip_5";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdateMove <= 120"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Update">*/
+        class Update
+        {
+          priority = 0.000000;
+          to="Update_Move";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdateMove > 120"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Workers">*/
+    class Check_Workers
+    {
+      name = "Check_Workers";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Time">*/
+        class Time
+        {
+          priority = 0.000000;
+          to="Nothing";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_workers_enabled || time - _lastUpdateWorkers <= 20"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Workers">*/
+        class Workers
+        {
+          priority = 0.000000;
+          to="Update_Workers";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_workers_enabled && time - _lastUpdateWorkers > 20"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Nothing">*/
+    class Nothing
+    {
+      name = "Nothing";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Move_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Workers">*/
+    class Update_Workers
+    {
+      name = "Update_Workers";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdateWorkers = time;" \n
+       "" \n
+       "_workers = _logik getVariable ""wfbe_workers"";" \n
+       "_aliveWorkers = (_workers) Call GetLiveUnits;" \n
+       "" \n
+       "//--- enough workers or?." \n
+       "if (count _aliveWorkers < (missionNamespace getVariable ""WFBE_C_STRUCTURES_WORKERS_MAX"")) then {" \n
+       "	_aiComFunds = (_side) Call GetAICommanderFunds;" \n
+       "" \n
+       "	if (_aiComFunds >= _workerPrice) then {" \n
+       "		[_side, -_workerPrice] Call ChangeAICommanderFunds;" \n
+       "		" \n
+       "		//--- Which index." \n
+       "		_index = 0;" \n
+       "		for '_i' from 0 to count(_workers)-1 do {" \n
+       "			if (isNull (_workers select _i)) exitWith {_index = _i};" \n
+       "		};" \n
+       "		" \n
+       "		if (_index == 0 && count(_workers) > 0) then {_index = count _workers};" \n
+       "		" \n
+       "		[_side, _hq, _index] Call SRVFNCRequestWorker;" \n
+       "	};" \n
+       "} else {" \n
+       "	//--- Max reached, enough in base to build else dispose." \n
+       "	{" \n
+       "		if (_x distance _hq > 600 && alive _x) then {_x setDammage 1};" \n
+       "	} forEach _workers;" \n
+       "};" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Move_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_5">*/
+    class Skip_5
+    {
+      name = "Skip_5";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update_Move">*/
+    class Update_Move
+    {
+      name = "Update_Move";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdateMove = time;" \n
+       "" \n
+       "if (time - _baseAiIntervalLast > _baseAiInterval) then {" \n
+       "	_hqCanMove = true;" \n
+       "" \n
+       "	//--- Build limit Check" \n
+       "	_buildLimit = false;" \n
+       "	_current = _logik getVariable ""wfbe_structures_live"";" \n
+       "	_limit = missionNamespace getVariable 'WFBE_C_STRUCTURES_MAX_BARRACKS';" \n
+       "	if (isNil '_limit') then {_limit = 4}; //--- Default." \n
+       "	if ((_current select 0) >= _limit) exitWith {_hqCanMove = false};" \n
+       "" \n
+       "	//--- check the nearby buildings." \n
+       "	{" \n
+       "		if !(alive _x) exitWith {_hqCanMove = false};	" \n
+       "	} forEach _content;" \n
+       "" \n
+       "	if (_hqCanMove) then {" \n
+       "		//--- Check Defenses." \n
+       "		for '_i' from 0 to count(_baseDefenses)-1 do {" \n
+       "			_defense = (_baseDefenses select _i) select 0;" \n
+       "			if (typeName _defense == ""STRING"") exitWith {_hqCanMove = false};" \n
+       "		};" \n
+       "" \n
+       "		if (_hqCanMove) then {" \n
+       "			//--- Attempt to get a destination." \n
+       "			_sortedLocation = [_hq, startingLocations] Call SortByDistance;" \n
+       "" \n
+       "			_hqDeployAt = objNull;" \n
+       "			{" \n
+       "				if (count (nearestObjects [_x, (_westStructuresNames + _eastStructuresNames), 400]) == 0 && _x distance _hq > 700) exitWith {_hqDeployAt = _x};" \n
+       "			} forEach _sortedLocation;" \n
+       "		" \n
+       "			if !(isNull _hqDeployAt) then {" \n
+       "				//--- Location Picked." \n
+       "				_hostileTowns = 0;" \n
+       "				_distance = _hq distance _hqDeployAt;" \n
+       "				{if (_x distance _hq < _distance && ((_x getVariable 'sideID') != _sideID)) then {_hostileTowns = _hostileTowns + 1}} forEach towns;" \n
+       "				" \n
+       "				if (_hostileTowns != 0) then {_hqCanMove = false};" \n
+       "			} else {" \n
+       "				_hqCanMove = false;" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Skip_6">*/
+    class Skip_6
+    {
+      name = "Skip_6";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Commander_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

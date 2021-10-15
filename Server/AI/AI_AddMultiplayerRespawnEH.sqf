@@ -1,0 +1,1 @@
+(leader _this) addMPEventHandler ['MPRespawn',{if (isServer && !(isPlayer (_this select 0))) then {_this Spawn AIAdvancedRespawn}}];

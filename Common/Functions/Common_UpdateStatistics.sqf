@@ -1,0 +1,1 @@
+Private ['_side','_val','_var'];_side = _this select 0;_var = _this select 1;_val = _this select 2;WF_Logic setVariable [Format["%1%2",_side,_var],((WF_Logic getVariable Format["%1%2",_side,_var]) + _val),true];

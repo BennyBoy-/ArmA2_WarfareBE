@@ -1,0 +1,290 @@
+/*%FSM<COMPILE "D:\ArmA2\FSM Editor Personal Edition\scriptedFSM.cfg, supplytruck">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Truck_Init",0,4346,-171.242203,-13.536451,-81.242249,36.463646,0.000000,"Truck Init"};
+item1[] = {"Truck_End",1,250,-303.115265,388.653168,-213.115280,438.653076,0.000000,"Truck End"};
+item2[] = {"Truck_is__dead_",4,218,-302.663574,272.303101,-212.663345,322.302917,1.000000,"Truck is " \n "dead?"};
+item3[] = {"Global__Checks",3,250,-170.493988,177.490768,-80.494026,227.490891,0.000000,"Global" \n " Checks"};
+item4[] = {"Loop",8,218,-171.007660,71.851631,-81.007713,121.851631,0.000000,"Loop"};
+item5[] = {"Can__Move_",4,218,-300.051117,178.466248,-210.051086,228.466232,0.000000,"Can " \n "Move?"};
+item6[] = {"Check__Locations",2,250,-299.279907,73.958237,-209.971802,123.266243,0.000000,"Check" \n " Locations"};
+item7[] = {"Deliver_",4,218,-170.476105,272.373291,-80.476044,322.373322,0.000000,"Deliver?"};
+item8[] = {"Delivery",2,250,-170.157013,387.966614,-80.156998,437.966614,0.000000,"Delivery"};
+item9[] = {"",7,210,49.830540,409.317871,57.830544,417.317871,0.000000,""};
+item10[] = {"",7,210,49.565125,92.576248,57.565128,100.576248,0.000000,""};
+item11[] = {"Destination_",4,218,-53.444309,177.966080,36.555691,227.966080,0.000000,"Destination?"};
+item12[] = {"Reload",2,250,-46.849068,102.598534,43.150940,152.598419,0.000000,"Reload"};
+link0[] = {0,4};
+link1[] = {2,1};
+link2[] = {3,2};
+link3[] = {3,5};
+link4[] = {3,7};
+link5[] = {3,11};
+link6[] = {4,3};
+link7[] = {5,6};
+link8[] = {6,4};
+link9[] = {7,8};
+link10[] = {8,9};
+link11[] = {9,10};
+link12[] = {10,4};
+link13[] = {11,12};
+link14[] = {12,4};
+globals[] = {0.000000,0,0,0,0,640,480,1,23,6316128,1,-459.421387,124.502724,623.334961,-109.385239,726,906,1};
+window[] = {2,-1,-1,-1,-1,796,50,1010,50,3,744};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "supplytruck";
+  class States
+  {
+    /*%FSM<STATE "Truck_Init">*/
+    class Truck_Init
+    {
+      name = "Truck_Init";
+      init = /*%FSM<STATEINIT""">*/"_side = _this select 0;" \n
+       "_sideID = (_side) Call GetSideID;" \n
+       "_sideText = str _side;" \n
+       "_logik = (_side) Call WFBE_CO_FNC_GetSideLogic;" \n
+       "" \n
+       "_type = missionNamespace getVariable Format ['WFBE_%1SUPPLYTRUCK',_sideText];" \n
+       "_crew = missionNamespace getVariable Format [""WFBE_%1SOLDIER"",_sideText];" \n
+       "_hq = (_side) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "_vehicle = [_type, (GetPos _hq), _sideID, 0, true] Call WFBE_CO_FNC_CreateVehicle;" \n
+       "_team = CreateGroup _side;" \n
+       "_driver = [_crew,_team,(getpos _vehicle),_sideID] Call WFBE_CO_FNC_CreateUnit;" \n
+       "[_driver] AllowGetIn true;" \n
+       "_driver MoveInDriver _vehicle;" \n
+       "" \n
+       "_logik setVariable [""wfbe_ai_supplytrucks"",(_logik getVariable ""wfbe_ai_supplytrucks"") + [_vehicle]];" \n
+       "[_vehicle,GetPos _hq,30,50,true,false,true] Call PlaceNear;" \n
+       "" \n
+       "[_sideText,'VehiclesCreated',1] Call UpdateStatistics;" \n
+       "[_sideText,'UnitsCreated',1] Call UpdateStatistics;" \n
+       "" \n
+       "_spt = missionNamespace getVariable Format[""WFBE_%1SERVICEPOINTTYPE"",_sideText];" \n
+       "" \n
+       "_SV = 1000;" \n
+       "_currentSV = 0;" \n
+       "_maxSV = 0;" \n
+       "_timer = 0;" \n
+       "_closest = objNull;" \n
+       "_sp = _hq;" \n
+       "_lastDestination = _hq;" \n
+       "_isDelivering = false;" \n
+       "_lastCheck = time;" \n
+       "_lastDelivery = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Global__Checks";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastCheck > 15"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Truck_End">*/
+    class Truck_End
+    {
+      name = "Truck_End";
+      init = /*%FSM<STATEINIT""">*/"if (alive _driver) then {_driver setDamage 1};" \n
+       "(_vehicle) spawn {	sleep 120;if (alive _this) then {_this setDamage 1}};" \n
+       "" \n
+       "_logik setVariable [""wfbe_ai_supplytrucks"",(_logik getVariable ""wfbe_ai_supplytrucks"") - [_vehicle]];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Global__Checks">*/
+    class Global__Checks
+    {
+      name = "Global__Checks";
+      init = /*%FSM<STATEINIT""">*/"if (fuel _vehicle < 0.4) then {_vehicle setFuel 1};" \n
+       "_destinations = [];" \n
+       "{" \n
+       "	_locationSide = (_x getVariable ""sideID"") Call GetSideFromID;" \n
+       "	if (_locationSide == _side) then {_destinations = _destinations + [_x]};" \n
+       "} forEach towns;" \n
+       "" \n
+       "_hq = (_side) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "if (_vehicle Distance _hq < 70 || _vehicle Distance _sp < 70) then {_SV = 1000;_lastDelivery = time};" \n
+       "" \n
+       "_timer = _timer + 15;" \n
+       "if (_timer > 30) then {_isDelivering = false;_timer = 0};" \n
+       "if (time - _lastDelivery > 600) then {_vehicle setDammage 1};" \n
+       "_lastCheck = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Truck_is__dead_">*/
+        class Truck_is__dead_
+        {
+          priority = 1.000000;
+          to="Truck_End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(alive _driver)||!(alive _vehicle)|| isNull _driver || isNull _vehicle || !canMove _vehicle"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Deliver_">*/
+        class Deliver_
+        {
+          priority = 0.000000;
+          to="Delivery";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_vehicle distance _closest < 60;"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Destination_">*/
+        class Destination_
+        {
+          priority = 0.000000;
+          to="Reload";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"count _destinations < 1"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Can__Move_">*/
+        class Can__Move_
+        {
+          priority = 0.000000;
+          to="Check__Locations";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"count _destinations > 0 && !_isDelivering"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check__Locations">*/
+    class Check__Locations
+    {
+      name = "Check__Locations";
+      init = /*%FSM<STATEINIT""">*/"_loc = [leader _team,_destinations] Call SortByDistance;" \n
+       "_closest = _loc select 0;" \n
+       "_possibleLoc = objNull;" \n
+       "_skip = false;" \n
+       "_isDelivering = true;" \n
+       "{" \n
+       "	_currentSV = _x getVariable ""supplyValue"";" \n
+       "	_maxSV = _x getVariable ""maxSupplyValue"";" \n
+       "	if (_currentSV < _maxSV && !_skip && _x !=_lastDestination) then {_closest = _x;_skip = true};" \n
+       "} forEach _loc;" \n
+       "" \n
+       "_currentSV = _closest getVariable ""supplyValue"";" \n
+       "if (_SV <= _currentSV) then {" \n
+       "	_skip = false;" \n
+       "	{" \n
+       "		_currentSV = _x getVariable ""supplyValue"";" \n
+       "		if (_currentSV > _SV && !_skip && _x distance _vehicle < _hq distance _vehicle && _lastDestination != _x) then {_possibleLoc = _x;_skip = true};" \n
+       "	} forEach _loc;" \n
+       "	if (isNull _possibleLoc) then {_possibleLoc = _hq};" \n
+       "};" \n
+       "" \n
+       "if (!isNull _possibleLoc) then {" \n
+       "	_closest = _possibleLoc;" \n
+       "	if (_possibleLoc == _hq) then {" \n
+       "		_buildings = (_side) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "		_checks = [_side,_spt,_buildings] Call GetFactories;" \n
+       "		if (count _checks > 0) then {" \n
+       "			_nearest = [_vehicle,_checks] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "			_deployed = (_side) Call WFBE_CO_FNC_GetSideHQDeployStatus;" \n
+       "			if (_nearest distance _vehicle < _vehicle distance _hq || !_deployed || getDammage _hq >= 1) then {_closest = _nearest;_sp = _nearest};" \n
+       "		};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "driver _vehicle doMove ([GetPos _closest,10,20] Call GetRandomPosition);"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Global__Checks";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastCheck > 15"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Delivery">*/
+    class Delivery
+    {
+      name = "Delivery";
+      init = /*%FSM<STATEINIT""">*/"_isDelivering = false;" \n
+       "_lastDestination = _closest;" \n
+       "if (_closest in towns) then {" \n
+       "	_currentSV = _closest getVariable ""supplyValue"";" \n
+       "	_maxSV = _closest getVariable ""maxSupplyValue"";" \n
+       "	_sideDeliver = (_closest getVariable ""sideID"") Call GetSideFromID;" \n
+       "	_upgrades = (_side) Call WFBE_CO_FNC_GetSideUpgrades;" \n
+       "	_increaseOf = (missionNamespace getVariable ""WFBE_C_TOWNS_SUPPLY_LEVELS_TRUCK"") select (_upgrades select WFBE_UP_SUPPLYRATE);" \n
+       "	_requireChange = false;" \n
+       "	if (_SV > _currentSV && _sideDeliver == _side) then {_currentSV = _currentSV + _increaseOf;_requireChange = true};" \n
+       "	if (_currentSV > _maxSV) then {_currentSV = _maxSV;_requireChange = true};" \n
+       "	if (_requireChange) then {_closest setVariable [""supplyValue"",_currentSV,true]};" \n
+       "	_SV = _currentSV;" \n
+       "};" \n
+       "" \n
+       "_lastDelivery = time;" \n
+       "_closest = objNull;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Global__Checks";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastCheck > 15"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Reload">*/
+    class Reload
+    {
+      name = "Reload";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Global__Checks";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastCheck > 15"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Truck_Init";
+  finalStates[] =
+  {
+    "Truck_End",
+  };
+};
+/*%FSM</COMPILE>*/

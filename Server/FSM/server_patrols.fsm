@@ -1,0 +1,295 @@
+/*%FSM<COMPILE "E:\Bohemia Interactive\ArmA 2\FSM Editor Personal Edition\scriptedFSM.cfg, server_patrols.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,4346,-25.000000,-150.000000,75.000000,-100.000000,0.000000,"Init"};
+item1[] = {"_",-1,250,-11.537962,23.713089,-8.193480,23.713089,0.000000,""};
+item2[] = {"Check",2,250,-25.000000,50.000000,75.000000,100.000000,0.000000,"Check"};
+item3[] = {"Team_is_Dead",4,218,-175.000000,50.000000,-75.000000,100.000000,1.000000,"Team is Dead"};
+item4[] = {"End",1,250,-175.000000,-50.000000,-75.000000,0.000000,0.000000,"End"};
+item5[] = {"Assign_Objective",4,218,-25.000000,150.000000,75.000000,200.000000,0.000000,"Assign" \n "Objective"};
+item6[] = {"Capture",4,218,125.000000,50.000000,225.000000,100.000000,0.000000,"Capture"};
+item7[] = {"Eta",2,250,125.000000,150.000000,225.000000,200.000000,0.000000,"Eta"};
+item8[] = {"Attempt_to_Captu",2,250,275.000000,50.000000,375.000000,100.000000,0.000000,"Attempt to Capture"};
+item9[] = {"Loop",4,218,-25.000000,-50.000000,75.000000,0.000000,0.000000,"Loop"};
+item10[] = {"Assigned",4,218,275.000000,150.000000,375.000000,200.000000,0.000000,"Assigned"};
+item11[] = {"",7,210,571.000000,-28.999998,579.000000,-21.000004,0.000000,""};
+item12[] = {"Not_Assigned",4,218,125.000000,250.000000,225.000000,300.000000,0.000000,"Not Assigned"};
+item13[] = {"Check_1",2,250,425.000000,150.000000,525.000000,200.000000,0.000000,"Check"};
+item14[] = {"Assign",2,250,275.000000,250.000000,375.000000,300.000000,0.000000,"Assign"};
+item15[] = {"",7,210,571.000000,171.000000,579.000000,179.000000,0.000000,""};
+item16[] = {"",7,210,571.000000,271.000000,579.000000,279.000000,0.000000,""};
+item17[] = {"",7,210,571.000000,71.000000,579.000000,79.000000,0.000000,""};
+version=1;
+class LayoutItems
+{
+	class Item1
+	{
+		class ItemInfo
+		{
+			FontFace="Arial";
+			FontHeight=10;
+			lStyle=1;
+		};
+	};
+};
+link0[] = {0,9};
+link1[] = {2,3};
+link2[] = {2,5};
+link3[] = {2,6};
+link4[] = {3,4};
+link5[] = {5,7};
+link6[] = {6,8};
+link7[] = {7,10};
+link8[] = {7,12};
+link9[] = {8,17};
+link10[] = {9,2};
+link11[] = {10,13};
+link12[] = {11,9};
+link13[] = {12,14};
+link14[] = {13,15};
+link15[] = {14,16};
+link16[] = {15,17};
+link17[] = {16,15};
+link18[] = {17,11};
+globals[] = {25.000000,1,0,0,0,640,480,1,49,6316128,1,-186.402100,704.050903,558.811401,-282.521301,707,663,1};
+window[] = {0,-1,-1,-1,-1,908,100,1440,100,1,725};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "server_patrols.fsm";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_location = _this select 0;" \n
+       "_sideID = _this select 1;" \n
+       "_side = (_sideID) Call WFBE_CO_FNC_GetSideFromID;" \n
+       "" \n
+       "_team_job = ""patrol"";" \n
+       "_team_target = objNull;" \n
+       "_team_alive = false;" \n
+       "" \n
+       "_town_conquest_mode = missionNamespace getVariable 'WFBE_C_TOWNS_CONQUEST_MODE';" \n
+       "_town_reuse = missionNamespace getVariable ""WFBE_C_PATROLS_TOWNS_LOCK"";" \n
+       "_town_vehicle_lock_defender = if ((missionNamespace getVariable ""WFBE_C_TOWNS_VEHICLES_LOCK_DEFENDER"") > 0) then {true} else {false};" \n
+       "_towns_visited = [_location];" \n
+       "" \n
+       "_group = [_location, _side] Call WFBE_SE_FNC_GetTownPatrol;" \n
+       "" \n
+       "_team = objNull;" \n
+       "if (count _group > 0) then {" \n
+       "	_team_alive = true;" \n
+       "	_team = createGroup _side;" \n
+       "" \n
+       "	_position = ([getPos _location, 50, 500] Call WFBE_CO_FNC_GetRandomPosition);" \n
+       "	_position = [_position, 50] Call WFBE_CO_FNC_GetEmptyPosition;" \n
+       "	_lock = if (_side == WFBE_DEFENDER) then {_town_vehicle_lock_defender} else {true};" \n
+       "	_retVal = [_group, _position, _side, _lock, _team] Call WFBE_CO_FNC_CreateTeam;" \n
+       "};" \n
+       "" \n
+       "_snap = 0;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check">*/
+    class Check
+    {
+      name = "Check";
+      init = /*%FSM<STATEINIT""">*/"_snap = time + (30 + random 1);" \n
+       "" \n
+       "_team_alive = if (count ((units _team) Call WFBE_CO_FNC_GetLiveUnits) == 0 || isNull _team) then {false} else {true};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Team_is_Dead">*/
+        class Team_is_Dead
+        {
+          priority = 1.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"WFBE_GameOver || !_team_alive"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Capture">*/
+        class Capture
+        {
+          priority = 0.000000;
+          to="Attempt_to_Captu";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_team_job == ""capture"" && !WFBE_GameOver && _team_alive"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Assign_Objective">*/
+        class Assign_Objective
+        {
+          priority = 0.000000;
+          to="Eta";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_team_job == ""patrol"" && !WFBE_GameOver && _team_alive"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/"_location setVariable [""wfbe_patrol_active"", false];" \n
+       "_location setVariable [""wfbe_patrol_active_last"", time];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Eta">*/
+    class Eta
+    {
+      name = "Eta";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Not_Assigned">*/
+        class Not_Assigned
+        {
+          priority = 0.000000;
+          to="Assign";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"isNull _team_target"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Assigned">*/
+        class Assigned
+        {
+          priority = 0.000000;
+          to="Check_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!isNull _team_target"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Attempt_to_Captu">*/
+    class Attempt_to_Captu
+    {
+      name = "Attempt_to_Captu";
+      init = /*%FSM<STATEINIT""">*/"if ((_team_target getVariable ""sideID"") == _sideID) then {" \n
+       "	//--- Captured, the team can move on." \n
+       "	[_towns_visited, _team_target] Call WFBE_CO_FNC_ArrayPush;" \n
+       "	_team_target = objNull;" \n
+       "	_team_job = ""patrol"";" \n
+       "" \n
+       "	//todo, rearm, repair, refuel." \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_1">*/
+    class Check_1
+    {
+      name = "Check_1";
+      init = /*%FSM<STATEINIT""">*/"if ((leader _team) distance _team_target < 200) then {" \n
+       "	_town_capturable = true;" \n
+       "	if (_town_conquest_mode == 1) then {" \n
+       "		if !(_team_target getVariable  Format[""wfbe_town_capturable_%1"", _side]) then {_town_capturable = false};" \n
+       "	};" \n
+       "	if ((_team_target getVariable ""sideID"") == _sideID && _town_capturable) then {" \n
+       "		//--- Town is friendly, don't bother." \n
+       "		[_towns_visited, _team_target] Call WFBE_CO_FNC_ArrayPush;" \n
+       "		_team_target = objNull;" \n
+       "	} else {" \n
+       "		//--- Attempt to capture the town." \n
+       "		_team_job = ""capture"";" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Assign">*/
+    class Assign
+    {
+      name = "Assign";
+      init = /*%FSM<STATEINIT""">*/"//--- Refresh the town list which can be visited." \n
+       "" \n
+       "if (count _towns_visited > _town_reuse) then {" \n
+       "	_towns_visited = [_towns_visited, 0] Call WFBE_CO_FNC_ArrayRemoveIndex;" \n
+       "};" \n
+       "" \n
+       "//--- Get the closest location which is available to the patrol while excluding previously visited towns." \n
+       "_team_target = [_location, towns - _towns_visited] Call WFBE_CO_FNC_GetClosestEntity;" \n
+       "" \n
+       "//--- Tell our patrol to move to the depot." \n
+       "[_team, getPos _team_target, 'MOVE', 25] Spawn WFBE_CO_FNC_WaypointSimple;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

@@ -1,0 +1,39 @@
+Private ["_group","_i","_timeSince","_unit","_units","_waitForMembers","_wpPos"]
+_group = _this select 0
+_wpPos = _this select 1
+
+_timeSince = 0
+
+if (vehicle (leader _group) isKindOf "Air") then {Goto "Exit";}
+
+#Main
+	~5
+	
+	_timeSince = _timeSince + 5
+	
+	;Check for the group's status.
+	_units = ((units _group) Call GetLiveUnits) - [leader _group]
+
+	;Exit if the leader is the only member.
+	if (count _units < 2) then {Goto "Exit";}
+	
+	_i = 0
+	_waitForMembers = false
+	
+	;Iterate through all members.
+	#Loop
+		_unit = _units select _i
+		
+		if (_unit distance (leader _group) > 150 && !(_unit isKindOf 'Air')) then {_waitForMembers = true; if (_timeSince > 240) then {[vehicle _unit,getPos (leader _group),75] Call PlaceSafe;};}
+		
+		_i = _i + 1
+	
+		if (_i == count _units) then {if (_waitForMembers) then {Goto "Main";} else {Goto "Exit";}};
+	
+		Goto "Loop"
+	
+	Goto "Main"
+	
+#Exit
+
+	Exit

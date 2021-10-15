@@ -1,0 +1,165 @@
+/*%FSM<COMPILE "D:\tools\BIS\FSM Editor Personal Edition\scriptedFSM.cfg, updatesalvage">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,-64.944939,-176.579712,25.055046,-126.579880,0.000000,"Init"};
+item1[] = {"Check_Towns",2,250,-66.836029,-56.267544,23.163887,-6.267582,0.000000,"Check Towns"};
+item2[] = {"End",1,250,-218.006683,15.304325,-128.006653,65.304314,0.000000,"End"};
+item3[] = {"Loop",4,218,65.605347,-56.267605,155.605377,-6.267574,0.000000,"Loop"};
+item4[] = {"Truck_is_Dead",4,218,-216.668854,-56.267559,-126.668869,-6.267574,1.000000,"Truck is" \n "Dead"};
+item5[] = {"Check_Wrecks",2,4346,66.545509,15.865158,156.545563,65.865219,0.000000,"Check Wrecks"};
+item6[] = {"Has_Driver",4,218,-66.545601,15.865162,23.454397,65.865189,0.000000,"Has Driver"};
+item7[] = {"_",8,218,-37.459465,-108.411957,-3.868937,-87.498108,0.000000,""};
+link0[] = {0,7};
+link1[] = {1,3};
+link2[] = {1,4};
+link3[] = {1,6};
+link4[] = {3,1};
+link5[] = {4,2};
+link6[] = {5,3};
+link7[] = {6,5};
+link8[] = {7,1};
+globals[] = {0.000000,0,0,0,0,640,480,1,29,6316128,1,-280.138428,228.260757,186.219727,-258.197296,588,489,1};
+window[] = {0,-1,-1,-1,-1,784,150,1410,150,1,606};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "updatesalvage";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_vehicle = _this select 0;" \n
+       "" \n
+       "_salvagerRange = missionNamespace getVariable ""WFBE_C_UNITS_SALVAGER_SCAVENGE_RANGE"";" \n
+       "_percentage = missionNamespace getVariable ""WFBE_C_UNITS_SALVAGER_SCAVENGE_RATIO"";" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Towns">*/
+    class Check_Towns
+    {
+      name = "Check_Towns";
+      init = /*%FSM<STATEINIT""">*/"_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Truck_is_Dead">*/
+        class Truck_is_Dead
+        {
+          priority = 1.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || !(alive _vehicle)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Has_Driver">*/
+        class Has_Driver
+        {
+          priority = 0.000000;
+          to="Check_Wrecks";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!(isNull (driver _vehicle)) && !gameOver && alive _vehicle"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 5 && !gameOver && alive _vehicle"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Wrecks">*/
+    class Check_Wrecks
+    {
+      name = "Check_Wrecks";
+      init = /*%FSM<STATEINIT""">*/"_vehicles = nearestObjects [getPos _vehicle, ['Car','Motorcycle','Ship','Air','Tank','StaticWeapon'],_salvagerRange];" \n
+       "" \n
+       "_wrecks = [];" \n
+       "{" \n
+       "	if !(alive _x) then {_wrecks = _wrecks + [_x]};" \n
+       "} forEach _vehicles;" \n
+       "" \n
+       "_hqs = [];" \n
+       "{_hqs = _hqs + [_x Call WFBE_CO_FNC_GetSideHQ]} forEach WFBE_PRESENTSIDES;" \n
+       "" \n
+       "_wrecks = _wrecks - _hqs;" \n
+       "" \n
+       "_overAllCost = 0;" \n
+       "{" \n
+       "	_isNeeded = _x getVariable 'keepAlive';" \n
+       "	" \n
+       "	if (isNil '_isNeeded') then {" \n
+       "		_get = missionNamespace getVariable (typeOf _x);" \n
+       "		_salvageCost = 250;" \n
+       "		if !(isNil '_get') then {" \n
+       "			_salvageCost = round(((_get select QUERYUNITPRICE)*_percentage) / 100);" \n
+       "		};" \n
+       "		" \n
+       "		_overAllCost = _overAllCost + _salvageCost;" \n
+       "		(Format [localize 'STR_WF_CHAT_Salvaged_Unit',_salvageCost,[typeOf _x,'displayName'] Call GetConfigInfo]) Call GroupChatMessage;" \n
+       "		" \n
+       "		deleteVehicle _x;" \n
+       "	};" \n
+       "} foreach _wrecks;" \n
+       "" \n
+       "if (_overAllCost > 0) then {(_overAllCost) Call ChangePlayerfunds};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 5 && !gameOver && alive _vehicle"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

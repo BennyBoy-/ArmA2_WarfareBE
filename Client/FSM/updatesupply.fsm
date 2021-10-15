@@ -1,0 +1,216 @@
+/*%FSM<COMPILE "D:\tools\BIS\FSM Editor Personal Edition\scriptedFSM.cfg, updatesupply">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,-64.944939,-176.579712,25.055046,-126.579880,0.000000,"Init"};
+item1[] = {"Check_Towns",2,250,-66.836029,-56.267544,23.163887,-6.267582,0.000000,"Check Towns"};
+item2[] = {"End",1,250,-218.006683,15.304325,-128.006653,65.304314,0.000000,"End"};
+item3[] = {"Loop",4,218,65.605347,-56.267605,155.605377,-6.267574,0.000000,"Loop"};
+item4[] = {"Truck_is_Dead",4,218,-216.668854,-56.267559,-126.668869,-6.267574,1.000000,"Truck is" \n "Dead"};
+item5[] = {"Truck_Check",2,4346,66.545509,15.865158,156.545563,65.865219,0.000000,"Truck Check"};
+item6[] = {"Has_Driver",4,218,-66.545601,15.865162,23.454397,65.865189,0.000000,"Has Driver"};
+item7[] = {"_",8,218,-37.459465,-108.411957,-3.868937,-87.498108,0.000000,""};
+link0[] = {0,7};
+link1[] = {1,3};
+link2[] = {1,4};
+link3[] = {1,6};
+link4[] = {3,1};
+link5[] = {4,2};
+link6[] = {5,3};
+link7[] = {6,5};
+link8[] = {7,1};
+globals[] = {0.000000,0,0,0,0,640,480,1,29,6316128,1,-338.339722,338.339386,553.058655,-220.453583,587,646,1};
+window[] = {0,-1,-1,-1,-1,816,25,1285,25,1,605};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "updatesupply";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_vehicle = _this select 0;" \n
+       "_side = _this select 1;" \n
+       "_driver = driver _vehicle;" \n
+       "_lastDriver = driver _vehicle;" \n
+       "" \n
+       "_SV = 1000;" \n
+       "_currentSV = 0;" \n
+       "_maxSV = 0;" \n
+       "_timer = 0;" \n
+       "_exit = false;" \n
+       "_canDeliver = false;" \n
+       "_hq = (sideJoined) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "_lastDestination = _hq;" \n
+       "_delRange = missionNamespace getVariable ""WFBE_C_PLAYERS_SUPPLY_TRUCKS_DELIVERY_RANGE"";" \n
+       "_fpsp = missionNamespace getVariable ""WFBE_C_PLAYERS_SUPPLY_TRUCKS_DELIVERY_FUNDS_COEF"";" \n
+       "_spsp = missionNamespace getVariable ""WFBE_C_PLAYERS_SCORE_DELIVERY"";" \n
+       "" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "_">*/
+        class _
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Check_Towns">*/
+    class Check_Towns
+    {
+      name = "Check_Towns";
+      init = /*%FSM<STATEINIT""">*/"if (!alive _vehicle || isNull _vehicle) then {_exit = true}; " \n
+       "" \n
+       "_driver = driver _vehicle;" \n
+       "_hasDriver = false;" \n
+       "_playerInVehicle = false;" \n
+       "if (!IsNull _driver) then {" \n
+       "	if (Alive _driver) then {_hasDriver = true};" \n
+       "	if (isPlayer _driver) then {_playerInVehicle = true};" \n
+       "};" \n
+       "" \n
+       "_lastDriver = _driver;" \n
+       "_lastUpdate = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Truck_is_Dead">*/
+        class Truck_is_Dead
+        {
+          priority = 1.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"gameOver || _exit"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Has_Driver">*/
+        class Has_Driver
+        {
+          priority = 0.000000;
+          to="Truck_Check";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_hasDriver && !gameOver && !_exit"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 3 && !gameOver && !_exit"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Truck_Check">*/
+    class Truck_Check
+    {
+      name = "Truck_Check";
+      init = /*%FSM<STATEINIT""">*/"if (!isNull _driver) then {" \n
+       "	if (_driver != _lastDriver) then {" \n
+       "		_lastDriver = _driver;" \n
+       "		if (_playerInVehicle) then {" \n
+       "			_txt = localize ""STR_WF_INFO_Supply_Full"";" \n
+       "			if (_SV != 1000) then {_txt = Format [localize ""STR_WF_INFO_Supply_Status"",_SV]};" \n
+       "			hint _txt;" \n
+       "		};" \n
+       "	};" \n
+       "};" \n
+       "	" \n
+       "_hq = (sideJoined) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "_isDeployed = (sideJoined) Call WFBE_CO_FNC_GetSideHQDeployStatus;" \n
+       "if (_vehicle Distance _hq < 70 && _SV != 1000 && getDammage _hq < 1 && _isDeployed) then {_SV = 1000;_vehicle setFuel 1;_lastDestination = _hq;if (_playerInVehicle) then {hint (localize ""STR_WF_INFO_Supply_Full"")}};" \n
+       "" \n
+       "if (_SV != 1000) then {" \n
+       "	_buildings = (sideJoined) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "	_checks = [sideJoined,missionNamespace getVariable Format [""WFBE_%1SERVICEPOINTTYPE"",sideJoinedText],_buildings] Call GetFactories;" \n
+       "	if (count _checks > 0) then {" \n
+       "		_sorted = [_vehicle,_checks] Call SortByDistance;" \n
+       "		_nearest = _sorted select 0;" \n
+       "		if (_vehicle distance _nearest < 70) then {_SV = 1000;_vehicle setFuel 1;_lastDestination = _nearest;if (_playerInVehicle) then {hint (localize ""STR_WF_INFO_Supply_Full"")}};" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "_loc = [_vehicle,towns] Call SortByDistance;" \n
+       "_closest = _loc select 0;" \n
+       "_name = _closest getVariable ""name"";" \n
+       "_locationSide = (_closest getVariable ""sideID"") Call GetSideFromID;" \n
+       "" \n
+       "_canDeliver = if (_locationSide == _side) then {true} else {false};" \n
+       "" \n
+       "if ((_vehicle Distance _closest < _delRange)&&(_canDeliver)&&(_lastDestination != _closest)) then {" \n
+       "	_lastDestination = _closest;" \n
+       "	_currentSV = _closest getVariable ""supplyValue"";" \n
+       "	_maxSV = _closest getVariable ""maxSupplyValue"";" \n
+       "	if (_SV > _currentSV) then {" \n
+       "		if (_currentSV != _maxSV) then {" \n
+       "			_upgrades = (sideJoined) Call WFBE_CO_FNC_GetSideUpgrades;" \n
+       "			_increaseOf = (missionNamespace getVariable ""WFBE_C_TOWNS_SUPPLY_LEVELS_TRUCK"") select (_upgrades select WFBE_UP_SUPPLYRATE);" \n
+       "			_currentSV = _currentSV + _increaseOf;" \n
+       "			if (_currentSV > _maxSV) then {_currentSV = _maxSV};" \n
+       "			_closest setVariable [""supplyValue"",_currentSV,true];" \n
+       "			_SV = _currentSV;" \n
+       "			_funds = _SV * _fpsp;" \n
+       "			hint Format[localize ""STR_WF_INFO_Supply_Deliver"",_name,_SV,_maxSV,_funds];" \n
+       "			_funds Call ChangePlayerFunds;" \n
+       "			WFBE_RequestChangeScore = ['SRVFNCREQUESTCHANGESCORE',[player,score player + _spsp]];" \n
+       "			publicVariable 'WFBE_RequestChangeScore';" \n
+       "			if (isHostedServer) then {['SRVFNCREQUESTCHANGESCORE',[player,score player + _spsp]] Spawn HandleSPVF};" \n
+       "		};" \n
+       "	} else {" \n
+       "		hint Format[localize ""STR_WF_INFO_Supply_Equal"",_name,_currentSV,_maxSV];" \n
+       "		_SV = _currentSV;" \n
+       "	};" \n
+       "	WFBE_RequestChangeScore = ['SRVFNCREQUESTCHANGESCORE',[player,score player + _spsp]];" \n
+       "	publicVariable 'WFBE_RequestChangeScore';" \n
+       "	if (isHostedServer) then {['SRVFNCREQUESTCHANGESCORE',[player,score player + _spsp]] Spawn HandleSPVF};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Check_Towns";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time - _lastUpdate > 3 && !gameOver && !_exit"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/

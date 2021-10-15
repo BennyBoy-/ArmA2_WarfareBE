@@ -1,0 +1,189 @@
+/*%FSM<COMPILE "D:\tools\BIS\FSM Editor Personal Edition\scriptedFSM.cfg, server_victory_defender_helper.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Init",0,250,150.000000,-475.000000,250.000000,-425.000000,0.000000,"Init"};
+item1[] = {"Loop",4,218,150.000000,-375.000000,250.000000,-325.000000,0.000000,"Loop"};
+item2[] = {"End",1,250,150.000000,-75.000000,250.000000,-25.000000,0.000000,"End"};
+item3[] = {"Status",2,250,150.000000,-275.000000,250.000000,-225.000000,0.000000,"Status"};
+item4[] = {"Gameover",4,218,150.000000,-175.000000,250.000000,-125.000000,0.000000,"Gameover"};
+item5[] = {"Lost",4,218,300.000000,-275.000000,400.000000,-225.000000,0.000000,"Lost"};
+item6[] = {"Alive",4,218,0.000000,-275.000000,100.000000,-225.000000,0.000000,"Alive"};
+item7[] = {"Wait",2,250,0.000000,-375.000000,100.000000,-325.000000,0.000000,"Wait"};
+item8[] = {"Help",2,4346,300.000000,-375.000000,400.000000,-325.000000,0.000000,"Help"};
+link0[] = {0,1};
+link1[] = {1,3};
+link2[] = {3,4};
+link3[] = {3,5};
+link4[] = {3,6};
+link5[] = {4,2};
+link6[] = {5,8};
+link7[] = {6,7};
+link8[] = {7,1};
+link9[] = {8,1};
+globals[] = {25.000000,1,0,0,0,640,480,1,42,6316128,1,-103.010742,576.733398,29.605272,-483.056641,655,489,1};
+window[] = {0,-1,-1,-1,-1,759,125,1385,125,1,673};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "server_victory_defender_helper.fsm";
+  class States
+  {
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_side = _this;" \n
+       "_logik = (_side) Call WFBE_CO_FNC_GetSideLogic;" \n
+       "" \n
+       "_startuppos_default = _logik getVariable ""wfbe_startpos"";" \n
+       "_startuppos = WF_Logic getVariable ""wfbe_spawnpos"";" \n
+       "_startuppos_count = count _startuppos;" \n
+       "_startuppos_rotation = missionNamespace getVariable ""WFBE_C_VICTORY_THREEWAY_LOCATION_SWAP"";" \n
+       "_startup_index = 0;" \n
+       "" \n
+       "_lastRotation = 0;" \n
+       "_snap = 0;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Status";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "End">*/
+    class End
+    {
+      name = "End";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Status">*/
+    class Status
+    {
+      name = "Status";
+      init = /*%FSM<STATEINIT""">*/"_hq = (_side) Call WFBE_CO_FNC_GetSideHQ;" \n
+       "_structures = (_side) Call WFBE_CO_FNC_GetSideStructures;" \n
+       "" \n
+       "_factories = 0;" \n
+       "{" \n
+       "	_factories = _factories + count([west,missionNamespace getVariable Format [""WFBE_%1%2TYPE"",_side,_x], _structures] Call GetFactories);" \n
+       "} forEach [""BARRACKS"",""LIGHT"",""HEAVY"",""AIRCRAFT""];" \n
+       "" \n
+       "_side_lost = if (!(alive _hq) && _factories == 0) then {true} else {false};" \n
+       "" \n
+       "_snap = time + 75;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Lost">*/
+        class Lost
+        {
+          priority = 0.000000;
+          to="Help";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_side_lost && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Alive">*/
+        class Alive
+        {
+          priority = 0.000000;
+          to="Wait";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_side_lost && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Gameover">*/
+        class Gameover
+        {
+          priority = 0.000000;
+          to="End";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Wait">*/
+    class Wait
+    {
+      name = "Wait";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Status";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Help">*/
+    class Help
+    {
+      name = "Help";
+      init = /*%FSM<STATEINIT""">*/"//swap spawn location (when nothing left)." \n
+       "//create startup veh randomly." \n
+       "" \n
+       "if (time - _lastRotation > _startuppos_rotation) then {" \n
+       "	_lastRotation = time;" \n
+       "	" \n
+       "	_found = false;" \n
+       "	while {!_found} do {" \n
+       "		_pos = _startuppos select _startup_index;" \n
+       "		if (([(_pos nearEntities [[""Man"",""Car"",""Motorcycle"",""Tank"",""Ship""], 550]), _side] Call WFBE_CO_FNC_GetAreaEnemiesCount) == 0) then {" \n
+       "			_found = true;" \n
+       "			_logik setVariable [""wfbe_startpos"", _pos, true];" \n
+       "		};" \n
+       "		_startup_index = _startup_index + 1;" \n
+       "		if (_startup_index >= _startuppos_count) exitWith {_startup_index = 0};" \n
+       "	};" \n
+       "};"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Loop">*/
+        class Loop
+        {
+          priority = 0.000000;
+          to="Status";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"time > _snap && !WFBE_GameOver"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Init";
+  finalStates[] =
+  {
+    "End",
+  };
+};
+/*%FSM</COMPILE>*/
